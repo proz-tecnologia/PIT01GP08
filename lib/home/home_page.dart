@@ -10,6 +10,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int _index = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,10 +53,12 @@ class _HomePageState extends State<HomePage> {
             label: 'Notificações',
           ),
         ],
+        currentIndex: _index,
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: (index) {
           setState(() {
+            _index = index;
             //TODO: implement navigation
           });
         },
