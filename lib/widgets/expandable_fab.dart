@@ -2,8 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-//TODO: study and finish cleaning
-
 class ExpandableFab extends StatefulWidget {
   const ExpandableFab({
     super.key,
@@ -66,6 +64,13 @@ class _ExpandableFabState extends State<ExpandableFab>
         alignment: Alignment.bottomRight,
         clipBehavior: Clip.none,
         children: [
+          GestureDetector(
+            onTap: () {
+              if (_open) {
+                _toggle();
+              }
+            },
+          ),
           _buildTapToCloseFab(),
           ..._buildExpandingActionButtons(),
           _buildTapToOpenFab(),
@@ -84,6 +89,9 @@ class _ExpandableFabState extends State<ExpandableFab>
           clipBehavior: Clip.antiAlias,
           elevation: 4.0,
           child: InkWell(
+            onFocusChange: (hasFocus) {
+              _toggle();
+            },
             onTap: _toggle,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
