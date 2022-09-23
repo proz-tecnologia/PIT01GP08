@@ -9,5 +9,5 @@ class AppColors {
   static const Color expense = Color(0xffe53529);
   static const Color splashDark = Color(0x44000000);
   static const Color splashLight = Color(0x44ffffff);
-  static const Color primary = Color(0xff000000);
+  static const Color primary = Color(0xFF2196F3); //TODO: choose theme color
 }

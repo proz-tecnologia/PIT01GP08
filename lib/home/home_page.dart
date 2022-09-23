@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/app_drawer.dart';
+import '../design_sys/colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -54,8 +55,8 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
         currentIndex: _index,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: AppColors.splashDark,
         onTap: (index) {
           setState(() {
             _index = index;

@@ -1,3 +1,4 @@
+import 'package:financial_app/design_sys/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'home/home_page.dart';
@@ -14,10 +15,11 @@ class MyApp extends StatelessWidget {
       //TODO: define parameters
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        backgroundColor: AppColors.white,
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
+        backgroundColor: AppColors.black,
       ),
       home: const HomePage(title: 'Flutter Demo Home Page'),
     );
