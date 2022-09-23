@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AppDatePicker extends StatefulWidget {
   const AppDatePicker({
@@ -14,14 +15,15 @@ class AppDatePicker extends StatefulWidget {
 }
 
 class _AppDatePickerState extends State<AppDatePicker> {
+  TextEditingController dateInput = TextEditingController(
+      text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
   @override
   Widget build(BuildContext context) {
     DateTime date = DateTime.now();
     return TextFormField(
-      //TODO: format
-      initialValue: date.toString(),
+      controller: dateInput,
       decoration: InputDecoration(
-        icon: const Icon(Icons.calendar_today),
+        suffixIcon: const Icon(Icons.calendar_today_rounded),
         labelStyle: TextStyle(color: widget._color),
         labelText: 'Vencimento',
       ),
@@ -36,10 +38,8 @@ class _AppDatePickerState extends State<AppDatePicker> {
 
         if (pickedDate != null) {
           setState(() {
-            date = pickedDate;
+            dateInput.text = DateFormat('dd/MM/yyyy').format(pickedDate);
           });
-        } else {
-          print("Date is not selected");
         }
       },
     );
