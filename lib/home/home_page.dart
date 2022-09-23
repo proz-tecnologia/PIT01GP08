@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../design_sys/colors.dart';
 import '../widgets/expandable_fab.dart';
+import 'new_entry_dialog.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -35,7 +36,7 @@ class _HomePageState extends State<HomePage> {
           FloatingActionButton(
             onPressed: () {
               setState(() {
-                newExpense();
+                newEntryDialog(context,'expense');
               });
             },
             tooltip: 'Despesa',
@@ -45,7 +46,7 @@ class _HomePageState extends State<HomePage> {
           FloatingActionButton(
             onPressed: () {
               setState(() {
-                newExpense();
+                newEntryDialog(context,'income');
               });
             },
             tooltip: 'Entrada',
@@ -91,8 +92,4 @@ class _HomePageState extends State<HomePage> {
       showUnselectedLabels: false,
     );
   }
-
-  newIncome() {}
-  newExpense() {}
 }
-
