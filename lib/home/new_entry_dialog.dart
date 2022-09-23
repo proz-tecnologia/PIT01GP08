@@ -70,14 +70,26 @@ class NewEntryDialog extends StatelessWidget {
               prefixText: 'R\$ ',
             ),
           ),
+          const SizedBox(
+            height: 8,
+          ),
           TextFormField(
             decoration: InputDecoration(
               labelStyle: TextStyle(color: _color.withOpacity(0.6)),
               labelText: 'Descrição',
             ),
           ),
+          const SizedBox(
+            height: 8,
+          ),
           AppDropdownButtonFormField(categories: _categories),
+          const SizedBox(
+            height: 16,
+          ),
           AppToggleButtons(select: _select, color: _color),
+          const SizedBox(
+            height: 8,
+          ),
           AppDatePicker(color: _color),
         ],
       ),
