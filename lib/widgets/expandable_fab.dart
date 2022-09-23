@@ -101,13 +101,11 @@ class _ExpandableFabState extends State<ExpandableFab>
   List<Widget> _buildExpandingActionButtons() {
     final children = <Widget>[];
     final count = widget.children.length;
-    //final step = 90.0 / (count - 1);
     for (var i = 0, distance = widget.distance;
         i < count;
         i++, distance += widget.distance) {
       children.add(
         _ExpandingActionButton(
-          directionInDegrees: 90,
           maxDistance: distance,
           progress: _expandAnimation,
           child: widget.children[i],
@@ -145,13 +143,11 @@ class _ExpandableFabState extends State<ExpandableFab>
 
 class _ExpandingActionButton extends StatelessWidget {
   const _ExpandingActionButton({
-    required this.directionInDegrees,
     required this.maxDistance,
     required this.progress,
     required this.child,
   });
 
-  final double directionInDegrees;
   final double maxDistance;
   final Animation<double> progress;
   final Widget child;
@@ -162,7 +158,7 @@ class _ExpandingActionButton extends StatelessWidget {
       animation: progress,
       builder: (context, child) {
         final offset = Offset.fromDirection(
-          directionInDegrees * (pi / 180.0),
+          pi / 2,
           progress.value * maxDistance,
         );
         return Positioned(
@@ -177,54 +173,6 @@ class _ExpandingActionButton extends StatelessWidget {
       child: FadeTransition(
         opacity: progress,
         child: child,
-      ),
-    );
-  }
-}
-
-class ActionButton extends StatelessWidget {
-  const ActionButton({
-    super.key,
-    this.onPressed,
-    required this.icon,
-  });
-
-  final VoidCallback? onPressed;
-  final Widget icon;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Material(
-      shape: const CircleBorder(),
-      clipBehavior: Clip.antiAlias,
-      color: theme.colorScheme.secondary,
-      elevation: 4.0,
-      child: IconButton(
-        onPressed: onPressed,
-        icon: icon,
-        color: theme.colorScheme.onSecondary,
-      ),
-    );
-  }
-}
-
-class FakeItem extends StatelessWidget {
-  const FakeItem({
-    super.key,
-    required this.isBig,
-  });
-
-  final bool isBig;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
-      height: isBig ? 128.0 : 36.0,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-        color: Colors.grey.shade300,
       ),
     );
   }
