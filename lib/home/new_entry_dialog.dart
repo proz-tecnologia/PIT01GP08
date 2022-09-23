@@ -19,14 +19,16 @@ Future<void> newEntryDialog(BuildContext context, String type) {
   ];
   final categories = type == 'income' ? incomeCategories : expenseCategories;
   final color = type == 'income' ? AppColors.income : AppColors.expense;
+  final title = type == 'income' ? 'Nova receita' : 'Nova despesa';
 
   return showDialog(
       context: context,
       builder: (BuildContext context) {
         return NewEntryDialog(
           categories: categories,
-          select: select,
           color: color,
+          select: select,
+          title: title,
         );
       });
 }
@@ -37,31 +39,39 @@ class NewEntryDialog extends StatelessWidget {
     required List<String> categories,
     required Color color,
     required List<bool> select,
+    required String title,
   })  : _categories = categories,
         _color = color,
         _select = select,
+        _title = title,
         super(key: key);
 
   final List<String> _categories;
   final Color _color;
   final List<bool> _select;
+  final String _title;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Nova despesa'),
+      backgroundColor: AppColors.white,
+      titleTextStyle:
+          TextStyle(color: _color, fontWeight: FontWeight.bold, fontSize: 16),
+      title: Text(_title),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextFormField(
             autofocus: true,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
+              labelStyle: TextStyle(color: _color.withOpacity(0.6)),
               labelText: 'Valor',
               prefixText: 'R\$ ',
             ),
           ),
           TextFormField(
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
+              labelStyle: TextStyle(color: _color.withOpacity(0.6)),
               labelText: 'Descrição',
             ),
           ),

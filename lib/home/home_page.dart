@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                 newEntryDialog(context,'income');
               });
             },
-            tooltip: 'Entrada',
+            tooltip: 'Receita',
             backgroundColor: AppColors.income,
             child: const Icon(Icons.arrow_upward),
           ),
