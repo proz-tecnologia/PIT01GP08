@@ -1,6 +1,7 @@
 import 'package:financial_app/design_sys/colors.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/app_date_picker.dart';
 import '../widgets/app_dropdown_button_form_field.dart';
 import '../widgets/app_toggle_buttons.dart';
 
@@ -56,7 +57,7 @@ class NewEntryDialog extends StatelessWidget {
     return AlertDialog(
       backgroundColor: AppColors.white,
       titleTextStyle:
-          TextStyle(color: _color, fontWeight: FontWeight.bold, fontSize: 16),
+          TextStyle(color: _color, fontWeight: FontWeight.w500, fontSize: 16),
       title: Text(_title),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -77,6 +78,7 @@ class NewEntryDialog extends StatelessWidget {
           ),
           AppDropdownButtonFormField(categories: _categories),
           AppToggleButtons(select: _select, color: _color),
+          AppDatePicker(color: _color),
         ],
       ),
       actions: [
