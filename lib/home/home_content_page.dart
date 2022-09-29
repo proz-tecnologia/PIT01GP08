@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../design_sys/colors.dart';
 import 'app_pending.dart';
+import 'transactions_summary.dart';
 
 class HomeContentPage extends StatefulWidget {
   const HomeContentPage({super.key});
@@ -24,10 +25,7 @@ class _HomeContentPage extends State<HomeContentPage> {
               child: const Text('Seleção do mes, saldo despesa e receita...'),
             ),
             appPending(),
-            Container(
-              height: 400,
-              color: Colors.green,
-            )
+            const TransactionsSummary(),
           ],
         ),
       ),
