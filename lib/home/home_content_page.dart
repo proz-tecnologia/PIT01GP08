@@ -13,25 +13,23 @@ class HomeContentPage extends StatefulWidget {
 class _HomeContentPage extends State<HomeContentPage> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(
-            height: 30,
-            color: AppColors.white,
-          ),
-          Container(
-            height: 250,
-            color: AppColors.white,
-            //TODO - Seleção do mês saldo, despesa e receita
-            child: const Text('Seleção do mes, saldo despesa e receita...'),
-          ),
-          appPending(),
-          Container(
-            height: 400,
-            color: Colors.green,
-          )
-        ],
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: 250,
+              color: AppColors.white,
+              //TODO - Seleção do mês saldo, despesa e receita
+              child: const Text('Seleção do mes, saldo despesa e receita...'),
+            ),
+            appPending(),
+            Container(
+              height: 400,
+              color: Colors.green,
+            )
+          ],
+        ),
       ),
     );
   }
