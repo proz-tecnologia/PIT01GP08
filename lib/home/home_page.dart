@@ -13,17 +13,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _index = 0;
-  List<Widget> _pages = [
-    HomeContentPage(),
-    Center(child: Text("Page Extrato")),
-    Center(child: Text('Page Estatítica')),
-    Center(child: Text('Page mais')),
+  final List<Widget> _pages = [
+    const HomeContentPage(),
+    const Center(child: Text("Page Extrato")),
+    const Center(child: Text('Page Estatítica')),
+    const Center(child: Text('Page mais')),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // extendBodyBehindAppBar: false,
       body: _pages[_index],
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -58,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                     _index = 0;
                   });
                 },
-                icon: Icon(Icons.home_rounded),
+                icon: const Icon(Icons.home_rounded),
                 tooltip: 'Início',
               ),
               IconButton(
@@ -67,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                     _index = 1;
                   });
                 },
-                icon: Icon(Icons.library_books_outlined),
+                icon: const Icon(Icons.library_books_outlined),
                 tooltip: 'Extrato',
               ),
               IconButton(
@@ -76,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                     _index = 2;
                   });
                 },
-                icon: Icon(Icons.leaderboard_rounded),
+                icon: const Icon(Icons.leaderboard_rounded),
                 tooltip: 'Estatística',
               ),
               IconButton(
@@ -85,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                     _index = 3;
                   });
                 },
-                icon: Icon(Icons.more_horiz),
+                icon: const Icon(Icons.more_horiz),
                 tooltip: 'Mais',
               ),
             ],
