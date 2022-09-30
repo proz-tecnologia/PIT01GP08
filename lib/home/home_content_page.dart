@@ -24,7 +24,7 @@ class _HomeContentPage extends State<HomeContentPage> {
               //TODO - Seleção do mês saldo, despesa e receita
               child: const Text('Seleção do mes, saldo despesa e receita...'),
             ),
-            appPending(),
+            const AppPending(),
             const TransactionsSummary(),
           ],
         ),
