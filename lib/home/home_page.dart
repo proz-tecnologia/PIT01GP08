@@ -13,11 +13,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _index = 0;
-  final List<Widget> _pages = [
-    const HomeContentPage(),
-    const Center(child: Text("Page Extrato")),
-    const Center(child: Text('Page Estatítica')),
-    const Center(child: Text('Page mais')),
+  final List<Widget> _pages = const [
+    HomeContentPage(),
+    Center(child: Text("Page Extrato")),
+    Text(''),
+    Center(child: Text('Page Estatítica')),
+    Center(child: Text('Page mais')),
   ];
 
   @override
@@ -39,58 +40,35 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  BottomAppBar _appBottomNavBar() {
-    return BottomAppBar(
-      shape: const CircularNotchedRectangle(),
-      color: Colors.blue,
-      notchMargin: 5,
-      child: IconTheme(
-        data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20.0, right: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    _index = 0;
-                  });
-                },
-                icon: const Icon(Icons.home_rounded),
-                tooltip: 'Início',
-              ),
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    _index = 1;
-                  });
-                },
-                icon: const Icon(Icons.library_books_outlined),
-                tooltip: 'Extrato',
-              ),
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    _index = 2;
-                  });
-                },
-                icon: const Icon(Icons.leaderboard_rounded),
-                tooltip: 'Estatística',
-              ),
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    _index = 3;
-                  });
-                },
-                icon: const Icon(Icons.more_horiz),
-                tooltip: 'Mais',
-              ),
-            ],
-          ),
+  BottomNavigationBar _appBottomNavBar() {
+    return BottomNavigationBar(
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home_rounded),
+          label: 'Início',
         ),
-      ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.library_books_outlined),
+          label: 'Extrato',
+        ),
+        BottomNavigationBarItem(icon: SizedBox(width: 1), label: ''),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.leaderboard_rounded),
+          label: 'Estatística',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.more_horiz),
+          label: 'Mais',
+        ),
+      ],
+      currentIndex: _index,
+      onTap: ((index) {
+        if (index != 2) {
+          setState(() {
+            _index = index;
+          });
+        }
+      }),
     );
   }
 }
