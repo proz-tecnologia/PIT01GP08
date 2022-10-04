@@ -1,7 +1,7 @@
+import 'package:financial_app/home/home_content_page.dart';
 import 'package:flutter/material.dart';
 
 import '../design_sys/colors.dart';
-import '../widgets/expandable_fab.dart';
 import 'new_entry_dialog.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,83 +13,62 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _index = 0;
+  final List<Widget> _pages = const [
+    HomeContentPage(),
+    Center(child: Text("Page Extrato")),
+    Text(''),
+    Center(child: Text('Page Estatítica')),
+    Center(child: Text('Page mais')),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      body: _pages[_index],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            newEntryDialog(context, 'expense');
+          });
+        },
+        tooltip: 'Despesa',
+        backgroundColor: AppColors.primary,
+        child: const Icon(Icons.add),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              //TODO: componentizar clickable cards
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: ExpandableFab(
-        children: [
-          FloatingActionButton(
-            onPressed: () {
-              setState(() {
-                newEntryDialog(context,'expense');
-              });
-            },
-            tooltip: 'Despesa',
-            backgroundColor: AppColors.expense,
-            child: const Icon(Icons.arrow_downward),
-          ),
-          FloatingActionButton(
-            onPressed: () {
-              setState(() {
-                newEntryDialog(context,'income');
-              });
-            },
-            tooltip: 'Receita',
-            backgroundColor: AppColors.income,
-            child: const Icon(Icons.arrow_upward),
-          ),
-        ],
-      ),
-      bottomNavigationBar: appBottomNavBar(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: _appBottomNavBar(),
     );
   }
 
-  BottomNavigationBar appBottomNavBar() {
+  BottomNavigationBar _appBottomNavBar() {
     return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
+      items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.home_rounded),
           label: 'Início',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.library_books),
+          icon: Icon(Icons.library_books_outlined),
           label: 'Extrato',
         ),
+        BottomNavigationBarItem(icon: SizedBox(width: 1), label: ''),
         BottomNavigationBarItem(
           icon: Icon(Icons.leaderboard_rounded),
-          label: 'Estatísticas',
+          label: 'Estatística',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.notifications_rounded),
-          label: 'Notificações',
+          icon: Icon(Icons.more_horiz),
+          label: 'Mais',
         ),
       ],
       currentIndex: _index,
-      selectedItemColor: AppColors.primary,
-      unselectedItemColor: AppColors.splashDark,
-      onTap: (index) {
-        setState(() {
-          _index = index;
-          //TODO: implement navigation
-        });
-      },
-      showSelectedLabels: false,
-      showUnselectedLabels: false,
+      onTap: ((index) {
+        if (index != 2) {
+          setState(() {
+            _index = index;
+          });
+        }
+      }),
     );
   }
 }
