@@ -1,4 +1,5 @@
 import 'package:financial_app/design_sys/colors.dart';
+import 'package:financial_app/design_sys/light_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'home/home_page.dart';
@@ -12,19 +13,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //TODO: define parameters
       title: 'Flutter Demo',
-      theme: ThemeData(
-        backgroundColor: AppColors.white,
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          type: BottomNavigationBarType.fixed,
-          elevation: 0,
-          selectedItemColor: AppColors.primary,
-          unselectedItemColor: Colors.grey,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-        ),
-      ),
+      theme: AppTheme.lightTheme,
+      //TODO: define dark theme
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         backgroundColor: AppColors.black,
