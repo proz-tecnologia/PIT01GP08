@@ -19,11 +19,15 @@ class _AppDatePickerState extends State<AppDatePicker> {
       text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
   @override
   Widget build(BuildContext context) {
-    DateTime date = DateTime.now();
     return TextFormField(
       controller: dateInput,
       decoration: InputDecoration(
-        suffixIcon: const Icon(Icons.calendar_today_rounded),
+        suffixIcon: Icon(
+          Icons.calendar_today_rounded,
+          color: widget._color,
+        ),
+        focusedBorder:
+            UnderlineInputBorder(borderSide: BorderSide(color: widget._color)),
         labelStyle: TextStyle(color: widget._color),
         labelText: 'Vencimento',
       ),

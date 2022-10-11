@@ -42,9 +42,9 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
   @override
   Widget build(BuildContext context) {
     var topBar = ToggleButtons(
-      constraints: const BoxConstraints.expand(width: 146),
+      constraints: const BoxConstraints(minWidth: 146),
       selectedColor: _color,
-      fillColor: AppColors.white,
+      fillColor: Theme.of(context).backgroundColor,
       renderBorder: false,
       textStyle: const TextStyle(
         fontWeight: FontWeight.w500,
@@ -74,7 +74,6 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
     );
 
     return AlertDialog(
-      backgroundColor: AppColors.white,
       titlePadding: const EdgeInsets.all(0),
       title: topBar,
       content: Form(
@@ -86,37 +85,34 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
               decoration: InputDecoration(
                 floatingLabelStyle: TextStyle(color: _color),
                 labelStyle: TextStyle(color: _color.withOpacity(0.6)),
+                focusedBorder:
+                    UnderlineInputBorder(borderSide: BorderSide(color: _color)),
                 labelText: 'Valor',
                 prefixText: 'R\$ ',
               ),
             ),
-            const SizedBox(
-              height: 8,
-            ),
+            const SizedBox(height: 8),
             TextFormField(
               decoration: InputDecoration(
                 floatingLabelStyle: TextStyle(color: _color),
                 labelStyle: TextStyle(color: _color.withOpacity(0.6)),
+                focusedBorder:
+                    UnderlineInputBorder(borderSide: BorderSide(color: _color)),
                 labelText: 'Descrição',
               ),
             ),
-            const SizedBox(
-              height: 8,
-            ),
-            AppDropdownButtonFormField(categories: _categories),
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 8),
+            AppDropdownButtonFormField(categories: _categories, color: _color),
+            const SizedBox(height: 16),
             AppToggleButtons(select: widget._select, color: _color),
-            const SizedBox(
-              height: 8,
-            ),
+            const SizedBox(height: 8),
             AppDatePicker(color: _color),
           ],
         ),
       ),
       actions: [
-        TextButton(
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(backgroundColor: _color),
           onPressed: () {
             //TODO: submit
           },

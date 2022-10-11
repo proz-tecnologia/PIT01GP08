@@ -9,20 +9,20 @@ class TransactionsSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(16),
-      child: InkWell(
-        onTap: () {
-          //TODO: navigation
-        },
-        child: SizedBox(
-          height: 195,
-          child: ListView.builder(
-            itemCount: mySummary.length,
-            itemBuilder: (context, index) {
-              return mySummary[index];
-            },
-          ),
+    return InkWell(
+      onTap: () {
+        //TODO: navigation
+      },
+      child: Container(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            mySummary[0],
+            const Divider(),
+            mySummary[1],
+            const Divider(),
+            mySummary[2],
+          ],
         ),
       ),
     );
