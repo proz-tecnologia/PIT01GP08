@@ -35,6 +35,7 @@ class AppTheme {
       outlinedButtonTheme: OutlinedButtonThemeData(style: _appButtonStyle),
       textButtonTheme: TextButtonThemeData(style: _appButtonStyle),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: AppColors.primary,
         foregroundColor: AppColors.white,
       ),
       cardTheme: const CardTheme(
