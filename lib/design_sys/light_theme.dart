@@ -40,7 +40,7 @@ class AppTheme {
       ),
       cardTheme: const CardTheme(
         color: AppColors.white,
-        margin: EdgeInsets.all(16.0),
+        margin: EdgeInsets.all(8.0),
       ),
       snackBarTheme: SnackBarThemeData(
         backgroundColor: AppColors.black.withOpacity(0.6),
