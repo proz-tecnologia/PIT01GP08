@@ -49,14 +49,20 @@ const mySummary = [
   ListTile(
     title: Text(
       'R\$ 1450,00',
-      style: TextStyle(color: AppColors.income),
+      style: TextStyle(
+        color: AppColors.income,
+        fontWeight: FontWeight.bold,
+      ),
     ),
     subtitle: Text('Salário'),
   ),
   ListTile(
     title: Text(
       'R\$ 23,90',
-      style: TextStyle(color: AppColors.expense),
+      style: TextStyle(
+        color: AppColors.expense,
+        fontWeight: FontWeight.bold,
+      ),
     ),
     subtitle: Text('Remédio'),
   ),
