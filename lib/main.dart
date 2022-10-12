@@ -15,6 +15,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
+      //TODO: Remover a linha 20 antes da entrega.
+      //A linha seguinte foi deixada apenas para uso de testes durante o desenvolvimento.
       themeMode: ThemeMode.light,
       home: const HomePage(title: 'Flutter Demo Home Page'),
     );
