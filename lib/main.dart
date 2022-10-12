@@ -1,5 +1,4 @@
-import 'package:financial_app/design_sys/colors.dart';
-import 'package:financial_app/design_sys/light_theme.dart';
+import 'package:financial_app/design_sys/themes.dart';
 import 'package:flutter/material.dart';
 
 import 'home/home_page.dart';
@@ -15,11 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: AppTheme.lightTheme,
-      //TODO: define dark theme
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        backgroundColor: AppColors.black,
-      ),
+      darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light,
       home: const HomePage(title: 'Flutter Demo Home Page'),
     );
