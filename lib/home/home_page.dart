@@ -1,7 +1,7 @@
 import 'package:financial_app/home/home_content_page.dart';
 import 'package:flutter/material.dart';
 
-import 'new_entry_dialog.dart';
+import '../shared/new_entry/new_entry_dialog.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
