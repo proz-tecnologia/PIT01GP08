@@ -21,8 +21,9 @@ class _AnimatedLogoState extends State<AnimatedLogo>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      reverseDuration: const Duration(milliseconds: 300),
-      duration: const Duration(milliseconds: 300),
+      reverseDuration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 600),
+      upperBound: 2,
       vsync: this,
     )..repeat(reverse: true);
   }
@@ -33,7 +34,7 @@ class _AnimatedLogoState extends State<AnimatedLogo>
       animation: _animationController,
       child: widget._logo,
       builder: (context, child) => Transform.scale(
-        scaleX: _animationController.value,
+        scaleX: 1 - _animationController.value,
         child: child,
       ),
     );
