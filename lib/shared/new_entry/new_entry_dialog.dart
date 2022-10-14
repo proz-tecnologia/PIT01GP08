@@ -93,6 +93,7 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
                     UnderlineInputBorder(borderSide: BorderSide(color: _color)),
                 labelText: 'Descrição',
               ),
+              cursorColor: AppColors.lightGrey,
             ),
             const SizedBox(height: 8),
             AppDropdownButtonFormField(categories: _categories, color: _color),

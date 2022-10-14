@@ -15,6 +15,7 @@ class CurrencyFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       autofocus: true,
+      showCursor: false,
       decoration: InputDecoration(
         floatingLabelStyle: TextStyle(color: _color),
         labelStyle: TextStyle(color: _color.withOpacity(0.6)),
