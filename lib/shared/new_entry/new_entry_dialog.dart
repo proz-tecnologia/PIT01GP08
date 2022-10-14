@@ -1,6 +1,7 @@
 import 'package:financial_app/design_sys/colors.dart';
 import 'package:flutter/material.dart';
 
+import 'widgets/app_currency_field.dart';
 import 'widgets/app_date_picker.dart';
 import 'widgets/app_dropdown_button_form_field.dart';
 import 'widgets/app_toggle_buttons.dart';
@@ -80,17 +81,7 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            TextFormField(
-              autofocus: true,
-              decoration: InputDecoration(
-                floatingLabelStyle: TextStyle(color: _color),
-                labelStyle: TextStyle(color: _color.withOpacity(0.6)),
-                focusedBorder:
-                    UnderlineInputBorder(borderSide: BorderSide(color: _color)),
-                labelText: 'Valor',
-                prefixText: 'R\$ ',
-              ),
-            ),
+            CurrencyFormField(color: _color),
             const SizedBox(height: 8),
             TextFormField(
               decoration: InputDecoration(
@@ -122,5 +113,3 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
     );
   }
 }
-
-//textInputAction
