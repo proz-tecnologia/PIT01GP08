@@ -16,7 +16,6 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = const [
     HomeContentPage(),
     Center(child: Text("Page Extrato")),
-    Text(''),
     Center(child: Text('Page Estatítica')),
     Center(child: Text('Page mais')),
   ];
