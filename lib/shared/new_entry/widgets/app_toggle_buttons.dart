@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../design_sys/colors.dart';
+import '../../../design_sys/colors.dart';
 
 class AppToggleButtons extends StatefulWidget {
   const AppToggleButtons({
@@ -30,9 +30,12 @@ class _AppToggleButtonsState extends State<AppToggleButtons> {
         });
       },
       borderRadius: const BorderRadius.all(Radius.circular(8)),
-      selectedColor: AppColors.white,
+      color: Theme.of(context).backgroundColor == AppColors.black
+          ? AppColors.white
+          : widget._color,
+      selectedColor: Theme.of(context).backgroundColor,
       fillColor: widget._color,
-      color: widget._color,
+      textStyle: const TextStyle(fontWeight: FontWeight.w500),
       constraints: const BoxConstraints(
         minHeight: 40.0,
         minWidth: 80.0,

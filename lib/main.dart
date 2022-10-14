@@ -1,4 +1,4 @@
-import 'package:financial_app/design_sys/colors.dart';
+import 'package:financial_app/design_sys/themes.dart';
 import 'package:flutter/material.dart';
 
 import 'home/home_page.dart';
@@ -12,23 +12,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //TODO: define parameters
       title: 'Flutter Demo',
-      theme: ThemeData(
-        backgroundColor: AppColors.white,
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          type: BottomNavigationBarType.fixed,
-          elevation: 0,
-          selectedItemColor: AppColors.primary,
-          unselectedItemColor: Colors.grey,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-        ),
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        backgroundColor: AppColors.black,
-      ),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      //TODO: Remover a linha 20 antes da entrega.
+      //A linha seguinte foi deixada apenas para uso de testes durante o desenvolvimento.
       themeMode: ThemeMode.light,
       home: const HomePage(title: 'Flutter Demo Home Page'),
     );

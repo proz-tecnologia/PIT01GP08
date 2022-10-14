@@ -1,8 +1,7 @@
 import 'package:financial_app/home/home_content_page.dart';
 import 'package:flutter/material.dart';
 
-import '../design_sys/colors.dart';
-import 'new_entry_dialog.dart';
+import '../shared/new_entry/new_entry_dialog.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -32,7 +31,6 @@ class _HomePageState extends State<HomePage> {
           });
         },
         tooltip: 'Despesa',
-        backgroundColor: AppColors.primary,
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

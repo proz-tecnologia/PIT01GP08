@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../design_sys/colors.dart';
-import 'app_pending.dart';
-import 'transactions_summary.dart';
+import 'widgets/app_pending.dart';
+import 'widgets/transactions_summary.dart';
 
 class HomeContentPage extends StatefulWidget {
   const HomeContentPage({super.key});
