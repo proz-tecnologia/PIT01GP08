@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../design_sys/colors.dart';
 import 'app_pending.dart';
 import 'transactions_summary.dart';
+import 'resume_info_widget.dart';
 
 class HomeContentPage extends StatefulWidget {
   const HomeContentPage({super.key});
@@ -17,15 +17,10 @@ class _HomeContentPage extends State<HomeContentPage> {
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
-          children: [
-            Container(
-              height: 250,
-              color: AppColors.white,
-              //TODO - Seleção do mês saldo, despesa e receita
-              child: const Text('Seleção do mes, saldo despesa e receita...'),
-            ),
-            const AppPending(),
-            const TransactionsSummary(),
+          children: const [
+            ResumeInfoWidget(),
+            AppPending(),
+            TransactionsSummary(),
           ],
         ),
       ),
