@@ -27,6 +27,16 @@ class CurrencyFormField extends StatelessWidget {
         FilteringTextInputFormatter.digitsOnly,
         CurrencyInputFormatter(),
       ],
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Campo obrigatório';
+        }
+        int intValue = int.parse(value.replaceAll(RegExp('[R\$,]'), ''));
+        if (intValue == 0) {
+          return 'O valor não pode ser zero.';
+        }
+        return null;
+      },
     );
   }
 }
