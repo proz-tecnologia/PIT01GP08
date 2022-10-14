@@ -39,6 +39,7 @@ class NewEntryDialog extends StatefulWidget {
 class _NewEntryDialogState extends State<NewEntryDialog> {
   List<String> _categories = expenseCategories;
   Color _color = AppColors.expense;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +79,7 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
       titlePadding: const EdgeInsets.all(0),
       title: topBar,
       content: Form(
+        key: _formKey,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -105,7 +107,11 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
         ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: _color),
           onPressed: () {
-            //TODO: submit
+            if (_formKey.currentState!.validate()) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Entrada salva com sucesso.')),
+              );
+            }
           },
           child: const Text('OK'),
         )
