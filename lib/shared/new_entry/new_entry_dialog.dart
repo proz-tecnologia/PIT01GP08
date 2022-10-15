@@ -39,6 +39,8 @@ class NewEntryDialog extends StatefulWidget {
 class _NewEntryDialogState extends State<NewEntryDialog> {
   List<String> _categories = expenseCategories;
   Color _color = AppColors.expense;
+  String _fulfilledCheckboxLabel = 'Pago';
+  bool _isfulfilledCheckboxChecked = true;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -56,8 +58,15 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
         setState(() {
           for (int i = 0; i < widget._selectType.length; i++) {
             widget._selectType[i] = i == index;
-            _categories = index == 0 ? expenseCategories : incomeCategories;
-            _color = index == 0 ? AppColors.expense : AppColors.income;
+            if (index == 0) {
+              _categories = expenseCategories;
+              _color = AppColors.expense;
+              _fulfilledCheckboxLabel = 'Pago';
+            } else {
+              _categories = incomeCategories;
+              _color = AppColors.income;
+              _fulfilledCheckboxLabel = 'Recebido';
+            }
           }
         });
       },
@@ -101,6 +110,22 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
             AppToggleButtons(select: widget._select, color: _color),
             const SizedBox(height: 8),
             AppDatePicker(color: _color),
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Checkbox(
+                  value: _isfulfilledCheckboxChecked,
+                  onChanged: (value) {
+                    setState(() {
+                      _isfulfilledCheckboxChecked = value!;
+                    });
+                  },
+                  fillColor: MaterialStateProperty.all(_color),
+                ),
+                Text(_fulfilledCheckboxLabel),
+              ],
+            )
           ],
         ),
       ),
