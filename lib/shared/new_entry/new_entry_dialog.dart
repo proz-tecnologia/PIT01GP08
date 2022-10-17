@@ -129,12 +129,6 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
         ),
       ),
       actions: [
-        TextButton(
-            style: TextButton.styleFrom(foregroundColor: _color),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('CANCELAR')),
         ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: _color),
           onPressed: () {
