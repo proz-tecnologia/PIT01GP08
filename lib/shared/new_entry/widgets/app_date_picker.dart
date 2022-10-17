@@ -5,16 +5,19 @@ class AppDatePicker extends StatefulWidget {
   const AppDatePicker({
     Key? key,
     required Color color,
-  })  : _color = color,
+    required checkboxNotifier,
+  })  : _isChecked = checkboxNotifier,
+        _color = color,
         super(key: key);
 
   final Color _color;
+  final ValueNotifier<bool> _isChecked;
 
   @override
-  State<AppDatePicker> createState() => _AppDatePickerState();
+  State<AppDatePicker> createState() => AppDatePickerState();
 }
 
-class _AppDatePickerState extends State<AppDatePicker> {
+class AppDatePickerState extends State<AppDatePicker> {
   TextEditingController dateInput = TextEditingController(
       text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
   @override
@@ -43,6 +46,11 @@ class _AppDatePickerState extends State<AppDatePicker> {
         if (pickedDate != null) {
           setState(() {
             dateInput.text = DateFormat('dd/MM/yyyy').format(pickedDate);
+            if (pickedDate.isAfter(DateTime.now())) {
+              widget._isChecked.value = false;
+            } else {
+              widget._isChecked.value = true;
+            }
           });
         }
       },

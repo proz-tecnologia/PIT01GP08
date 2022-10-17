@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'widgets/app_currency_field.dart';
 import 'widgets/app_date_picker.dart';
 import 'widgets/app_dropdown_button_form_field.dart';
+import 'widgets/app_fulfilled_check.dart';
 import 'widgets/app_toggle_buttons.dart';
 
 Future<void> newEntryDialog(BuildContext context, String type) {
@@ -39,8 +40,9 @@ class NewEntryDialog extends StatefulWidget {
 class _NewEntryDialogState extends State<NewEntryDialog> {
   List<String> _categories = expenseCategories;
   Color _color = AppColors.expense;
-  String _fulfilledCheckboxLabel = 'Pago';
-  bool _isfulfilledCheckboxChecked = true;
+  final ValueNotifier<String> _fulfilledCheckboxLabel =
+      ValueNotifier<String>('Pago');
+  final ValueNotifier<bool> _fulfilledChecked = ValueNotifier<bool>(true);
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -61,11 +63,11 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
             if (index == 0) {
               _categories = expenseCategories;
               _color = AppColors.expense;
-              _fulfilledCheckboxLabel = 'Pago';
+              _fulfilledCheckboxLabel.value = 'Pago';
             } else {
               _categories = incomeCategories;
               _color = AppColors.income;
-              _fulfilledCheckboxLabel = 'Recebido';
+              _fulfilledCheckboxLabel.value = 'Recebido';
             }
           }
         });
@@ -109,22 +111,15 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
             const SizedBox(height: 16),
             AppToggleButtons(select: widget._select, color: _color),
             const SizedBox(height: 8),
-            AppDatePicker(color: _color),
+            AppDatePicker(
+              color: _color,
+              checkboxNotifier: _fulfilledChecked,
+            ),
             const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Checkbox(
-                  value: _isfulfilledCheckboxChecked,
-                  onChanged: (value) {
-                    setState(() {
-                      _isfulfilledCheckboxChecked = value!;
-                    });
-                  },
-                  fillColor: MaterialStateProperty.all(_color),
-                ),
-                Text(_fulfilledCheckboxLabel),
-              ],
+            AppFulfilledCheck(
+              color: _color,
+              checkboxNotifier: _fulfilledChecked,
+              labelNotifier: _fulfilledCheckboxLabel,
             )
           ],
         ),
