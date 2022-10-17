@@ -7,12 +7,15 @@ class AppToggleButtons extends StatefulWidget {
     Key? key,
     required List<bool> select,
     required Color color,
+    required ValueNotifier<String> labelNotifier,
   })  : _select = select,
         _color = color,
+        _fulfilledLabel = labelNotifier,
         super(key: key);
 
   final List<bool> _select;
   final Color _color;
+  final ValueNotifier<String> _fulfilledLabel;
 
   @override
   State<AppToggleButtons> createState() => _AppToggleButtonsState();
@@ -26,6 +29,14 @@ class _AppToggleButtonsState extends State<AppToggleButtons> {
         setState(() {
           for (int i = 0; i < widget._select.length; i++) {
             widget._select[i] = i == index;
+          }
+          if (index == 0) {
+            widget._fulfilledLabel.value =
+                widget._color == AppColors.expense ? 'Pago' : 'Recebido';
+          } else {
+            if (!widget._fulfilledLabel.value.contains('(mês atual)')) {
+              widget._fulfilledLabel.value += ' (mês atual)';
+            }
           }
         });
       },

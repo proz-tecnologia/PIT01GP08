@@ -32,6 +32,9 @@ class NewEntryDialog extends StatefulWidget {
 
   final List<bool> _selectType = <bool>[true, false];
   final List<bool> _select = <bool>[true, false, false];
+  final ValueNotifier<String> _fulfilledCheckboxLabel =
+      ValueNotifier<String>('Pago');
+  final ValueNotifier<bool> _fulfilledChecked = ValueNotifier<bool>(true);
 
   @override
   State<NewEntryDialog> createState() => _NewEntryDialogState();
@@ -40,9 +43,6 @@ class NewEntryDialog extends StatefulWidget {
 class _NewEntryDialogState extends State<NewEntryDialog> {
   List<String> _categories = expenseCategories;
   Color _color = AppColors.expense;
-  final ValueNotifier<String> _fulfilledCheckboxLabel =
-      ValueNotifier<String>('Pago');
-  final ValueNotifier<bool> _fulfilledChecked = ValueNotifier<bool>(true);
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -63,11 +63,11 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
             if (index == 0) {
               _categories = expenseCategories;
               _color = AppColors.expense;
-              _fulfilledCheckboxLabel.value = 'Pago';
+              widget._fulfilledCheckboxLabel.value = 'Pago';
             } else {
               _categories = incomeCategories;
               _color = AppColors.income;
-              _fulfilledCheckboxLabel.value = 'Recebido';
+              widget._fulfilledCheckboxLabel.value = 'Recebido';
             }
           }
         });
@@ -88,7 +88,7 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
 
     return AlertDialog(
       titlePadding: const EdgeInsets.all(0),
-      title: topBar,
+      title: topBar, //TODO: COMPONENTIZE
       content: Form(
         key: _formKey,
         child: Column(
@@ -109,17 +109,21 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
             const SizedBox(height: 8),
             AppDropdownButtonFormField(categories: _categories, color: _color),
             const SizedBox(height: 16),
-            AppToggleButtons(select: widget._select, color: _color),
+            AppToggleButtons(
+              select: widget._select,
+              color: _color,
+              labelNotifier: widget._fulfilledCheckboxLabel,
+            ),
             const SizedBox(height: 8),
             AppDatePicker(
               color: _color,
-              checkboxNotifier: _fulfilledChecked,
+              checkboxNotifier: widget._fulfilledChecked,
             ),
             const SizedBox(height: 8),
             AppFulfilledCheck(
               color: _color,
-              checkboxNotifier: _fulfilledChecked,
-              labelNotifier: _fulfilledCheckboxLabel,
+              checkboxNotifier: widget._fulfilledChecked,
+              labelNotifier: widget._fulfilledCheckboxLabel,
             )
           ],
         ),
