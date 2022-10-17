@@ -129,6 +129,12 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
         ),
       ),
       actions: [
+        TextButton(
+            style: TextButton.styleFrom(foregroundColor: _color),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('CANCELAR')),
         ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: _color),
           onPressed: () {
@@ -136,6 +142,7 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Entrada salva com sucesso.')),
               );
+              Navigator.of(context).pop();
             }
           },
           child: const Text('OK'),
