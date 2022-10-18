@@ -84,7 +84,7 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                   child: Row(
                     children: [
                       const Icon(
-                        Icons.arrow_downward,
+                        Icons.arrow_upward,
                         size: 30,
                         color: AppColors.white,
                       ),
@@ -126,14 +126,14 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                         mainAxisSize: MainAxisSize.max,
                         children: const [
                           Text(
-                            'Receitas',
+                            'Despesas',
                             style: TextStyle(
                               color: AppColors.white,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                           Text(
-                            'RS 1000,00',
+                            'RS 150,00',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: AppColors.white,
