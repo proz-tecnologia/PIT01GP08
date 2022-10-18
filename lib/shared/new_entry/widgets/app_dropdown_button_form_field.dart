@@ -1,33 +1,39 @@
 import 'package:flutter/material.dart';
 
+import '../entry_types.dart';
+
 class AppDropdownButtonFormField extends StatelessWidget {
-  const AppDropdownButtonFormField({
+  const AppDropdownButtonFormField(
+    ValueNotifier<EntryType> typeNotifier,{
     Key? key,
-    required List<String> categories,
-    required Color color,
-  })  : _categories = categories,
-        _color = color,
+  })  : _typeNotifier = typeNotifier,
         super(key: key);
 
-  final List<String> _categories;
-  final Color _color;
+  final ValueNotifier<EntryType> _typeNotifier;
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField(
-        decoration: InputDecoration(
-          floatingLabelStyle: TextStyle(color: _color),
-          focusedBorder:
-              UnderlineInputBorder(borderSide: BorderSide(color: _color)),
-          labelText: 'Categoria',
-        ),
-        value: _categories[0],
-        items: _categories
-            .map((category) => DropdownMenuItem(
-                  value: category,
-                  child: Text(category),
-                ))
-            .toList(),
-        onChanged: (value) {});
+    return AnimatedBuilder(
+      animation: _typeNotifier,
+      builder: (context, child) {
+        final categories = _typeNotifier.value.categories;
+        final color = _typeNotifier.value.color;
+        return DropdownButtonFormField(
+            decoration: InputDecoration(
+              floatingLabelStyle: TextStyle(color: color),
+              focusedBorder:
+                  UnderlineInputBorder(borderSide: BorderSide(color: color)),
+              labelText: 'Categoria',
+            ),
+            value: categories[0],
+            items: categories
+                .map((category) => DropdownMenuItem(
+                      value: category,
+                      child: Text(category),
+                    ))
+                .toList(),
+            onChanged: (value) {});
+      },
+    );
   }
 }
