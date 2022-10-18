@@ -1,7 +1,7 @@
 import 'package:financial_app/design_sys/colors.dart';
 import 'package:flutter/material.dart';
 
-import 'widgets/item_to_expansion_panel.dart';
+import 'item_to_expansion_panel.dart';
 
 class ResumeInfoWidget extends StatefulWidget {
   const ResumeInfoWidget({
@@ -27,8 +27,9 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
             SizedBox(
               height: 250,
               width: MediaQuery.of(context).size.width,
+              child:
+                  TextButton(onPressed: () {}, child: const Text("Dezembro")),
             ),
-            TextButton(onPressed: () {}, child: Text("Dezembro"))
           ],
         ),
       ),

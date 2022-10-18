@@ -1,7 +1,7 @@
 import 'package:financial_app/design_sys/themes.dart';
 import 'package:flutter/material.dart';
 
-import 'home/home_page.dart';
+import 'shared/new_entry/widgets/home_page.dart';
 
 void main() {
   runApp(const MyApp());
