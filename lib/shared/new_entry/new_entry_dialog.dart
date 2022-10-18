@@ -2,12 +2,7 @@ import 'package:financial_app/design_sys/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'entry_types.dart';
-import 'widgets/app_currency_field.dart';
-import 'widgets/app_date_picker.dart';
-import 'widgets/app_dropdown_button_form_field.dart';
-import 'widgets/app_fulfilled_check.dart';
-import 'widgets/app_toggle_buttons.dart';
-import 'widgets/new_entry_top_bar.dart';
+import 'widgets/widgets.dart';
 
 Future<void> newEntryDialog(BuildContext context, String type) {
   return showDialog(
