@@ -21,10 +21,10 @@ class AppPending extends StatelessWidget {
                   children: const [
                     Icon(
                       Icons.download_rounded,
-                      size: 50,
+                      size: 40,
                       color: AppColors.expense,
                     ),
-                    Text('Resto a pagar'),
+                    Text('Pagar'),
                     Text(
                       'RS 1000,00',
                       style: TextStyle(
@@ -46,10 +46,10 @@ class AppPending extends StatelessWidget {
                   children: const [
                     Icon(
                       Icons.publish_rounded,
-                      size: 50,
+                      size: 40,
                       color: AppColors.income,
                     ),
-                    Text('Receita a receber'),
+                    Text('Receber'),
                     Text(
                       'RS 1000,00',
                       style: TextStyle(
