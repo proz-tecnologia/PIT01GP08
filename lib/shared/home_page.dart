@@ -1,7 +1,7 @@
-import 'package:financial_app/home/home_content_page.dart';
+import 'package:financial_app/home/widgets/home_content_page.dart';
 import 'package:flutter/material.dart';
 
-import '../shared/new_entry/new_entry_dialog.dart';
+import 'new_entry/new_entry_dialog.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -15,6 +15,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = const [
     HomeContentPage(),
     Center(child: Text("Page Extrato")),
+    Text(""),
     Center(child: Text('Page Estatítica')),
     Center(child: Text('Page mais')),
   ];

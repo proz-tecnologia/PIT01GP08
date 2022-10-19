@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'widgets/app_pending.dart';
-import 'widgets/transactions_summary.dart';
+import 'app_pending.dart';
+import '../components/transactions_summary.dart';
 import 'resume_info_widget.dart';
 
 class HomeContentPage extends StatefulWidget {
@@ -14,15 +14,13 @@ class HomeContentPage extends StatefulWidget {
 class _HomeContentPage extends State<HomeContentPage> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          children: const [
-            ResumeInfoWidget(),
-            AppPending(),
-            TransactionsSummary(),
-          ],
-        ),
+    return SingleChildScrollView(
+      child: Column(
+        children: const [
+          ResumeInfoWidget(),
+          AppPending(),
+          TransactionsSummary(),
+        ],
       ),
     );
   }
