@@ -2,7 +2,7 @@ import 'package:financial_app/design_sys/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'entry_types.dart';
-import 'widgets/widgets.dart';
+import 'components/widgets.dart';
 
 Future<void> newEntryDialog(BuildContext context, String type) {
   return showDialog(
