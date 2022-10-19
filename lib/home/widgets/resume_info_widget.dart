@@ -18,19 +18,20 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
       height: 250,
       width: MediaQuery.of(context).size.width,
       color: AppColors.primary,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 8,
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Row(
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
               children: [
-                const SizedBox(
-                  width: 80,
+                Expanded(
+                  flex: 1,
+                  child: Container(),
                 ),
                 IconButton(
                     color: AppColors.white,
@@ -47,107 +48,115 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                     color: AppColors.white,
                     onPressed: () {},
                     icon: const Icon(Icons.arrow_forward_ios)),
-                const SizedBox(
-                  width: 80,
+                Expanded(
+                  flex: 1,
+                  child: Container(),
                 ),
               ],
             ),
-          ),
-          SizedBox(
-            height: 45,
-            width: MediaQuery.of(context).size.width,
-          ),
-          const Text(
-            'Saldo',
-            style: TextStyle(
-              color: AppColors.white,
-              fontWeight: FontWeight.w400,
+            const SizedBox(
+              height: 45,
             ),
-          ),
-          const Text(
-            'R\$ 2600,00',
-            style: TextStyle(
-              color: AppColors.white,
-              fontWeight: FontWeight.bold,
+            const Text(
+              'Saldo',
+              style: TextStyle(
+                color: AppColors.white,
+                fontWeight: FontWeight.w400,
+              ),
             ),
-          ),
-          SizedBox(
-            height: 45,
-            width: MediaQuery.of(context).size.width,
-          ),
-          Container(
-            color: AppColors.primary,
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.arrow_upward,
-                        size: 30,
-                        color: AppColors.white,
-                      ),
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: const [
-                          Text(
-                            'Receitas',
-                            style: TextStyle(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          Text(
-                            'RS 1000,00',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+            const Text(
+              'R\$ 2600,00',
+              style: TextStyle(
+                color: AppColors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 45,
+            ),
+            Container(
+              color: AppColors.primary,
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Container(),
                   ),
-                ),
-                const SizedBox(
-                  width: 60,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.arrow_downward,
-                        size: 30,
-                        color: AppColors.white,
-                      ),
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: const [
-                          Text(
-                            'Despesas',
-                            style: TextStyle(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.w400,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.arrow_upward,
+                          size: 30,
+                          color: AppColors.white,
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            Text(
+                              'Receitas',
+                              style: TextStyle(
+                                color: AppColors.white,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
-                          ),
-                          Text(
-                            'RS 150,00',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.white,
+                            Text(
+                              'RS 1000,00',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.white,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    flex: 1,
+                    child: Container(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.arrow_downward,
+                          size: 30,
+                          color: AppColors.white,
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            Text(
+                              'Despesas',
+                              style: TextStyle(
+                                color: AppColors.white,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Text(
+                              'RS 150,00',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

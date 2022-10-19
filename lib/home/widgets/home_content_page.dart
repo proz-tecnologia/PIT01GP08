@@ -14,15 +14,13 @@ class HomeContentPage extends StatefulWidget {
 class _HomeContentPage extends State<HomeContentPage> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          children: const [
-            ResumeInfoWidget(),
-            AppPending(),
-            TransactionsSummary(),
-          ],
-        ),
+    return SingleChildScrollView(
+      child: Column(
+        children: const [
+          ResumeInfoWidget(),
+          AppPending(),
+          TransactionsSummary(),
+        ],
       ),
     );
   }
