@@ -59,6 +59,22 @@ class RegisterPageState extends State<RegisterPage> {
                     SizedBox(
                       height: sizeSpaceItemButton,
                     ),
+                    SizedBox(
+                      height: sizeButton,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Validate will return true if the form is valid, or false if
+                          // the form is invalid.
+                        },
+                        child: const Text(
+                          'CRIAR CONTA',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
