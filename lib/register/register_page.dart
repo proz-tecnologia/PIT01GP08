@@ -78,6 +78,18 @@ class RegisterPageState extends State<RegisterPage> {
                   ],
                 ),
               ),
+              SizedBox(
+                height: sizeSpaceItemEnd,
+              ),
+              TextButton(
+                onPressed: () {},
+                child: const Text(
+                  'JÁ POSSUI CADASTRO?',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
