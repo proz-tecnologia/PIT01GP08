@@ -25,7 +25,15 @@ class RegisterPageState extends State<RegisterPage> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
-          child: Column(mainAxisSize: MainAxisSize.min, children: []),
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            SizedBox(
+              height: sizeSpaceTitleTop,
+            ),
+            const Text(
+              'Cadastre-se',
+              style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+            ),
+          ]),
         ),
       ),
     );
