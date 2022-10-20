@@ -1,25 +1,23 @@
-import 'package:financial_app/design_sys/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import 'entry_types.dart';
+import '../../design_sys/colors.dart';
 import 'components/widgets.dart';
+import 'entry_change_notifier.dart';
 
 Future<void> newEntryDialog(BuildContext context, String type) {
   return showDialog(
       context: context,
       builder: (BuildContext context) {
-        return NewEntryDialog();
+        return ChangeNotifierProvider(
+          create: (context) => NewEntryChangeNotifier(),
+          child: const NewEntryDialog(),
+        );
       });
 }
 
 class NewEntryDialog extends StatefulWidget {
-  NewEntryDialog({Key? key}) : super(key: key);
-
-  final ValueNotifier<EntryType> _typeNotifier =
-      ValueNotifier<EntryType>(EntryTypes.expense);
-  final ValueNotifier<String> _fulfilledCheckboxLabel =
-      ValueNotifier<String>('Pago');
-  final ValueNotifier<bool> _fulfilledChecked = ValueNotifier<bool>(true);
+  const NewEntryDialog({Key? key}) : super(key: key);
 
   @override
   State<NewEntryDialog> createState() => _NewEntryDialogState();
@@ -33,57 +31,41 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
     return AlertDialog(
       titlePadding: const EdgeInsets.all(0),
       title:
-          NewEntryTopBar(widget._typeNotifier, widget._fulfilledCheckboxLabel),
+          NewEntryTopBar(),
       content: Form(
         key: _formKey,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            CurrencyFormField(widget._typeNotifier),
+            const CurrencyFormField(),
             const SizedBox(height: 8),
-            AnimatedBuilder(
-              animation: widget._typeNotifier,
-              builder: (context, child) {
-                final color = widget._typeNotifier.value.color;
-                return TextFormField(
-                  decoration: InputDecoration(
-                    floatingLabelStyle: TextStyle(color: color),
-                    labelStyle: TextStyle(color: color.withOpacity(0.6)),
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: color)),
-                    labelText: 'Descrição',
-                  ),
-                  cursorColor: AppColors.lightGrey,
-                );
-              },
+            Consumer<NewEntryChangeNotifier>(
+              builder: (context, notifier, child) => TextFormField(
+                decoration: InputDecoration(
+                  floatingLabelStyle: TextStyle(color: notifier.color),
+                  labelStyle: TextStyle(color: notifier.color.withOpacity(0.6)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: notifier.color)),
+                  labelText: 'Descrição',
+                ),
+                cursorColor: AppColors.lightGrey,
+              ),
             ),
             const SizedBox(height: 8),
-            AppDropdownButtonFormField(widget._typeNotifier),
+            const AppDropdownButtonFormField(),
             const SizedBox(height: 16),
-            AppToggleButtons(
-              typeNotifier: widget._typeNotifier,
-              labelNotifier: widget._fulfilledCheckboxLabel,
-            ),
+            const AppToggleButtons(),
             const SizedBox(height: 8),
-            AppDatePicker(
-              typeNotifier: widget._typeNotifier,
-              checkboxNotifier: widget._fulfilledChecked,
-            ),
+            const AppDatePicker(),
             const SizedBox(height: 8),
-            AppFulfilledCheck(
-              typeNotifier: widget._typeNotifier,
-              checkboxNotifier: widget._fulfilledChecked,
-              labelNotifier: widget._fulfilledCheckboxLabel,
-            )
+            const AppFulfilledCheck(),
           ],
         ),
       ),
       actions: [
-        AnimatedBuilder(
-          animation: widget._typeNotifier,
-          builder: (context, child) => ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                backgroundColor: widget._typeNotifier.value.color),
+        Consumer<NewEntryChangeNotifier>(
+          builder: (context, notifier, child) => ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: notifier.color),
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 ScaffoldMessenger.of(context).showSnackBar(

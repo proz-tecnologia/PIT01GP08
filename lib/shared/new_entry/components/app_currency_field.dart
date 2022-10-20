@@ -1,51 +1,41 @@
+import 'package:financial_app/shared/new_entry/entry_change_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-
-import '../entry_types.dart';
+import 'package:provider/provider.dart';
 
 class CurrencyFormField extends StatelessWidget {
-  const CurrencyFormField(
-    ValueNotifier<EntryType> typeNotifier,{
-    Key? key,
-  })  : _typeNotifier = typeNotifier,
-        super(key: key);
-
-  final ValueNotifier<EntryType> _typeNotifier;
+  const CurrencyFormField({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _typeNotifier,
-      builder: (context, child) {
-        final color = _typeNotifier.value.color;
-        return TextFormField(
-          autofocus: true,
-          showCursor: false,
-          decoration: InputDecoration(
-            floatingLabelStyle: TextStyle(color: color),
-            labelStyle: TextStyle(color: color.withOpacity(0.6)),
-            focusedBorder:
-                UnderlineInputBorder(borderSide: BorderSide(color: color)),
-            labelText: 'Valor',
+    return Consumer<NewEntryChangeNotifier>(
+      builder: (context, notifier, child) => TextFormField(
+            autofocus: true,
+            showCursor: false,
+            decoration: InputDecoration(
+              floatingLabelStyle: TextStyle(color: notifier.color),
+              labelStyle: TextStyle(color: notifier.color.withOpacity(0.6)),
+              focusedBorder:
+                  UnderlineInputBorder(borderSide: BorderSide(color: notifier.color)),
+              labelText: 'Valor',
+            ),
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              CurrencyInputFormatter(),
+            ],
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Campo obrigatório';
+              }
+              int intValue = int.parse(value.replaceAll(RegExp('[R\$,]'), ''));
+              if (intValue == 0) {
+                return 'O valor não pode ser zero.';
+              }
+              return null;
+            },
           ),
-          keyboardType: TextInputType.number,
-          inputFormatters: [
-            FilteringTextInputFormatter.digitsOnly,
-            CurrencyInputFormatter(),
-          ],
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Campo obrigatório';
-            }
-            int intValue = int.parse(value.replaceAll(RegExp('[R\$,]'), ''));
-            if (intValue == 0) {
-              return 'O valor não pode ser zero.';
-            }
-            return null;
-          },
-        );
-      },
     );
   }
 }
