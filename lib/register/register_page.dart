@@ -25,16 +25,69 @@ class RegisterPageState extends State<RegisterPage> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            SizedBox(
-              height: sizeSpaceTitleTop,
-            ),
-            const Text(
-              'Cadastre-se',
-              style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
-            ),
-          ]),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                height: sizeSpaceTitleTop,
+              ),
+              const Text(
+                'Cadastre-se',
+                style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+              ),
+              Form(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: sizeSpaceItem,
+                    ),
+                    TextFormFieldDefault(
+                        textInputAction: _textInputActionNext,
+                        labelText: 'Nome'),
+                    SizedBox(
+                      height: sizeSpaceItem,
+                    ),
+                    TextFormFieldDefault(
+                        textInputAction: _textInputActionNext,
+                        labelText: 'Email'),
+                    SizedBox(
+                      height: sizeSpaceItem,
+                    ),
+                    const TextFormFieldDefault(
+                        textInputAction: TextInputAction.done,
+                        labelText: 'Senha'),
+                    SizedBox(
+                      height: sizeSpaceItemButton,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
+      ),
+    );
+  }
+}
+
+class TextFormFieldDefault extends StatelessWidget {
+  const TextFormFieldDefault({
+    Key? key,
+    required TextInputAction textInputAction,
+    required String labelText,
+  })  : _textInputAction = textInputAction,
+        _labelText = labelText,
+        super(key: key);
+
+  final TextInputAction _textInputAction;
+  final String _labelText;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      textInputAction: _textInputAction,
+      decoration: InputDecoration(
+        labelText: _labelText,
       ),
     );
   }
