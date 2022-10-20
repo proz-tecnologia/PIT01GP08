@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../design_sys/colors.dart';
-import '../entry_change_notifier.dart';
+import '../change_notifier.dart';
 
 class AppToggleButtons extends StatefulWidget {
   const AppToggleButtons({

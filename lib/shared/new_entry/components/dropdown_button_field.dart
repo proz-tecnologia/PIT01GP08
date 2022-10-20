@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../entry_change_notifier.dart';
+import '../change_notifier.dart';
 
-class AppDropdownButtonFormField extends StatelessWidget {
-  const AppDropdownButtonFormField({Key? key}) : super(key: key);
+class AppDropdownButtonField extends StatelessWidget {
+  const AppDropdownButtonField({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

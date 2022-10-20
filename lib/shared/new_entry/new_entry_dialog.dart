@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../design_sys/colors.dart';
-import 'components/widgets.dart';
-import 'entry_change_notifier.dart';
+import 'components/components.dart';
+import 'change_notifier.dart';
 
 Future<void> newEntryDialog(BuildContext context, String type) {
   return showDialog(
@@ -30,8 +30,7 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       titlePadding: const EdgeInsets.all(0),
-      title:
-          NewEntryTopBar(),
+      title: NewEntryTopBar(),
       content: Form(
         key: _formKey,
         child: Column(
@@ -52,11 +51,11 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
               ),
             ),
             const SizedBox(height: 8),
-            const AppDropdownButtonFormField(),
+            const AppDropdownButtonField(),
             const SizedBox(height: 16),
             const AppToggleButtons(),
             const SizedBox(height: 8),
-            const AppDatePicker(),
+            const AppDatePickerField(),
             const SizedBox(height: 8),
             const AppFulfilledCheck(),
           ],

@@ -1,4 +1,4 @@
-import 'package:financial_app/shared/new_entry/entry_change_notifier.dart';
+import 'package:financial_app/shared/new_entry/change_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';

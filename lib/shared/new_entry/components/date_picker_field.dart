@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../entry_change_notifier.dart';
+import '../change_notifier.dart';
 
-class AppDatePicker extends StatefulWidget {
-  const AppDatePicker({Key? key}) : super(key: key);
+class AppDatePickerField extends StatefulWidget {
+  const AppDatePickerField({Key? key}) : super(key: key);
 
   @override
-  State<AppDatePicker> createState() => AppDatePickerState();
+  State<AppDatePickerField> createState() => AppDatePickerFieldState();
 }
 
-class AppDatePickerState extends State<AppDatePicker> {
+class AppDatePickerFieldState extends State<AppDatePickerField> {
   TextEditingController dateInput = TextEditingController(
       text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
   @override
