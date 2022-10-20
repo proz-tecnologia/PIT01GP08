@@ -33,32 +33,34 @@ class _NewEntryDialogState extends State<NewEntryDialog> {
       title: NewEntryTopBar(),
       content: Form(
         key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            const CurrencyFormField(),
-            const SizedBox(height: 8),
-            Consumer<NewEntryChangeNotifier>(
-              builder: (context, notifier, child) => TextFormField(
-                decoration: InputDecoration(
-                  floatingLabelStyle: TextStyle(color: notifier.color),
-                  labelStyle: TextStyle(color: notifier.color.withOpacity(0.6)),
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: notifier.color)),
-                  labelText: 'Descrição',
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const CurrencyFormField(),
+              const SizedBox(height: 8),
+              Consumer<NewEntryChangeNotifier>(
+                builder: (context, notifier, child) => TextFormField(
+                  decoration: InputDecoration(
+                    floatingLabelStyle: TextStyle(color: notifier.color),
+                    labelStyle: TextStyle(color: notifier.color.withOpacity(0.6)),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: notifier.color)),
+                    labelText: 'Descrição',
+                  ),
+                  cursorColor: AppColors.lightGrey,
                 ),
-                cursorColor: AppColors.lightGrey,
               ),
-            ),
-            const SizedBox(height: 8),
-            const AppDropdownButtonField(),
-            const SizedBox(height: 16),
-            const AppToggleButtons(),
-            const SizedBox(height: 8),
-            const AppDatePickerField(),
-            const SizedBox(height: 8),
-            const AppFulfilledCheck(),
-          ],
+              const SizedBox(height: 8),
+              const AppDropdownButtonField(),
+              const SizedBox(height: 16),
+              const AppToggleButtons(),
+              const SizedBox(height: 8),
+              const AppDatePickerField(),
+              const SizedBox(height: 8),
+              const AppFulfilledCheck(),
+            ],
+          ),
         ),
       ),
       actions: [
