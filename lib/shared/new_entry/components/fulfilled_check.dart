@@ -1,31 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../change_notifier.dart';
+class AppFulfilledCheck extends StatefulWidget {
+  const AppFulfilledCheck({
+    Key? key,
+    required Color color,
+    required String fulfilledLabel,
+    required bool initialFulfilled,
+  })  : _color = color,
+        _fulfilledLabel = fulfilledLabel,
+        _initialFulfilled = initialFulfilled,
+        super(key: key);
 
-class AppFulfilledCheck extends StatelessWidget {
-  const AppFulfilledCheck({Key? key}) : super(key: key);
+  final Color _color;
+  final String _fulfilledLabel;
+  final bool _initialFulfilled;
 
   @override
+  State<AppFulfilledCheck> createState() => _AppFulfilledCheckState();
+}
+
+class _AppFulfilledCheckState extends State<AppFulfilledCheck> {
+  bool isFulfilled = true;
+  @override
   Widget build(BuildContext context) {
-    return Consumer<NewEntryChangeNotifier>(
-      builder: (context, notifier, child) => Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Checkbox(
-            value: notifier.initialFulfilled,
-            onChanged: (value) {
-              if (notifier.initialFulfilled == true) {
-                notifier.uncheckFulfilled();
-              } else {
-                notifier.checkFulfilled();
-              }
-            },
-            fillColor: MaterialStateProperty.all(notifier.color),
-          ),
-          Text(notifier.fulfilledLabel),
-        ],
-      ),
+    isFulfilled = widget._initialFulfilled;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Checkbox(
+          value: isFulfilled,
+          onChanged: (value) {
+            setState(() {
+              isFulfilled = value!;
+            });
+          },
+          fillColor: MaterialStateProperty.all(widget._color),
+        ),
+        Text(widget._fulfilledLabel),
+      ],
     );
   }
 }
