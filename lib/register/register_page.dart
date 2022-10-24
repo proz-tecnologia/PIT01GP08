@@ -67,12 +67,7 @@ class RegisterPageState extends State<RegisterPage> {
                           // Validate will return true if the form is valid, or false if
                           // the form is invalid.
                         },
-                        child: const Text(
-                          'CRIAR CONTA',
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
+                        child: const Text('CRIAR CONTA'),
                       ),
                     ),
                   ],
@@ -83,12 +78,7 @@ class RegisterPageState extends State<RegisterPage> {
               ),
               TextButton(
                 onPressed: () {},
-                child: const Text(
-                  'JÁ POSSUI CADASTRO?',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
+                child: const Text('JÁ POSSUI CADASTRO?'),
               ),
             ],
           ),
