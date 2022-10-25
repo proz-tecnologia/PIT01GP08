@@ -69,86 +69,83 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
               ),
             ),
             SizedBox(height: spaceBetween),
-            Container(
-              color: AppColors.primary,
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Container(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.arrow_upward,
-                          size: 30,
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              'Receitas',
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.onPrimary,
-                                fontWeight: FontWeight.w400,
-                              ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.arrow_upward,
+                        size: 30,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Text(
+                            'Receitas',
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                              fontWeight: FontWeight.w400,
                             ),
-                            Text(
-                              'RS 1000,00',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.onPrimary,
-                              ),
+                          ),
+                          Text(
+                            'RS 1000,00',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.onPrimary,
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.arrow_downward,
-                          size: 30,
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              'Despesas',
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.onPrimary,
-                                fontWeight: FontWeight.w400,
-                              ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.arrow_downward,
+                        size: 30,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Text(
+                            'Despesas',
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                              fontWeight: FontWeight.w400,
                             ),
-                            Text(
-                              'RS 150,00',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.onPrimary,
-                              ),
+                          ),
+                          Text(
+                            'RS 150,00',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.onPrimary,
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(),
-                  ),
-                ],
-              ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(),
+                ),
+              ],
             ),
             SizedBox(height: spaceBetween),
           ],
