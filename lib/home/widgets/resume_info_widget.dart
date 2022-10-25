@@ -1,4 +1,3 @@
-import 'package:financial_app/design_sys/colors.dart';
 import 'package:flutter/material.dart';
 
 class ResumeInfoWidget extends StatefulWidget {
