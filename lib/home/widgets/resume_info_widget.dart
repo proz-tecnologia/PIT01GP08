@@ -55,7 +55,7 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
               ],
             ),
             const SizedBox(
-              height: 45,
+              height: 25,
             ),
             const Text(
               'Saldo',
@@ -72,7 +72,7 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
               ),
             ),
             const SizedBox(
-              height: 45,
+              height: 25,
             ),
             Container(
               color: AppColors.primary,
