@@ -3,17 +3,23 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class CurrencyFormField extends StatelessWidget {
-  const CurrencyFormField({Key? key, required Color color})
-      : _color = color,
+  const CurrencyFormField({
+    Key? key,
+    required Color color,
+    this.initialValue,
+  })  : _color = color,
         super(key: key);
 
   final Color _color;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       autofocus: true,
       showCursor: false,
+      textInputAction: TextInputAction.next,
+      initialValue: initialValue,
       decoration: InputDecoration(
         floatingLabelStyle: TextStyle(color: _color),
         labelStyle: TextStyle(color: _color.withOpacity(0.6)),

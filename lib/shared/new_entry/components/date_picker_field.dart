@@ -5,10 +5,12 @@ class AppDatePickerField extends StatefulWidget {
   const AppDatePickerField({
     Key? key,
     required Color color,
+    this.initialValue,
   })  : _color = color,
         super(key: key);
 
   final Color _color;
+  final String? initialValue;
 
   @override
   State<AppDatePickerField> createState() => AppDatePickerFieldState();
@@ -21,6 +23,7 @@ class AppDatePickerFieldState extends State<AppDatePickerField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: dateInput,
+      initialValue: widget.initialValue,
       decoration: InputDecoration(
         suffixIcon: Icon(
           Icons.calendar_today_rounded,
