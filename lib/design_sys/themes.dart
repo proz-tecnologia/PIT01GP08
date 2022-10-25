@@ -118,7 +118,7 @@ ButtonStyle _appButtonStyle = const ButtonStyle(
   textStyle: MaterialStatePropertyAll(
     TextStyle(
       fontSize: 18,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w600,
       letterSpacing: 1.0,
     ),
   ),

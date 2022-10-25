@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -41,21 +39,21 @@ class RegisterPageState extends State<RegisterPage> {
                     SizedBox(
                       height: sizeSpaceItem,
                     ),
-                    TextFormFieldDefault(
+                    TextFormField(
                         textInputAction: _textInputActionNext,
-                        labelText: 'Nome'),
+                        decoration: const InputDecoration(labelText: 'Nome')),
                     SizedBox(
                       height: sizeSpaceItem,
                     ),
-                    TextFormFieldDefault(
+                    TextFormField(
                         textInputAction: _textInputActionNext,
-                        labelText: 'Email'),
+                        decoration: const InputDecoration(labelText: 'Email')),
                     SizedBox(
                       height: sizeSpaceItem,
                     ),
-                    const TextFormFieldDefault(
+                    TextFormField(
                         textInputAction: TextInputAction.done,
-                        labelText: 'Senha'),
+                        decoration: const InputDecoration(labelText: 'Senha')),
                     SizedBox(
                       height: sizeSpaceItemButton,
                     ),
@@ -88,25 +86,3 @@ class RegisterPageState extends State<RegisterPage> {
   }
 }
 
-class TextFormFieldDefault extends StatelessWidget {
-  const TextFormFieldDefault({
-    Key? key,
-    required TextInputAction textInputAction,
-    required String labelText,
-  })  : _textInputAction = textInputAction,
-        _labelText = labelText,
-        super(key: key);
-
-  final TextInputAction _textInputAction;
-  final String _labelText;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      textInputAction: _textInputAction,
-      decoration: InputDecoration(
-        labelText: _labelText,
-      ),
-    );
-  }
-}
