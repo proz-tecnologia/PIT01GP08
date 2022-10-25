@@ -29,9 +29,9 @@ class RegisterPageState extends State<RegisterPage> {
               SizedBox(
                 height: sizeSpaceTitleTop,
               ),
-              const Text(
+              Text(
                 'Cadastre-se',
-                style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               Form(
                 child: Column(
@@ -85,4 +85,3 @@ class RegisterPageState extends State<RegisterPage> {
     );
   }
 }
-

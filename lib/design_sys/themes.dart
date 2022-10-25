@@ -50,6 +50,9 @@ class AppTheme {
         disabledActionTextColor: AppColors.lightGrey,
         contentTextStyle: const TextStyle(color: AppColors.white),
       ),
+      textTheme: const TextTheme(
+        titleLarge: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+      ),
     );
   }
 
@@ -108,6 +111,9 @@ class AppTheme {
         actionTextColor: AppColors.primary,
         disabledActionTextColor: AppColors.lightGrey,
         contentTextStyle: const TextStyle(color: AppColors.white),
+      ),
+      textTheme: const TextTheme(
+        titleLarge: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
       ),
     );
   }
