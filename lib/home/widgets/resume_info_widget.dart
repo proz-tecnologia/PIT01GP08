@@ -13,18 +13,17 @@ class ResumeInfoWidget extends StatefulWidget {
 class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final spaceBetween = height * 0.03;
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      height: 250,
+      margin: EdgeInsets.only(bottom: spaceBetween),
       width: MediaQuery.of(context).size.width,
-      color: AppColors.primary,
+      color: Theme.of(context).primaryColor,
       child: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 8,
-            ),
+            SizedBox(height: spaceBetween),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
@@ -34,18 +33,18 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                   child: Container(),
                 ),
                 IconButton(
-                    color: AppColors.white,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     onPressed: () {},
                     icon: const Icon(Icons.arrow_back_ios)),
-                const Text(
+                Text(
                   'Dezembro',
                   style: TextStyle(
-                    color: AppColors.white,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
                 IconButton(
-                    color: AppColors.white,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     onPressed: () {},
                     icon: const Icon(Icons.arrow_forward_ios)),
                 Expanded(
@@ -54,26 +53,22 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 25,
-            ),
-            const Text(
+            SizedBox(height: spaceBetween),
+            Text(
               'Saldo',
               style: TextStyle(
-                color: AppColors.white,
+                color: Theme.of(context).colorScheme.onPrimary,
                 fontWeight: FontWeight.w400,
               ),
             ),
-            const Text(
+            Text(
               'R\$ 2600,00',
               style: TextStyle(
-                color: AppColors.white,
+                color: Theme.of(context).colorScheme.onPrimary,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(
-              height: 25,
-            ),
+            SizedBox(height: spaceBetween),
             Container(
               color: AppColors.primary,
               child: Row(
@@ -86,18 +81,18 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.arrow_upward,
                           size: 30,
-                          color: AppColors.white,
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
                         Column(
                           mainAxisSize: MainAxisSize.max,
-                          children: const [
+                          children: [
                             Text(
                               'Receitas',
                               style: TextStyle(
-                                color: AppColors.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -105,7 +100,7 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                               'RS 1000,00',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: AppColors.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                               ),
                             ),
                           ],
@@ -121,18 +116,18 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.arrow_downward,
                           size: 30,
-                          color: AppColors.white,
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
                         Column(
                           mainAxisSize: MainAxisSize.max,
-                          children: const [
+                          children: [
                             Text(
                               'Despesas',
                               style: TextStyle(
-                                color: AppColors.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -140,7 +135,7 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                               'RS 150,00',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: AppColors.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                               ),
                             ),
                           ],
@@ -155,6 +150,7 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                 ],
               ),
             ),
+            SizedBox(height: spaceBetween),
           ],
         ),
       ),
