@@ -24,12 +24,15 @@ class NewEntryTopBarItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Column(children: [
-        TextButton(
-          onPressed: _onPressed ?? () {},
-          style: TextButton.styleFrom(
-            foregroundColor: _selected ? _color : AppColors.darkGrey,
+        SizedBox(
+          width: double.infinity,
+          child: TextButton(
+            onPressed: _onPressed ?? () {},
+            style: TextButton.styleFrom(
+              foregroundColor: _selected ? _color : AppColors.darkGrey,
+            ),
+            child: Text(_text),
           ),
-          child: Text(_text),
         ),
         _selected
             ? Container(
