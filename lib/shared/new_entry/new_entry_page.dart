@@ -37,80 +37,83 @@ class _NewEntryPageState extends State<NewEntryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Row(
-            children: [
-              NewEntryTopBarItem(
-                'DESPESA',
-                color: AppColors.expense,
-                selected: _select[0],
-                onPressed: () => _changeType(0),
-              ),
-              NewEntryTopBarItem(
-                'RECEITA',
-                color: AppColors.income,
-                selected: _select[1],
-                onPressed: () => _changeType(1),
-              ),
-            ],
-          ),
-          Form(
-            key: widget._formKey,
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: <Widget>[
-                  CurrencyFormField(color: _color),
-                  const SizedBox(height: 8),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      floatingLabelStyle: TextStyle(color: _color),
-                      labelStyle: TextStyle(color: _color.withOpacity(0.6)),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: _color)),
-                      labelText: 'Descrição',
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            Row(
+              children: [
+                NewEntryTopBarItem(
+                  'DESPESA',
+                  color: AppColors.expense,
+                  selected: _select[0],
+                  onPressed: () => _changeType(0),
+                ),
+                NewEntryTopBarItem(
+                  'RECEITA',
+                  color: AppColors.income,
+                  selected: _select[1],
+                  onPressed: () => _changeType(1),
+                ),
+              ],
+            ),
+            Form(
+              key: widget._formKey,
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  children: <Widget>[
+                    CurrencyFormField(color: _color),
+                    const SizedBox(height: 8),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        floatingLabelStyle: TextStyle(color: _color),
+                        labelStyle: TextStyle(color: _color.withOpacity(0.6)),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: _color)),
+                        labelText: 'Descrição',
+                      ),
+                      cursorColor: AppColors.lightGrey,
                     ),
-                    cursorColor: AppColors.lightGrey,
-                  ),
-                  const SizedBox(height: 8),
-                  AppDropdownButtonField(
-                    color: _color,
-                    categories: _categories,
-                  ),
-                  const SizedBox(height: 16),
-                  AppToggleButtons(color: _color),
-                  const SizedBox(height: 8),
-                  AppDatePickerField(
-                    color: _color,
-                  ),
-                  const SizedBox(height: 8),
-                  AppFulfilledCheck(
-                    color: _color,
-                    fulfilledLabel: _fulfilledLabel,
-                    initialFulfilled: check,
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    AppDropdownButtonField(
+                      color: _color,
+                      categories: _categories,
+                    ),
+                    const SizedBox(height: 16),
+                    AppToggleButtons(color: _color),
+                    const SizedBox(height: 8),
+                    AppDatePickerField(color: _color),
+                    const SizedBox(height: 8),
+                    AppFulfilledCheck(
+                      color: _color,
+                      fulfilledLabel: _fulfilledLabel,
+                      initialFulfilled: check,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          Expanded(child: Container()),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(children: [
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text('OK'),
-              ),
-              const SizedBox(height: 16),
-              TextButton(
-                onPressed: () {},
-                child: const Text('CANCELAR'),
-              ),
-            ]),
-          ),
-        ],
+            Expanded(child: Container()),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('OK'),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text('CANCELAR'),
+                ),
+              ]),
+            ),
+          ],
+        ),
       ),
     );
   }
