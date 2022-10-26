@@ -27,6 +27,7 @@ class AppPending extends StatelessWidget {
                     Text('Pagar'),
                     Text(
                       'RS 1000,00',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: AppColors.expense,
@@ -52,6 +53,7 @@ class AppPending extends StatelessWidget {
                     Text('Receber'),
                     Text(
                       'RS 1000,00',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: AppColors.income,

@@ -12,6 +12,7 @@ class AppTheme {
       dividerColor: AppColors.lightGrey,
       errorColor: AppColors.expense,
       primaryColor: AppColors.primary,
+      secondaryHeaderColor: AppColors.darkGrey,
       shadowColor: AppColors.darkGrey,
       toggleableActiveColor: AppColors.primary,
       colorScheme: const ColorScheme(
@@ -66,6 +67,7 @@ class AppTheme {
       dividerColor: AppColors.darkGrey,
       errorColor: AppColors.expense,
       primaryColor: AppColors.primary,
+      secondaryHeaderColor: AppColors.lightGrey,
       shadowColor: AppColors.darkGrey,
       toggleableActiveColor: AppColors.primary,
       colorScheme: const ColorScheme(
