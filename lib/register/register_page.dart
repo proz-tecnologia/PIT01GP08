@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -31,9 +29,9 @@ class RegisterPageState extends State<RegisterPage> {
               SizedBox(
                 height: sizeSpaceTitleTop,
               ),
-              const Text(
+              Text(
                 'Cadastre-se',
-                style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               Form(
                 child: Column(
@@ -41,21 +39,21 @@ class RegisterPageState extends State<RegisterPage> {
                     SizedBox(
                       height: sizeSpaceItem,
                     ),
-                    TextFormFieldDefault(
+                    TextFormField(
                         textInputAction: _textInputActionNext,
-                        labelText: 'Nome'),
+                        decoration: const InputDecoration(labelText: 'Nome')),
                     SizedBox(
                       height: sizeSpaceItem,
                     ),
-                    TextFormFieldDefault(
+                    TextFormField(
                         textInputAction: _textInputActionNext,
-                        labelText: 'Email'),
+                        decoration: const InputDecoration(labelText: 'Email')),
                     SizedBox(
                       height: sizeSpaceItem,
                     ),
-                    const TextFormFieldDefault(
+                    TextFormField(
                         textInputAction: TextInputAction.done,
-                        labelText: 'Senha'),
+                        decoration: const InputDecoration(labelText: 'Senha')),
                     SizedBox(
                       height: sizeSpaceItemButton,
                     ),
@@ -67,12 +65,7 @@ class RegisterPageState extends State<RegisterPage> {
                           // Validate will return true if the form is valid, or false if
                           // the form is invalid.
                         },
-                        child: const Text(
-                          'CRIAR CONTA',
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
+                        child: const Text('CRIAR CONTA'),
                       ),
                     ),
                   ],
@@ -83,39 +76,11 @@ class RegisterPageState extends State<RegisterPage> {
               ),
               TextButton(
                 onPressed: () {},
-                child: const Text(
-                  'JÁ POSSUI CADASTRO?',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
+                child: const Text('JÁ POSSUI CADASTRO?'),
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class TextFormFieldDefault extends StatelessWidget {
-  const TextFormFieldDefault({
-    Key? key,
-    required TextInputAction textInputAction,
-    required String labelText,
-  })  : _textInputAction = textInputAction,
-        _labelText = labelText,
-        super(key: key);
-
-  final TextInputAction _textInputAction;
-  final String _labelText;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      textInputAction: _textInputAction,
-      decoration: InputDecoration(
-        labelText: _labelText,
       ),
     );
   }

@@ -27,7 +27,9 @@ class _AppBottomNavBarState extends State<AppBottomNavBar> {
           icon: Icon(Icons.library_books_outlined),
           label: 'Extrato',
         ),
-        BottomNavigationBarItem(icon: SizedBox(width: 1)), // item vazio com o único objetivo de melhorar o layout
+        BottomNavigationBarItem(
+            icon: SizedBox(width: 1),
+            label: ''), // item vazio com o único objetivo de melhorar o layout
         BottomNavigationBarItem(
           icon: Icon(Icons.equalizer_rounded),
           label: 'Estatística',
