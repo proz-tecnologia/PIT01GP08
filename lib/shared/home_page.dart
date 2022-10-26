@@ -1,8 +1,7 @@
-import 'package:financial_app/home/widgets/home_content_page.dart';
 import 'package:flutter/material.dart';
 
 import 'app_bottom_nav_bar.dart';
-import 'new_entry/new_entry_dialog.dart';
+import '../home/widgets/home_content_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -28,11 +27,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            newEntryDialog(context, 'expense');
-          });
-        },
+        onPressed: () => Navigator.of(context).pushNamed('newEntry'),
         tooltip: 'Despesa',
         child: const Icon(Icons.add),
       ),

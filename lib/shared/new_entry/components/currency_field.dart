@@ -1,41 +1,47 @@
-import 'package:financial_app/shared/new_entry/change_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class CurrencyFormField extends StatelessWidget {
-  const CurrencyFormField({Key? key}) : super(key: key);
+  const CurrencyFormField({
+    Key? key,
+    required Color color,
+    this.initialValue,
+  })  : _color = color,
+        super(key: key);
+
+  final Color _color;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<NewEntryChangeNotifier>(
-      builder: (context, notifier, child) => TextFormField(
-            autofocus: true,
-            showCursor: false,
-            decoration: InputDecoration(
-              floatingLabelStyle: TextStyle(color: notifier.color),
-              labelStyle: TextStyle(color: notifier.color.withOpacity(0.6)),
-              focusedBorder:
-                  UnderlineInputBorder(borderSide: BorderSide(color: notifier.color)),
-              labelText: 'Valor',
-            ),
-            keyboardType: TextInputType.number,
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-              CurrencyInputFormatter(),
-            ],
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Campo obrigatório';
-              }
-              int intValue = int.parse(value.replaceAll(RegExp('[R\$,]'), ''));
-              if (intValue == 0) {
-                return 'O valor não pode ser zero.';
-              }
-              return null;
-            },
-          ),
+    return TextFormField(
+      autofocus: true,
+      showCursor: false,
+      textInputAction: TextInputAction.next,
+      initialValue: initialValue,
+      decoration: InputDecoration(
+        floatingLabelStyle: TextStyle(color: _color),
+        labelStyle: TextStyle(color: _color.withOpacity(0.6)),
+        focusedBorder:
+            UnderlineInputBorder(borderSide: BorderSide(color: _color)),
+        labelText: 'Valor',
+      ),
+      keyboardType: TextInputType.number,
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+        CurrencyInputFormatter(),
+      ],
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Campo obrigatório';
+        }
+        int intValue = int.parse(value.replaceAll(RegExp('[R\$,]'), ''));
+        if (intValue == 0) {
+          return 'O valor não pode ser zero.';
+        }
+        return null;
+      },
     );
   }
 }
