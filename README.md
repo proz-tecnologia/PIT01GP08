@@ -72,5 +72,5 @@ flutter run
     <td align="center"><a href="https://github.com/RenataSisilio"><sub><b>Renata Sicílio</b></sub></a><br/></td>
     <td align="center"><a href="https://github.com/rudarabello"><sub><b>Rudá Rabello</b></sub></a><br/></td>
     <td align="center"><a href="https://github.com/jacksonlira88"><sub><b>Jackson Lira</b></sub></a><br/></td>
-    <td align="center"><a href="https://https://github.com/evilarinho"><sub><b>Edilson Vilarinho</b></sub></a><br/></td>
+    <td align="center"><a href="https://github.com/evilarinho"><sub><b>Edilson Vilarinho</b></sub></a><br/></td>
 </table>
