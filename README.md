@@ -18,7 +18,7 @@ This app was develop on Proz bootCamp. The app help you to manage yours financia
 
 Home                       | 
 :-------------------------:|
-<img src="https://user-images.githubusercontent.com/112419444/191877356-80b4695e-c636-4b94-b18e-26a424baadc8.png" alt="show_case"  height="500">    
+<img src="https://user-images.githubusercontent.com/22122/198066123-27d422e6-7e18-47fe-aa48-1df1e0349b4f.png" alt="show_case"  height="500">    
 
 <br/>
 
