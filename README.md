@@ -2,7 +2,7 @@
   Financial_app
 </h1>
 <p align="center">
-  <img  src="https://img.icons8.com/office/344/ledger.png" height="120px"/>
+  <img  src="https://user-images.githubusercontent.com/22122/198460731-637d3b67-858a-4aa6-9243-eba3a679d8c8.png" height="120px"/>
 </p>
 
  ## Built With
