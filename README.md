@@ -12,7 +12,7 @@
 
 ## Description
 
-This app was develop on Proz bootCamp. The app help you to manage yours financial incomes and outcomes!.
+This app was developed on Proz bootCamp, to help you easily manage your financial life, incomes and expenses!
 
 <br/>
 
@@ -25,23 +25,23 @@ Home                       |
 
 
 ## Development
-- Develop from the prototype/wireframe of what is expected at the end of the sprint I
-- Configure the repository created on Github by the work team
+- Developing the prototype/wireframe of what is expected at the end of sprint I
+- Configuring of the repository created on Github by the work team
 
 </br>
 
 ## Organization
-- Using the Github board for project management
+- Using Github board for project management
 - Using Git Flow
 - Using Discord for team communication
 
 </br>
 
 ## At the end of the sprint I
-- The project must contain reusable components
-- The project must follow the language conventions and best practices
-- The project must present what was proposed by the prototype
-- The project must present the components and functionalities defined by the business rules
+- Project must contain reusable components
+- Project must follow language conventions and best practices
+- Project must present what was proposed by the prototype
+- Project must present the components and functionalities defined by the business rules
 
 </br>
 
@@ -69,8 +69,10 @@ flutter run
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/RenataSisilio"><sub><b>Renata Sicílio</b></sub></a><br/></td>
-    <td align="center"><a href="https://github.com/rudarabello"><sub><b>Rudá Rabello</b></sub></a><br/></td>
-    <td align="center"><a href="https://github.com/jacksonlira88"><sub><b>Jackson Lira</b></sub></a><br/></td>
     <td align="center"><a href="https://github.com/evilarinho"><sub><b>Edilson Vilarinho</b></sub></a><br/></td>
+    <td align="center"><a href="https://github.com/jacksonlira88"><sub><b>Jackson Lira</b></sub></a><br/></td>
+    <td align="center"><a href="https://github.com/RenataSisilio"><sub><b>Renata Sisilio</b></sub></a><br/></td>
+    <td align="center"><a href="https://github.com/rudarabello"><sub><b>Rudá Rabello</b></sub></a><br/></td>
+
+
 </table>
