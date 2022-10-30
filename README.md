@@ -2,7 +2,7 @@
   Financial_app
 </h1>
 <p align="center">
-  <img  src="https://user-images.githubusercontent.com/22122/198460731-637d3b67-858a-4aa6-9243-eba3a679d8c8.png" height="120px"/>
+  <img  src="https://user-images.githubusercontent.com/22122/198906925-5211f194-034c-4a79-b4aa-7cf1f3c2680d.png" height="120px"/>
 </p>
 
  ## Built With
@@ -26,7 +26,7 @@ Home                       |
 
 ## Development
 - Developing the prototype/wireframe of what is expected at the end of sprint I
-- Configuring of the repository created on Github by the work team
+- Configuring the repository created on Github by the work team
 
 </br>
 
