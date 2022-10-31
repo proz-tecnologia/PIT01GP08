@@ -2,7 +2,7 @@
   Financial_app
 </h1>
 <p align="center">
-  <img  src="https://img.icons8.com/office/344/ledger.png" height="120px"/>
+  <img  src="https://user-images.githubusercontent.com/22122/198906925-5211f194-034c-4a79-b4aa-7cf1f3c2680d.png" height="120px"/>
 </p>
 
  ## Built With
@@ -12,33 +12,36 @@
 
 ## Description
 
-This app was develop on Proz bootCamp. The app help you to manage yours financial incomes and outcomes!.
+This app was developed on Proz bootCamp, to help you easily manage your financial life, incomes and expenses!
 
 <br/>
 
-Home                       | Adding outcomes           | Adding incomes              |
-:-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://user-images.githubusercontent.com/112419444/191877356-80b4695e-c636-4b94-b18e-26a424baadc8.png" alt="show_case"  height="500">   | <img src="https://user-images.githubusercontent.com/112419444/191877454-f299a4d0-9478-4ce3-8afb-01700f494ced.png" alt="show_case"  height="500"> | <img src="https://user-images.githubusercontent.com/112419444/191877470-60fd82cb-670f-46b7-b62c-3650779dcb92.png" alt="show_case"  height="500"> 
+Home                       | 
+:-------------------------:|
+<img src="https://user-images.githubusercontent.com/22122/199113302-52f91723-0110-4dec-9a1c-97dab1e3a6fd.jpeg" alt="show_case"  height="500">    
 
 <br/>
 
 
 
-## Features
--
--
+## Development
+- Developing the prototype/wireframe of what is expected at the end of sprint I
+- Configuring the repository created on Github by the work team
 
 </br>
 
-## User Sign Up
--
--
+## Organization
+- Using Github board for project management
+- Using Git Flow
+- Using Discord for team communication
 
 </br>
 
-## User Sign In
--
--
+## At the end of the sprint I
+- Project must contain reusable components
+- Project must follow language conventions and best practices
+- Project must present what was proposed by the prototype
+- Project must present the components and functionalities defined by the business rules
 
 </br>
 
@@ -66,7 +69,10 @@ flutter run
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/RenataSisilio"><sub><b>Renata Sicílio</b></sub></a><br/></td>
-    <td align="center"><a href="https://github.com/rudarabello"><sub><b>Rudá Rabello</b></sub></a><br/></td>
+    <td align="center"><a href="https://github.com/evilarinho"><sub><b>Edilson Vilarinho</b></sub></a><br/></td>
     <td align="center"><a href="https://github.com/jacksonlira88"><sub><b>Jackson Lira</b></sub></a><br/></td>
+    <td align="center"><a href="https://github.com/RenataSisilio"><sub><b>Renata Sisilio</b></sub></a><br/></td>
+    <td align="center"><a href="https://github.com/rudarabello"><sub><b>Rudá Rabello</b></sub></a><br/></td>
+
+
 </table>
