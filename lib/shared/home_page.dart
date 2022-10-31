@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).pushNamed('newEntry'),
+        onPressed: () {},
         tooltip: 'Despesa',
         child: const Icon(Icons.add),
       ),
