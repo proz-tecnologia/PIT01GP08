@@ -12,12 +12,20 @@ class TransactionsSummary extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        children: const [
-          TransactionListTile(0),
-          Divider(),
-          TransactionListTile(1),
-          Divider(),
-          TransactionListTile(2),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Á vencer/vencidas',
+            style: TextStyle(
+              color: Theme.of(context).disabledColor,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const TransactionListTile(0),
+          const Divider(),
+          const TransactionListTile(1),
+          const Divider(),
+          const TransactionListTile(2),
         ],
       ),
     );
