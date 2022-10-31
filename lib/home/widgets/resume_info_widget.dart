@@ -1,3 +1,4 @@
+import 'package:financial_app/design_sys/sizes.dart';
 import 'package:flutter/material.dart';
 
 class ResumeInfoWidget extends StatefulWidget {
@@ -13,7 +14,7 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    final spaceBetween = height * 0.03;
+    final spaceBetween = height * Sizes.threePercent;
     return Container(
       margin: EdgeInsets.only(bottom: spaceBetween),
       width: MediaQuery.of(context).size.width,
@@ -75,12 +76,12 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                   child: Container(),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(Sizes.smallSpace),
                   child: Row(
                     children: [
                       Icon(
                         Icons.arrow_upward,
-                        size: 30,
+                        size: Sizes.mediumIconSize,
                         color: Theme.of(context).colorScheme.onPrimary,
                       ),
                       Column(
@@ -110,12 +111,12 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                   child: Container(),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(Sizes.smallSpace),
                   child: Row(
                     children: [
                       Icon(
                         Icons.arrow_downward,
-                        size: 30,
+                        size: Sizes.mediumIconSize,
                         color: Theme.of(context).colorScheme.onPrimary,
                       ),
                       Column(
