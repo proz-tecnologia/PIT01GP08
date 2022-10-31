@@ -1,3 +1,4 @@
+import 'package:financial_app/design_sys/sizes.dart';
 import 'package:flutter/material.dart';
 
 import '../../shared/components/month_changer.dart';
@@ -17,8 +18,7 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    final spaceBetween = height * 0.03;
-
+    final spaceBetween = height * Sizes.threePercent;
     return Container(
       margin: EdgeInsets.only(bottom: spaceBetween),
       width: MediaQuery.of(context).size.width,

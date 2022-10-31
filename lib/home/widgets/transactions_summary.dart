@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../design_sys/sizes.dart';
 import '../components/transaction_list_tile.dart';
 
 class TransactionsSummary extends StatelessWidget {
@@ -10,14 +11,22 @@ class TransactionsSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(Sizes.mediumSpace),
       child: Column(
-        children: const [
-          TransactionListTile(0),
-          Divider(),
-          TransactionListTile(1),
-          Divider(),
-          TransactionListTile(2),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'A vencer/vencidas',
+            style: TextStyle(
+              color: Theme.of(context).disabledColor,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const TransactionListTile(0),
+          const Divider(),
+          const TransactionListTile(1),
+          const Divider(),
+          const TransactionListTile(2),
         ],
       ),
     );

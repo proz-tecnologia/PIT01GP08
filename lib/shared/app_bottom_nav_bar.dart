@@ -18,23 +18,23 @@ class _AppBottomNavBarState extends State<AppBottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      items: const [
-        BottomNavigationBarItem(
+      items: [
+        const BottomNavigationBarItem(
           icon: Icon(Icons.home_rounded),
           label: 'Início',
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.library_books_outlined),
           label: 'Extrato',
         ),
         BottomNavigationBarItem(
-            icon: SizedBox(width: 1),
+            icon: Container(),
             label: ''), // item vazio com o único objetivo de melhorar o layout
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.equalizer_rounded),
           label: 'Estatística',
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.more_horiz),
           label: 'Mais',
         ),
