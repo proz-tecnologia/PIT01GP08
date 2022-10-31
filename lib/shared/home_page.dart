@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_bottom_nav_bar.dart';
-import '../home/widgets/home_content_page.dart';
+import '../home/home_content_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
