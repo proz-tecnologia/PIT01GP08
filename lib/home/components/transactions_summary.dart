@@ -16,7 +16,7 @@ class TransactionsSummary extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Á vencer/vencidas',
+            'A vencer/vencidas',
             style: TextStyle(
               color: Theme.of(context).disabledColor,
               fontWeight: FontWeight.w700,
