@@ -1,6 +1,9 @@
 import 'package:financial_app/design_sys/sizes.dart';
 import 'package:flutter/material.dart';
 
+import '../../shared/components/month_changer.dart';
+import '../components/total_tile.dart';
+
 class ResumeInfoWidget extends StatefulWidget {
   const ResumeInfoWidget({
     Key? key,
@@ -11,6 +14,7 @@ class ResumeInfoWidget extends StatefulWidget {
 }
 
 class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
+  bool visible = true;
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -25,125 +29,51 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
           children: [
             SizedBox(height: spaceBetween),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Container(),
-                ),
-                IconButton(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    onPressed: () {},
-                    icon: const Icon(Icons.arrow_back_ios)),
-                Text(
-                  'Dezembro',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                IconButton(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    onPressed: () {},
-                    icon: const Icon(Icons.arrow_forward_ios)),
-                Expanded(
-                  flex: 1,
-                  child: Container(),
-                ),
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                MonthChanger('Dezembro'),
               ],
-            ),
-            SizedBox(height: spaceBetween),
-            Text(
-              'Saldo',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onPrimary,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Text(
-              'R\$ 2600,00',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onPrimary,
-                fontWeight: FontWeight.bold,
-              ),
             ),
             SizedBox(height: spaceBetween),
             Row(
               children: [
+                Expanded(flex: 1, child: Container()),
+                TotalTile(
+                  label: 'Saldo',
+                  value: 'R\$ 2600,00',
+                  visible: visible,
+                ),
                 Expanded(
                   flex: 1,
-                  child: Container(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(Sizes.smallSpace),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.arrow_upward,
-                        size: Sizes.mediumIconSize,
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Text(
-                            'Receitas',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          Text(
-                            'RS 1000,00',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  child: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        visible = !visible;
+                      });
+                    },
+                    icon: Icon(
+                      visible ? Icons.visibility : Icons.visibility_off,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: Container(),
+              ],
+            ),
+            SizedBox(height: spaceBetween),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                TotalTile(
+                  icon: Icons.arrow_downward,
+                  label: 'Despesas',
+                  value: 'R\$ 150,00',
+                  visible: visible,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(Sizes.smallSpace),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.arrow_downward,
-                        size: Sizes.mediumIconSize,
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Text(
-                            'Despesas',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          Text(
-                            'RS 150,00',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(),
+                TotalTile(
+                  icon: Icons.arrow_upward,
+                  label: 'Receitas',
+                  value: 'R\$ 1000,00',
+                  visible: visible,
                 ),
               ],
             ),
