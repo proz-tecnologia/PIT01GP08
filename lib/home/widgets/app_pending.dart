@@ -1,5 +1,6 @@
-import 'package:financial_app/design_sys/colors.dart';
 import 'package:flutter/material.dart';
+
+import '../../design_sys/colors.dart';
 
 class AppPending extends StatelessWidget {
   const AppPending({
