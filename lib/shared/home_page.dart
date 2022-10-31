@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'app_bottom_nav_bar.dart';
-import '../home/widgets/home_content_page.dart';
+import '../home/home_content_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-  final String title;
+  const HomePage({super.key});
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -27,8 +26,8 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).pushNamed('newEntry'),
-        tooltip: 'Despesa',
+        onPressed: () {},
+        tooltip: 'Nova movimentação',
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

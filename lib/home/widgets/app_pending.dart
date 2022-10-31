@@ -1,8 +1,8 @@
-import 'package:financial_app/design_sys/colors.dart';
-import 'package:financial_app/design_sys/sizes.dart';
 import 'package:flutter/material.dart';
 
 import '../components/pending_card.dart';
+import '../../design_sys/colors.dart';
+import '../../design_sys/sizes.dart';
 
 class AppPending extends StatelessWidget {
   const AppPending({
