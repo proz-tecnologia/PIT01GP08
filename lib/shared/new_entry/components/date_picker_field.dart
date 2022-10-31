@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class AppDatePicker extends StatefulWidget {
-  const AppDatePicker({
+class AppDatePickerField extends StatefulWidget {
+  const AppDatePickerField({
     Key? key,
     required Color color,
+    this.initialValue,
   })  : _color = color,
         super(key: key);
 
   final Color _color;
+  final String? initialValue;
 
   @override
-  State<AppDatePicker> createState() => _AppDatePickerState();
+  State<AppDatePickerField> createState() => AppDatePickerFieldState();
 }
 
-class _AppDatePickerState extends State<AppDatePicker> {
+class AppDatePickerFieldState extends State<AppDatePickerField> {
   TextEditingController dateInput = TextEditingController(
       text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: dateInput,
+      initialValue: widget.initialValue,
       decoration: InputDecoration(
         suffixIcon: Icon(
           Icons.calendar_today_rounded,

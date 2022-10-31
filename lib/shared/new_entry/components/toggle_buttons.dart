@@ -5,13 +5,10 @@ import '../../../design_sys/colors.dart';
 class AppToggleButtons extends StatefulWidget {
   const AppToggleButtons({
     Key? key,
-    required List<bool> select,
     required Color color,
-  })  : _select = select,
-        _color = color,
+  })  : _color = color,
         super(key: key);
 
-  final List<bool> _select;
   final Color _color;
 
   @override
@@ -19,13 +16,19 @@ class AppToggleButtons extends StatefulWidget {
 }
 
 class _AppToggleButtonsState extends State<AppToggleButtons> {
+  final List<bool> _select = <bool>[true, false, false];
   @override
   Widget build(BuildContext context) {
     return ToggleButtons(
       onPressed: (int index) {
         setState(() {
-          for (int i = 0; i < widget._select.length; i++) {
-            widget._select[i] = i == index;
+          for (int i = 0; i < _select.length; i++) {
+            _select[i] = i == index;
+          }
+          if (index == 0) {
+            //notifier.changeLabel(normal: true);
+          } else {
+            //notifier.changeLabel(normal: false);
           }
         });
       },
@@ -40,7 +43,7 @@ class _AppToggleButtonsState extends State<AppToggleButtons> {
         minHeight: 40.0,
         minWidth: 80.0,
       ),
-      isSelected: widget._select,
+      isSelected: _select,
       children: const [
         Text('Normal'),
         Text('Fixa'),

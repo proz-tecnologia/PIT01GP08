@@ -12,6 +12,7 @@ class AppTheme {
       dividerColor: AppColors.lightGrey,
       errorColor: AppColors.expense,
       primaryColor: AppColors.primary,
+      secondaryHeaderColor: AppColors.darkGrey,
       shadowColor: AppColors.darkGrey,
       toggleableActiveColor: AppColors.primary,
       colorScheme: const ColorScheme(
@@ -50,6 +51,9 @@ class AppTheme {
         disabledActionTextColor: AppColors.lightGrey,
         contentTextStyle: const TextStyle(color: AppColors.white),
       ),
+      textTheme: const TextTheme(
+        titleLarge: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+      ),
     );
   }
 
@@ -63,6 +67,7 @@ class AppTheme {
       dividerColor: AppColors.darkGrey,
       errorColor: AppColors.expense,
       primaryColor: AppColors.primary,
+      secondaryHeaderColor: AppColors.lightGrey,
       shadowColor: AppColors.darkGrey,
       toggleableActiveColor: AppColors.primary,
       colorScheme: const ColorScheme(
@@ -109,6 +114,9 @@ class AppTheme {
         disabledActionTextColor: AppColors.lightGrey,
         contentTextStyle: const TextStyle(color: AppColors.white),
       ),
+      textTheme: const TextTheme(
+        titleLarge: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+      ),
     );
   }
 }
@@ -117,7 +125,8 @@ ButtonStyle _appButtonStyle = const ButtonStyle(
   padding: MaterialStatePropertyAll(EdgeInsets.all(16.0)),
   textStyle: MaterialStatePropertyAll(
     TextStyle(
-      fontWeight: FontWeight.bold,
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
       letterSpacing: 1.0,
     ),
   ),
