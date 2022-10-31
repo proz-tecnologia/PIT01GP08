@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_pending.dart';
-import '../components/transactions_summary.dart';
+import 'transactions_summary.dart';
 import 'resume_info_widget.dart';
 
 class HomeContentPage extends StatefulWidget {
