@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
         children: const [
           HomeContentPage(),
           Center(child: Text('Page Extrato')),
-          Center(child: Text('Page Estatítica')),
+          Center(child: Text('Page Estatística')),
           Center(child: Text('Page mais')),
         ],
       ),
