@@ -33,10 +33,10 @@ class _AppToggleButtonsState extends State<AppToggleButtons> {
         });
       },
       borderRadius: const BorderRadius.all(Radius.circular(8)),
-      color: Theme.of(context).backgroundColor == AppColors.black
+      color: Theme.of(context).colorScheme.background == AppColors.black
           ? AppColors.white
           : widget._color,
-      selectedColor: Theme.of(context).backgroundColor,
+      selectedColor: Theme.of(context).colorScheme.background,
       fillColor: widget._color,
       textStyle: const TextStyle(fontWeight: FontWeight.w500),
       constraints: const BoxConstraints(
