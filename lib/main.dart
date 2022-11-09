@@ -1,5 +1,5 @@
 import 'package:financial_app/design_sys/themes.dart';
-import 'package:financial_app/shared/new_entry/new_entry_page.dart';
+import 'package:financial_app/views/new_entry/new_entry_page.dart';
 import 'package:flutter/material.dart';
 
 import 'shared/home_page.dart';
