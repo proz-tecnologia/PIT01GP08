@@ -4,14 +4,14 @@ import '../models/section.dart';
 
 class StatisticsController {
   final _sections = <Section>[];
+  late double _total;
 
   StatisticsController() {
     _getSections();
   }
 
-  List<Section> get sections {
-    return _sections;
-  }
+  List<Section> get sections => _sections;
+  double get total => _total;
 
   void _getSections() {
     _sections.addAll([
@@ -20,10 +20,11 @@ class StatisticsController {
       Section(3, color: Colors.purple),
       Section(2, color: Colors.green),
     ]);
+    _total = _getTotal();
     _setPercents();
   }
 
-  double getTotal() {
+  double _getTotal() {
     double total = 0;
     for (var s in _sections) {
       total += s.value;
@@ -32,9 +33,8 @@ class StatisticsController {
   }
 
   void _setPercents() {
-    double total = getTotal();
     for (var s in _sections) {
-      s.percent = s.value / total * 100;
+      s.percent = s.value / _total * 100;
     }
   }
 }
