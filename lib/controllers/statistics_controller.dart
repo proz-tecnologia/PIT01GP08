@@ -15,10 +15,11 @@ class StatisticsController {
 
   void _getSections() {
     _sections.addAll([
-      Section(5, color: Colors.blue),
-      Section(4, color: Colors.amber),
-      Section(3, color: Colors.purple),
-      Section(2, color: Colors.green),
+      Section(5, description: 'Section 1', color: Colors.blue),
+      Section(4, description: 'Section 2', color: Colors.amber),
+      Section(3, description: 'Section 3', color: Colors.purple),
+      Section(2, description: 'Section 4', color: Colors.green),
+      Section(0.5, description: 'Section 5', color: Colors.pink),
     ]);
     _total = _getTotal();
     _setPercents();

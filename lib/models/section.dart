@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Section {
   Section(
     double value, {
-    String description = '',
+    required String description,
     required Color color,
   })  : _value = value,
         _description = description,
