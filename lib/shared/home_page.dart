@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'app_bottom_nav_bar.dart';
 import '../views/home/widgets/home_content_page.dart';
+import '../views/statistics/statistics_page.dart';
+import 'app_bottom_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -22,7 +23,7 @@ class _HomePageState extends State<HomePage> {
         children: const [
           HomeContentPage(),
           Center(child: Text('Page Extrato')),
-          Center(child: Text('Page Estatítica')),
+          StatisticsPage(),
           Center(child: Text('Page mais')),
         ],
       ),
