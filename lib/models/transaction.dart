@@ -18,6 +18,8 @@ class Transaction {
 
   DateTime get date => _date;
   String get description => _description;
-  String get value => 'R\$ ${_value.toStringAsFixed(2).replaceFirst('.', ',')}';
+  double get value => _value;
+  String get valueString =>
+      'R\$ ${_value.toStringAsFixed(2).replaceFirst('.', ',')}';
   String get type => _type.name;
 }

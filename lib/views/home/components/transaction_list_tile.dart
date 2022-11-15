@@ -15,7 +15,7 @@ class TransactionListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        mySummary[index].value,
+        mySummary[index].valueString,
         style: const TextStyle(
           color: AppColors.expense,
           fontWeight: FontWeight.bold,
@@ -44,7 +44,6 @@ class TransactionListTile extends StatelessWidget {
     );
   }
 }
-
 
 //Mocked example values
 List<Transaction> mySummary = [
