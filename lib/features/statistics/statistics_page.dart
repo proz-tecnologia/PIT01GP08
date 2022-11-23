@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../controllers/statistics_controller.dart';
+import 'statistics_controller.dart';
 import 'statistics_states.dart';
 import 'widgets/chart.dart';
 import 'widgets/legend.dart';

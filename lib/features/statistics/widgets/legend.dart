@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../controllers/statistics_controller.dart';
+import '../statistics_controller.dart';
 
 class Legend extends StatelessWidget {
   const Legend(

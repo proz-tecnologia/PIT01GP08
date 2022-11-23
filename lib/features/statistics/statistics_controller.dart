@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../models/section.dart';
-import '../views/statistics/statistics_states.dart';
+import 'models/section.dart';
+import 'statistics_states.dart';
 
 class StatisticsController {
   final _sections = <Section>[];

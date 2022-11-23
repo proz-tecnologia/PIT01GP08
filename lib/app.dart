@@ -1,10 +1,10 @@
-import 'package:financial_app/shared/home_page.dart';
+import 'package:financial_app/features/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:financial_app/design_sys/themes.dart';
 
-import 'views/new_entry/new_entry_page.dart';
-import 'views/register/register_page.dart';
-import 'views/splash/splash.dart';
+import 'features/new_entry/new_entry_page.dart';
+import 'features/register/register_page.dart';
+import 'features/splash/splash.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

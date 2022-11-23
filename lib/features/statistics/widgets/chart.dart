@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-import '../../../controllers/statistics_controller.dart';
+import '../statistics_controller.dart';
 import '../../../design_sys/colors.dart';
 
 class Chart extends StatelessWidget {

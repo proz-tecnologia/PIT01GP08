@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../design_sys/colors.dart';
-import '../../../models/transaction.dart';
+import '../models/transaction.dart';
 
 class TransactionListTile extends StatelessWidget {
   const TransactionListTile(
