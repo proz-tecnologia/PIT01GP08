@@ -4,9 +4,22 @@ import 'package:flutter/material.dart';
 import 'widgets/animated_logo.dart';
 import 'widgets/app_progress.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
   final Image _logo = Image.asset('assets/logo_white_flat.png');
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 4)).then(
+      (_) => Navigator.of(context).pushReplacementNamed('/home-page'),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
