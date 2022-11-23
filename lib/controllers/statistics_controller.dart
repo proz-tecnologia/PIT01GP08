@@ -23,7 +23,10 @@ class StatisticsController {
   void _getSections() async {
     state.value = LoadingStatisticsState();
     try {
-      // trocar pela chamada da api
+      // trocar pela chamada da api;
+      // - pegar despesas do mês
+      // - separar em categorias
+      // - gerar seções com base nos valores totais
       _sections.addAll([
         Section(5, description: 'Section 1', color: Colors.blue),
         Section(4, description: 'Section 2', color: Colors.amber),
