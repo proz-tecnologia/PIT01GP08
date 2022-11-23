@@ -9,7 +9,6 @@ import 'statistics_states.dart';
 class StatisticsController extends Cubit<StatisticsState> {
   final _sections = <Section>[];
   late double _total;
-  final touchedIndex = ValueNotifier(-1);
 
   StatisticsController() : super(LoadingStatisticsState()) {
     _getSections();

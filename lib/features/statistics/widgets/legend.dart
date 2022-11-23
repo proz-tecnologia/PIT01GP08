@@ -1,3 +1,4 @@
+import 'package:financial_app/features/statistics/widgets/index_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,19 +11,21 @@ class Legend extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final controller = context.read<StatisticsController>();
+    final touchedIndex = IndexController();
+
     return ListView.builder(
       itemCount: controller.sections.length,
       itemBuilder: (context, index) => AnimatedBuilder(
-        animation: controller.touchedIndex,
+        animation: touchedIndex,
         builder: (context, child) {
           return ListTile(
-            onTap: () => controller.touchedIndex.value =
-                controller.touchedIndex.value == index ? -1 : index,
+            onTap: () =>
+                touchedIndex.value = touchedIndex.value == index ? -1 : index,
             leading: SizedBox(
               width: width * 0.1,
               child: Center(
                 child: CircleAvatar(
-                    radius: controller.touchedIndex.value == index ? 12 : 8,
+                    radius: touchedIndex.value == index ? 12 : 8,
                     backgroundColor: controller.sections[index].color),
               ),
             ),
