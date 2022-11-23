@@ -31,10 +31,12 @@ class StatisticsController extends Cubit<StatisticsState> {
         Section(2, description: 'Section 4', color: Colors.green),
         Section(0.5, description: 'Section 5', color: Colors.pink),
       ]);
+
       _total = _getTotal();
       _setPercents();
-      await Future.delayed(const Duration(seconds: 1));
 
+      // para testes de gerência de estado:
+      await Future.delayed(const Duration(seconds: 1));
       final random = Random();
       if (random.nextBool() && random.nextBool()) {
         throw Exception();
