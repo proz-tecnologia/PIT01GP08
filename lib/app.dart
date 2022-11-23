@@ -18,7 +18,7 @@ class App extends StatelessWidget {
         '/splash-screen': (context) => SplashScreen(),
         '/register-page': (context) => const RegisterPage(),
         '/home-page': (context) => HomePage(title: 'Flutter Demo Home Page'),
-        'newEntry': (context) => NewEntryPage(),
+        '/new-entry': (context) => NewEntryPage(),
       },
       //TODO: Remover a linha 20 antes da entrega.
       //A linha seguinte foi deixada apenas para uso de testes durante o desenvolvimento.
