@@ -6,27 +6,12 @@ class AppTheme {
 
   static ThemeData get lightTheme {
     return ThemeData(
-      backgroundColor: AppColors.white,
       dialogBackgroundColor: AppColors.white,
       disabledColor: AppColors.lightGrey,
       dividerColor: AppColors.lightGrey,
-      errorColor: AppColors.expense,
       primaryColor: AppColors.primary,
       secondaryHeaderColor: AppColors.darkGrey,
       shadowColor: AppColors.darkGrey,
-      toggleableActiveColor: AppColors.primary,
-      colorScheme: const ColorScheme(
-          brightness: Brightness.light,
-          primary: AppColors.primary,
-          onPrimary: AppColors.white,
-          secondary: AppColors.white,
-          onSecondary: AppColors.black,
-          error: AppColors.expense,
-          onError: AppColors.white,
-          background: AppColors.white,
-          onBackground: AppColors.black,
-          surface: AppColors.white,
-          onSurface: AppColors.black),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         type: BottomNavigationBarType.fixed,
         elevation: 0,
@@ -54,6 +39,66 @@ class AppTheme {
       textTheme: const TextTheme(
         titleLarge: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
       ),
+      switchTheme: SwitchThemeData(
+        thumbColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return AppColors.primary;
+          }
+          return null;
+        }),
+        trackColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return AppColors.primary;
+          }
+          return null;
+        }),
+      ),
+      radioTheme: RadioThemeData(
+        fillColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return AppColors.primary;
+          }
+          return null;
+        }),
+      ),
+      checkboxTheme: CheckboxThemeData(
+        fillColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return AppColors.primary;
+          }
+          return null;
+        }),
+      ),
+      colorScheme: const ColorScheme(
+              brightness: Brightness.light,
+              primary: AppColors.primary,
+              onPrimary: AppColors.white,
+              secondary: AppColors.white,
+              onSecondary: AppColors.black,
+              error: AppColors.expense,
+              onError: AppColors.white,
+              background: AppColors.white,
+              onBackground: AppColors.black,
+              surface: AppColors.white,
+              onSurface: AppColors.black)
+          .copyWith(background: AppColors.white)
+          .copyWith(error: AppColors.expense),
     );
   }
 
@@ -61,27 +106,12 @@ class AppTheme {
     return ThemeData(
       brightness: Brightness.dark,
       canvasColor: AppColors.black,
-      backgroundColor: AppColors.black,
       dialogBackgroundColor: AppColors.black,
       disabledColor: AppColors.darkGrey,
       dividerColor: AppColors.darkGrey,
-      errorColor: AppColors.expense,
       primaryColor: AppColors.primary,
       secondaryHeaderColor: AppColors.lightGrey,
       shadowColor: AppColors.darkGrey,
-      toggleableActiveColor: AppColors.primary,
-      colorScheme: const ColorScheme(
-          brightness: Brightness.dark,
-          primary: AppColors.primary,
-          onPrimary: AppColors.black,
-          secondary: AppColors.black,
-          onSecondary: AppColors.white,
-          error: AppColors.expense,
-          onError: AppColors.black,
-          background: AppColors.black,
-          onBackground: AppColors.white,
-          surface: AppColors.black,
-          onSurface: AppColors.white),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         type: BottomNavigationBarType.fixed,
         elevation: 0,
@@ -117,6 +147,66 @@ class AppTheme {
       textTheme: const TextTheme(
         titleLarge: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
       ),
+      switchTheme: SwitchThemeData(
+        thumbColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return AppColors.primary;
+          }
+          return null;
+        }),
+        trackColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return AppColors.primary;
+          }
+          return null;
+        }),
+      ),
+      radioTheme: RadioThemeData(
+        fillColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return AppColors.primary;
+          }
+          return null;
+        }),
+      ),
+      checkboxTheme: CheckboxThemeData(
+        fillColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return AppColors.primary;
+          }
+          return null;
+        }),
+      ),
+      colorScheme: const ColorScheme(
+              brightness: Brightness.dark,
+              primary: AppColors.primary,
+              onPrimary: AppColors.black,
+              secondary: AppColors.black,
+              onSecondary: AppColors.white,
+              error: AppColors.expense,
+              onError: AppColors.black,
+              background: AppColors.black,
+              onBackground: AppColors.white,
+              surface: AppColors.black,
+              onSurface: AppColors.white)
+          .copyWith(background: AppColors.black)
+          .copyWith(error: AppColors.expense),
     );
   }
 }
