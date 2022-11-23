@@ -2,22 +2,18 @@ import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../statistics_controller.dart';
-import '../../../design_sys/colors.dart';
 
 class Chart extends StatelessWidget {
-  const Chart(
-    this.controller, {
-    Key? key,
-  }) : super(key: key);
-
-  final StatisticsController controller;
+  const Chart({super.key});
 
   @override
   Widget build(BuildContext context) {
     final screenMinSize = min(
         MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
+    final controller = context.read<StatisticsController>();
     return Stack(
       alignment: AlignmentDirectional.center,
       children: [

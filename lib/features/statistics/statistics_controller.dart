@@ -1,27 +1,25 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'models/section.dart';
 import 'statistics_states.dart';
 
-class StatisticsController {
+class StatisticsController extends Cubit<StatisticsState> {
   final _sections = <Section>[];
   late double _total;
   final touchedIndex = ValueNotifier(-1);
-  final state = ValueNotifier<StatisticsState>(InitialStatisticsState());
 
-  StatisticsController._() {
+  StatisticsController() : super(LoadingStatisticsState()) {
     _getSections();
-  }
-
-  factory StatisticsController() {
-    return StatisticsController._();
   }
 
   List<Section> get sections => _sections;
   double get total => _total;
 
   void _getSections() async {
-    state.value = LoadingStatisticsState();
+    emit(LoadingStatisticsState());
     try {
       // trocar pela chamada da api;
       // - pegar despesas do mês
@@ -36,10 +34,16 @@ class StatisticsController {
       ]);
       _total = _getTotal();
       _setPercents();
-      await Future.delayed(const Duration(seconds: 2));
-      state.value = SuccessStatisticsState();
+      await Future.delayed(const Duration(seconds: 1));
+
+      final random = Random();
+      if (random.nextBool() && random.nextBool()) {
+        throw Exception();
+      }
+
+      emit(SuccessStatisticsState());
     } catch (e) {
-      state.value = ErrorStatisticsState();
+      emit(ErrorStatisticsState());
     }
   }
 
@@ -55,10 +59,5 @@ class StatisticsController {
     for (var s in _sections) {
       s.percent = s.value / _total * 100;
     }
-  }
-
-  void dispose() {
-    StatisticsController().dispose();
-    touchedIndex.dispose();
   }
 }

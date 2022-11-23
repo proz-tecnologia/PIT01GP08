@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../statistics_controller.dart';
 
 class Legend extends StatelessWidget {
-  const Legend(
-    this.controller, {
-    Key? key,
-  }) : super(key: key);
-
-  final StatisticsController controller;
+  const Legend({super.key});
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    final controller = context.read<StatisticsController>();
     return ListView.builder(
       itemCount: controller.sections.length,
       itemBuilder: (context, index) => AnimatedBuilder(
