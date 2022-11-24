@@ -1,9 +1,10 @@
-import 'package:financial_app/shared/home_page.dart';
-import 'package:financial_app/splash/splash.dart';
+import 'package:financial_app/features/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:financial_app/design_sys/themes.dart';
-import 'package:financial_app/register/register_page.dart';
-import 'package:financial_app/shared/new_entry/new_entry_page.dart';
+
+import 'features/new_entry/new_entry_page.dart';
+import 'features/register/register_page.dart';
+import 'features/splash/splash.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -17,7 +18,7 @@ class App extends StatelessWidget {
       routes: {
         '/splash-screen': (context) => SplashScreen(),
         '/register-page': (context) => const RegisterPage(),
-        '/home-page': (context) => HomePage(title: 'Flutter Demo Home Page'),
+        '/home-page': (context) => const HomePage(title: 'Flutter Demo Home Page'),
         '/new-entry': (context) => NewEntryPage(),
       },
       //TODO: Remover a linha 20 antes da entrega.

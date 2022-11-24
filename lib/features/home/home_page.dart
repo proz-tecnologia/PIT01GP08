@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'app_bottom_nav_bar.dart';
-import '../home/widgets/home_content_page.dart';
+import '../statistics/statistics_controller.dart';
+import 'home_content_page.dart';
+import '../statistics/statistics_page.dart';
+import 'widgets/app_bottom_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -19,11 +22,14 @@ class _HomePageState extends State<HomePage> {
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: controller,
-        children: const [
-          HomeContentPage(),
-          Center(child: Text('Page Extrato')),
-          Center(child: Text('Page Estatítica')),
-          Center(child: Text('Page mais')),
+        children: [
+          const HomeContentPage(),
+          const Center(child: Text('Page Extrato')),
+          BlocProvider(
+            create: (_) => StatisticsController(),
+            child: const StatisticsPage(),
+          ),
+          const Center(child: Text('Page mais')),
         ],
       ),
       floatingActionButton: FloatingActionButton(
