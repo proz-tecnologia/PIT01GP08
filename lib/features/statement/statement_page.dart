@@ -8,14 +8,9 @@ import 'statement_controller.dart';
 import 'statement_states.dart';
 import '../../shared/widgets/transaction_tile.dart';
 
-class StatementPage extends StatefulWidget {
+class StatementPage extends StatelessWidget {
   const StatementPage({super.key});
 
-  @override
-  State<StatementPage> createState() => _StatementPageState();
-}
-
-class _StatementPageState extends State<StatementPage> {
   @override
   Widget build(BuildContext context) {
     return Column(
