@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../design_sys/sizes.dart';
+import '../../shared/widgets/top_bar_toggle_button.dart';
 import '../home/components/month_changer.dart';
 import 'statement_controller.dart';
 import 'statement_states.dart';
-import '../../shared/widgets/topbar_button.dart';
 import '../../shared/widgets/transaction_tile.dart';
 
 class StatementPage extends StatefulWidget {
@@ -45,13 +45,22 @@ class _StatementPageState extends State<StatementPage> {
               if (currentState is ErrorStatementState) {
                 return const Center(child: Text('Erro'));
               }
-              final list = context.read<StatementController>().list;
+              final controller = context.read<StatementController>();
+              final list = controller.list;
               return Column(
                 children: [
                   Row(
                     children: [
-                      TopBarToggle.expense(),
-                      TopBarToggle.income(),
+                      TopBarToggleButton.expense(
+                        isSelected: currentState is BothStatementState ||
+                            currentState is ExpenseStatementState,
+                        onPressed: () => controller.toggleState(false),
+                      ),
+                      TopBarToggleButton.income(
+                        isSelected: currentState is BothStatementState ||
+                            currentState is IncomeStatementState,
+                        onPressed: () => controller.toggleState(true),
+                      ),
                     ],
                   ),
                   Expanded(

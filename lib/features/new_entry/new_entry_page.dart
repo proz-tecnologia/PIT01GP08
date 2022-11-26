@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../design_sys/colors.dart';
+import '../../shared/widgets/top_bar_toggle_button.dart';
 import 'components/components.dart';
 
 class NewEntryPage extends StatefulWidget {
@@ -43,16 +44,12 @@ class _NewEntryPageState extends State<NewEntryPage> {
           children: [
             Row(
               children: [
-                NewEntryTopBarItem(
-                  'DESPESA',
-                  color: AppColors.expense,
-                  selected: _select[0],
+                TopBarToggleButton.expense(
+                  isSelected: _select[0],
                   onPressed: () => _changeType(0),
                 ),
-                NewEntryTopBarItem(
-                  'RECEITA',
-                  color: AppColors.income,
-                  selected: _select[1],
+                TopBarToggleButton.income(
+                  isSelected: _select[1],
                   onPressed: () => _changeType(1),
                 ),
               ],
