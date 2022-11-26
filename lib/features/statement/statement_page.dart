@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../design_sys/sizes.dart';
 import '../../shared/widgets/top_bar_toggle_button.dart';
-import '../home/components/month_changer.dart';
+import '../../shared/widgets/month_changer.dart';
 import 'statement_controller.dart';
 import 'statement_states.dart';
 import '../../shared/widgets/transaction_tile.dart';
