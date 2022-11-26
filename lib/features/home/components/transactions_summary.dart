@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../design_sys/sizes.dart';
-import '../../../shared/widgets/transaction_list_tile.dart';
+import '../../../shared/models/transaction.dart';
+import '../../../shared/widgets/transaction_tile.dart';
 
 class TransactionsSummary extends StatelessWidget {
   const TransactionsSummary({
@@ -22,11 +23,38 @@ class TransactionsSummary extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          const TransactionListTile(0),
+          TransactionTile.alert(
+            Transaction(
+              type: Type.expense,
+              description: 'Parcela carro',
+              value: 850,
+              date: DateTime.now().add(
+                const Duration(days: 3),
+              ),
+            ),
+          ),
           const Divider(),
-          const TransactionListTile(1),
+          TransactionTile.alert(
+            Transaction(
+              type: Type.expense,
+              description: 'Conta de energia',
+              value: 450,
+              date: DateTime.now().add(
+                const Duration(days: 10),
+              ),
+            ),
+          ),
           const Divider(),
-          const TransactionListTile(2),
+          TransactionTile.alert(
+            Transaction(
+              type: Type.expense,
+              description: 'Remédios',
+              value: 23.90,
+              date: DateTime.now().add(
+                const Duration(days: 12),
+              ),
+            ),
+          ),
         ],
       ),
     );

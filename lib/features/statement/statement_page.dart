@@ -61,7 +61,7 @@ class _StatementPageState extends State<StatementPage> {
                       child: ListView.builder(
                         itemCount: list.length,
                         itemBuilder: (context, index) => Card(
-                          child: TransactionTile(transaction: list[index]),
+                          child: TransactionTile.check(list[index]),
                         ),
                       ),
                     ),
@@ -75,4 +75,3 @@ class _StatementPageState extends State<StatementPage> {
     );
   }
 }
-

@@ -5,12 +5,40 @@ import '../../design_sys/sizes.dart';
 import '../models/transaction.dart';
 
 class TransactionTile extends StatelessWidget {
-  const TransactionTile({
+  const TransactionTile(
+    this.transaction, {
     Key? key,
-    required this.transaction,
+    required this.trailingCondition,
+    required this.trailingIcon,
   }) : super(key: key);
 
   final Transaction transaction;
+  final Icon trailingIcon;
+  final bool trailingCondition;
+
+  factory TransactionTile.alert(Transaction transaction) {
+    return TransactionTile(
+      transaction,
+      trailingCondition:
+          transaction.date.difference(DateTime.now()) < const Duration(days: 4),
+      trailingIcon: const Icon(
+        Icons.warning_rounded,
+        color: AppColors.expense,
+      ),
+    );
+  }
+
+  factory TransactionTile.check(Transaction transaction) {
+    return TransactionTile(
+      transaction,
+      trailingCondition: true,
+      trailingIcon: const Icon(
+        Icons.check_circle_rounded,
+        color: AppColors.primary,
+        size: Sizes.smallIconSize,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,15 +61,9 @@ class TransactionTile extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .bodySmall
-                ?.copyWith(
-                    color: Theme.of(context)
-                        .secondaryHeaderColor),
+                ?.copyWith(color: Theme.of(context).secondaryHeaderColor),
           ),
-          Icon(
-            Icons.check_circle_rounded,
-            color: Theme.of(context).primaryColor,
-            size: Sizes.smallIconSize,
-          )
+          trailingCondition ? trailingIcon : const SizedBox.shrink(),
         ],
       ),
     );
