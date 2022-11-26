@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../design_sys/sizes.dart';
-import 'transaction_list_tile.dart';
+import '../../../shared/widgets/transaction_list_tile.dart';
 
 class TransactionsSummary extends StatelessWidget {
   const TransactionsSummary({

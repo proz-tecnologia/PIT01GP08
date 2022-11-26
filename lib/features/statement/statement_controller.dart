@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../home/models/transaction.dart';
+import '../../shared/models/transaction.dart';
 import 'statement_states.dart';
 
 class StatementController extends Cubit<StatementState> {

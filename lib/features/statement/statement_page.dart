@@ -5,8 +5,8 @@ import '../../design_sys/sizes.dart';
 import '../home/components/month_changer.dart';
 import 'statement_controller.dart';
 import 'statement_states.dart';
-import 'widgets/topbar_button.dart';
-import 'widgets/transaction_tile.dart';
+import '../../shared/widgets/topbar_button.dart';
+import '../../shared/widgets/transaction_tile.dart';
 
 class StatementPage extends StatefulWidget {
   const StatementPage({super.key});

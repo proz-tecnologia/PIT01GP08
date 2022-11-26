@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../design_sys/colors.dart';
-import '../statement_controller.dart';
-import '../statement_states.dart';
+import '../../design_sys/colors.dart';
+import '../../features/statement/statement_controller.dart';
+import '../../features/statement/statement_states.dart';
 
 class TopBarToggle extends StatelessWidget {
   const TopBarToggle(
