@@ -1,48 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../design_sys/colors.dart';
+import '../statement_controller.dart';
+import '../statement_states.dart';
 
-class NewEntryTopBarItem extends StatefulWidget {
-  const NewEntryTopBarItem(
-    String text, {
+class TopBarToggle extends StatelessWidget {
+  const TopBarToggle(
+    this.text, {
     Key? key,
-    required Color color,
-  })  : _text = text,
-        _color = color,
-        super(key: key);
+    required this.color,
+    required this.isIncome,
+  }) : super(key: key);
 
-  final String _text;
-  final Color _color;
+  final String text;
+  final Color color;
+  final bool isIncome;
 
-  @override
-  State<NewEntryTopBarItem> createState() => _NewEntryTopBarItemState();
-}
+  factory TopBarToggle.expense() {
+    return const TopBarToggle(
+      'DESPESA',
+      color: AppColors.expense,
+      isIncome: false,
+    );
+  }
 
-class _NewEntryTopBarItemState extends State<NewEntryTopBarItem> {
-  final bool _selected = true;
+  factory TopBarToggle.income() {
+    return const TopBarToggle(
+      'RECEITA',
+      color: AppColors.income,
+      isIncome: true,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(children: [
-        SizedBox(
-          width: double.infinity,
-          child: TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-              foregroundColor: _selected ? widget._color : AppColors.darkGrey,
+    final controller = context.read<StatementController>();
+    return BlocBuilder<StatementController, StatementState>(
+      builder: (context, state) {
+        final selected = state is BothStatementState ||
+            (isIncome
+                ? state is IncomeStatementState
+                : state is ExpenseStatementState);
+        return Expanded(
+          child: Column(children: [
+            SizedBox(
+              width: double.infinity,
+              child: TextButton(
+                onPressed: () => controller.toggleState(isIncome),
+                style: TextButton.styleFrom(
+                  foregroundColor: selected ? color : AppColors.darkGrey,
+                ),
+                child: Text(text),
+              ),
             ),
-            child: Text(widget._text),
-          ),
-        ),
-        _selected
-            ? Container(
-                color: widget._color,
-                width: MediaQuery.of(context).size.width / 2,
-                height: 2,
-              )
-            : Container(),
-      ]),
+            selected
+                ? Container(
+                    color: color,
+                    height: 2,
+                  )
+                : const SizedBox.shrink(),
+          ]),
+        );
+      },
     );
   }
 }

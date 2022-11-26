@@ -30,6 +30,19 @@ class StatementController extends Cubit<StatementState> {
       emit(ErrorStatementState());
     }
   }
+
+  void toggleState(bool isIncome) {
+    if (state is BothStatementState) {
+      if (isIncome) {
+        emit(ExpenseStatementState());
+      } else {
+        emit(IncomeStatementState());
+      }
+    } else if ((state is ExpenseStatementState && isIncome) ||
+        (state is IncomeStatementState && !isIncome)) {
+      emit(BothStatementState());
+    }
+  }
 }
 
 final List<Transaction> _mock = [
