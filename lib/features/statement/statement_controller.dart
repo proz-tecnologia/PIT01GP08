@@ -7,17 +7,17 @@ import 'statement_states.dart';
 
 class StatementController extends Cubit<StatementState> {
   StatementController() : super(LoadingStatementState()) {
-    init();
+    _init();
   }
   final List<Transaction> _list = [];
 
-  List<Transaction> get list => _list;
+  List<Transaction> get list => _showTransactions();
 
-  void init() async {
+  void _init() async {
     emit(LoadingStatementState());
     try {
-      final list = await _getTransactions();
-      _list.addAll(list);
+      // TODO: trocar pela requisição na API
+      _list.addAll(_mock);
 
       // para testes de gerência de estado:
       await Future.delayed(const Duration(seconds: 1));
@@ -43,22 +43,16 @@ class StatementController extends Cubit<StatementState> {
         (state is IncomeStatementState && !isIncome)) {
       emit(BothStatementState());
     }
-    final list = await _getTransactions();
-    _list.clear();
-    _list.addAll(list);
   }
 
-  Future<List<Transaction>> _getTransactions() async {
-    if (_list.isEmpty || state is BothStatementState) {
-      // TODO: trocar pela requisição na API
-      return _mock;
+  List<Transaction> _showTransactions() {
+    if (state is BothStatementState) {
+      return _list;
     }
     if (state is IncomeStatementState) {
-      // TODO: trocar pela requisição na API
-      return _mock.where((element) => element.type == 'income').toList();
+      return _list.where((element) => element.type == 'income').toList();
     }
-    // TODO: trocar pela requisição na API
-    return _mock.where((element) => element.type == 'expense').toList();
+    return _list.where((element) => element.type == 'expense').toList();
   }
 }
 
