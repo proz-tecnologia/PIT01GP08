@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../statement/statement_controller.dart';
+import '../statement/statement_page.dart';
 import '../statistics/statistics_controller.dart';
 import 'home_content_page.dart';
 import '../statistics/statistics_page.dart';
@@ -24,7 +26,10 @@ class _HomePageState extends State<HomePage> {
         controller: controller,
         children: [
           const HomeContentPage(),
-          const Center(child: Text('Page Extrato')),
+          BlocProvider(
+            create: (_) => StatementController(),
+            child: const StatementPage(),
+          ),
           BlocProvider(
             create: (_) => StatisticsController(),
             child: const StatisticsPage(),

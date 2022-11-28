@@ -5,6 +5,7 @@ class Sizes {
   static const mediumSpace = 16.0;
   static const largeSpace = 24.0;
 
+  static const smallIconSize = 20.0;
   static const mediumIconSize = 32.0;
   static const largeIconSize = 40.0;
 
