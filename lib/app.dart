@@ -17,7 +17,7 @@ class App extends StatelessWidget {
       darkTheme: AppTheme.darkTheme,
       initialRoute: '/splash-screen',
       routes: {
-        'login': (context) => LoginPage(context),
+        '/login': (context) => LoginPage(context),
         '/splash-screen': (context) => SplashScreen(),
         '/register-page': (context) => const RegisterPage(),
         '/home-page': (context) =>
