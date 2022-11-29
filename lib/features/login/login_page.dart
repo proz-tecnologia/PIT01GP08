@@ -1,7 +1,8 @@
-import 'package:financial_app/design_sys/colors.dart';
-import 'package:financial_app/features/login/login_controller.dart';
-import 'package:financial_app/features/login/login_states.dart';
 import 'package:flutter/material.dart';
+
+import '../../design_sys/colors.dart';
+import 'login_controller.dart';
+import 'login_states.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/login';
