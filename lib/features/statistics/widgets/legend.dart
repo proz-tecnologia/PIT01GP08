@@ -1,4 +1,4 @@
-import 'package:financial_app/features/statistics/widgets/index_controller.dart';
+import 'package:financial_app/features/statistics/index_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
