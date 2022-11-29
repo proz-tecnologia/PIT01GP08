@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:financial_app/design_sys/themes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'features/home/home_page.dart';
+import 'features/login/login_controller.dart';
 import 'features/login/login_page.dart';
 import 'features/new_entry/new_entry_page.dart';
 import 'features/register/register_page.dart';
@@ -17,7 +19,10 @@ class App extends StatelessWidget {
       darkTheme: AppTheme.darkTheme,
       initialRoute: '/splash-screen',
       routes: {
-        '/login': (context) => LoginPage(context),
+        '/login': (context) => BlocProvider(
+              create: (_) => LoginController(),
+              child: const LoginPage(),
+            ),
         '/splash-screen': (context) => SplashScreen(),
         '/register-page': (context) => const RegisterPage(),
         '/home-page': (context) =>
