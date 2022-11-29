@@ -1,8 +1,8 @@
-import 'package:financial_app/features/home/home_page.dart';
-import 'package:financial_app/features/login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:financial_app/design_sys/themes.dart';
 
+import 'features/home/home_page.dart';
+import 'features/login/login_page.dart';
 import 'features/new_entry/new_entry_page.dart';
 import 'features/register/register_page.dart';
 import 'features/splash/splash.dart';
