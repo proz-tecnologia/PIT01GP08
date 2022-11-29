@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../design_sys/colors.dart';
+import '../../design_sys/sizes.dart';
 import 'login_controller.dart';
 import 'login_states.dart';
 
 class LoginPage extends StatefulWidget {
-  static const routeName = '/login';
-  const LoginPage(BuildContext context, {super.key});
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -17,119 +17,122 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final ButtonStyle style = ElevatedButton.styleFrom(
-    textStyle: const TextStyle(fontSize: 20),
-    backgroundColor: AppColors.primary,
-  );
 
-  bool _isVisible = false;
-
-  void updateVisibilityOfPassword() {
-    setState(() {
-      _isVisible = !_isVisible;
-    });
-  }
+  final ValueNotifier<bool> _isVisible = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
+    LoginController controller = context.read<LoginController>();
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(Sizes.largeSpace),
         child: Form(
           key: _formKey,
-          child: Column(
-            children: [
-              Expanded(child: Container(width: 100)),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(height: 24),
-                  const Padding(
-                    padding: EdgeInsets.all(24),
-                    child: Image(
-                      width: 100,
-                      height: 100,
-                      image: AssetImage('assets/logo_colors.png'),
-                    ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: Sizes.largeSpace),
+                const Padding(
+                  padding: EdgeInsets.all(Sizes.largeSpace),
+                  child: Image(
+                    width: Sizes.logoSize,
+                    height: Sizes.logoSize,
+                    image: AssetImage('assets/logo_colors.png'),
                   ),
-                  const SizedBox(height: 24),
-                  TextFormField(
-                    style: const TextStyle(fontSize: 20),
-                    validator: (value) {
-                      if (value?.isEmpty ?? true) {
-                        return 'Email obrigatório';
+                ),
+                const SizedBox(height: Sizes.largeSpace),
+                TextFormField(
+                  style: const TextStyle(fontSize: Sizes.mediumSpace),
+                  validator: (value) {
+                    if (value?.isEmpty ?? true) {
+                      return 'Email obrigatório';
+                    }
+                    return null;
+                  },
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                    hintText: 'Email',
+                  ),
+                ),
+                const SizedBox(height: Sizes.mediumSpace),
+                ValueListenableBuilder(
+                  builder: (context, value, _) {
+                    return TextFormField(
+                      style: const TextStyle(fontSize: Sizes.mediumSpace),
+                      validator: (value) {
+                        if (value?.isEmpty ?? true) {
+                          return 'Senha obrigatória';
+                        }
+                        return null;
+                      },
+                      controller: passwordController,
+                      decoration: InputDecoration(
+                        hintText: 'Senha',
+                        suffixIcon: IconButton(
+                          onPressed: () => _isVisible.value = !_isVisible.value,
+                          icon: Icon(
+                              value ? Icons.visibility : Icons.visibility_off),
+                        ),
+                      ),
+                      obscureText: value ? false : true,
+                      obscuringCharacter: '*',
+                    );
+                  },
+                  valueListenable: _isVisible,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: Sizes.extraLargeSpace),
+                      child: Text('Recuperar senha',
+                          style: Theme.of(context).textTheme.titleMedium),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: Sizes.extraLargeSpace),
+                SizedBox(
+                  width: double.infinity,
+                  child: BlocListener<LoginController, LoginState>(
+                    listener: (context, state) {
+                      final navigator = Navigator.of(context);
+                      if (state is LoginStateError) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('Ops, algo deu errado'),
+                              content: Center(
+                                heightFactor: Sizes.dialogFactor,
+                                child: Text(state.error),
+                              ),
+                            );
+                          },
+                        );
                       }
-                      return null;
+                      if (state is LoginStateSuccess) {
+                        navigator.pushReplacementNamed('/home-page');
+                      }
                     },
-                    controller: emailController,
-                    decoration: const InputDecoration(
-                      hintText: 'Email',
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    style: const TextStyle(fontSize: 20),
-                    controller: passwordController,
-                    decoration: InputDecoration(
-                      hintText: 'Senha',
-                      suffixIcon: IconButton(
-                        onPressed: () => updateVisibilityOfPassword(),
-                        icon: Icon(_isVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off),
-                      ),
-                    ),
-                    obscureText: _isVisible ? false : true,
-                    obscuringCharacter: '*',
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 48.0),
-                        child: Text('Recuperar senha',
-                            style: Theme.of(context).textTheme.titleMedium),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 50),
-                  SizedBox(
-                    width: double.infinity,
                     child: ElevatedButton(
                       // ignore: prefer_const_constructors
-                      style: style,
+                      style: Theme.of(context).elevatedButtonTheme.style,
                       onPressed: () async {
-                        final navigator = Navigator.of(context);
                         if (_formKey.currentState?.validate() ?? false) {
-                          final result = await controller.login(
+                          await controller.login(
                             emailController.text,
                             passwordController.text,
                           );
-                          if (result is LoginStateError) {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: const Text('Ops, algo deu errado'),
-                                  content: Center(
-                                    child: Text(result.error),
-                                  ),
-                                );
-                              },
-                            );
-                          }
-                          if (result is LoginStateSuccess) {
-                            navigator.pushReplacementNamed('/home-page');
-                          }
                         }
                       },
                       child: const Text('Entrar'),
                     ),
                   ),
-                ],
-              ),
-              Expanded(child: Container(width: 100)),
-            ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
