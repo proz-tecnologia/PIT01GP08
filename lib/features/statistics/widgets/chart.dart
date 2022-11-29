@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../statistics_controller.dart';
-import 'index_controller.dart';
+import '../index_controller.dart';
 
 class Chart extends StatelessWidget {
   const Chart({super.key});
