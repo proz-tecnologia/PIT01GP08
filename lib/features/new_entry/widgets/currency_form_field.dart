@@ -6,12 +6,12 @@ class CurrencyFormField extends StatelessWidget {
   const CurrencyFormField({
     Key? key,
     required Color color,
-    this.initialValue,
+    required this.textController,
   })  : _color = color,
         super(key: key);
 
   final Color _color;
-  final String? initialValue;
+  final TextEditingController textController;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class CurrencyFormField extends StatelessWidget {
       autofocus: true,
       showCursor: false,
       textInputAction: TextInputAction.next,
-      initialValue: initialValue,
+      initialValue: textController.text,
       decoration: InputDecoration(
         floatingLabelStyle: TextStyle(color: _color),
         labelStyle: TextStyle(color: _color.withOpacity(0.6)),
@@ -33,10 +33,15 @@ class CurrencyFormField extends StatelessWidget {
         CurrencyInputFormatter(),
       ],
       validator: (value) {
+        textController.text = value
+                ?.replaceAll(RegExp('[R\$]'), '')
+                .replaceAll('.', '')
+                .replaceAll(',', '.') ??
+            '';
         if (value == null || value.isEmpty) {
           return 'Campo obrigatório';
         }
-        int intValue = int.parse(value.replaceAll(RegExp('[R\$,]'), ''));
+        int intValue = int.parse(value.replaceAll(RegExp('[R\$.,]'), ''));
         if (intValue == 0) {
           return 'O valor não pode ser zero.';
         }

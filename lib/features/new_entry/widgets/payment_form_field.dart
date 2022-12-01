@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 
 import '../../../design_sys/colors.dart';
 
-class AppToggleButtons extends StatefulWidget {
-  const AppToggleButtons({
+class PaymentFormField extends StatefulWidget {
+  const PaymentFormField({
     Key? key,
-    required Color color,
-  })  : _color = color,
-        super(key: key);
+    required this.color,
+  }) : super(key: key);
 
-  final Color _color;
+  final Color color;
 
   @override
-  State<AppToggleButtons> createState() => _AppToggleButtonsState();
+  State<PaymentFormField> createState() => _PaymentFormFieldState();
 }
 
-class _AppToggleButtonsState extends State<AppToggleButtons> {
+class _PaymentFormFieldState extends State<PaymentFormField> {
   final List<bool> _select = <bool>[true, false, false];
   @override
   Widget build(BuildContext context) {
@@ -25,19 +24,14 @@ class _AppToggleButtonsState extends State<AppToggleButtons> {
           for (int i = 0; i < _select.length; i++) {
             _select[i] = i == index;
           }
-          if (index == 0) {
-            //notifier.changeLabel(normal: true);
-          } else {
-            //notifier.changeLabel(normal: false);
-          }
         });
       },
       borderRadius: const BorderRadius.all(Radius.circular(8)),
       color: Theme.of(context).colorScheme.background == AppColors.black
           ? AppColors.white
-          : widget._color,
+          : widget.color,
       selectedColor: Theme.of(context).colorScheme.background,
-      fillColor: widget._color,
+      fillColor: widget.color,
       textStyle: const TextStyle(fontWeight: FontWeight.w500),
       constraints: const BoxConstraints(
         minHeight: 40.0,
