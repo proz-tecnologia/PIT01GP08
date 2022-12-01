@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../shared/models/transaction.dart';
 import 'new_entry_states.dart';
 
 class NewEntryController extends Cubit<NewEntryState> {
@@ -23,11 +26,31 @@ class NewEntryController extends Cubit<NewEntryState> {
     }
   }
 
-  void changeType(bool isIncome) {
+  void changeType({required bool isIncome}) {
     if (isIncome && state is ExpenseNewEntryState) {
       emit(IncomeNewEntryState());
     } else if (state is IncomeNewEntryState) {
       emit(ExpenseNewEntryState());
+    }
+  }
+
+  void saveTransaction(Transaction transaction) async {
+    final lastTypeState = state;
+    emit(SavingNewEntryState());
+    try {
+      //fazer post na api
+
+      // para testes de gerência de estado:
+      await Future.delayed(const Duration(seconds: 1));
+      final random = Random();
+      if (random.nextBool() && random.nextBool()) {
+        throw Exception();
+      }
+
+      emit(SuccessNewEntryState());
+    } catch (e) {
+      emit(SavingErrorNewEntryState());
+      emit(lastTypeState);
     }
   }
 }
@@ -43,4 +66,5 @@ final mockedExpenseCategories = <String>[
 final mockedIncomeCategories = <String>[
   'Salário',
   'Presente',
+  'Aluguel',
 ];
