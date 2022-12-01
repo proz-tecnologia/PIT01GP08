@@ -15,15 +15,25 @@ class NewEntryPage extends StatelessWidget {
         appBar: AppBar(title: const Text('Nova transação')),
         body: BlocConsumer<NewEntryController, NewEntryState>(
           listener: (context, currentState) {
-            if (currentState is SavingNewEntryState) {
-              //esmaecer tela e chamar progress
-            }
+            /*if (currentState is SavingNewEntryState) {
+              showDialog(
+                  context: context,
+                  builder: (context) => const Center(child: CircularProgressIndicator()));
+            }*/
             if (currentState is SavingErrorNewEntryState) {
-              //chamar snackbar
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Ocorreu um erro. Tente novamente.'),
+                ),
+              );
             }
             if (currentState is SuccessNewEntryState) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Transação salva com sucesso.'),
+                ),
+              );
               Navigator.of(context).pop();
-              //chamar snackbar
             }
           },
           builder: (context, currentState) {
