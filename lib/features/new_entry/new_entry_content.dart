@@ -107,6 +107,11 @@ class _NewEntryContentState extends State<NewEntryContent> {
                               type: state is IncomeNewEntryState
                                   ? Type.income
                                   : Type.expense,
+                              categoryId: 1,
+                              //pegar dados do form
+                              fulfilled: true,
+                              id: 1,
+                              payment: Payment.normal,
                             ),
                           );
                         }
@@ -128,4 +133,3 @@ class _NewEntryContentState extends State<NewEntryContent> {
     );
   }
 }
-
