@@ -19,6 +19,8 @@ class RegisterPageState extends State<RegisterPage> {
     final double sizeSpaceItemButton = sizeHeight * 0.055;
     final double sizeSpaceItemEnd = sizeHeight * 0.08;
 
+    final _formKey = GlobalKey<FormState>();
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -34,26 +36,48 @@ class RegisterPageState extends State<RegisterPage> {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               Form(
+                key: _formKey,
                 child: Column(
                   children: [
                     SizedBox(
                       height: sizeSpaceItem,
                     ),
                     TextFormField(
-                        textInputAction: _textInputActionNext,
-                        decoration: const InputDecoration(labelText: 'Nome')),
+                      textInputAction: _textInputActionNext,
+                      decoration: const InputDecoration(labelText: 'Nome'),
+                      validator: (value) {
+                        if (value?.isEmpty ?? true) {
+                          return 'Nome é obrigatório';
+                        }
+                        return null;
+                      },
+                    ),
                     SizedBox(
                       height: sizeSpaceItem,
                     ),
                     TextFormField(
-                        textInputAction: _textInputActionNext,
-                        decoration: const InputDecoration(labelText: 'Email')),
+                      textInputAction: _textInputActionNext,
+                      decoration: const InputDecoration(labelText: 'Email'),
+                      validator: (value) {
+                        if (value?.isEmpty ?? true) {
+                          return 'Email é obrigatório';
+                        }
+                        return null;
+                      },
+                    ),
                     SizedBox(
                       height: sizeSpaceItem,
                     ),
                     TextFormField(
-                        textInputAction: TextInputAction.done,
-                        decoration: const InputDecoration(labelText: 'Senha')),
+                      textInputAction: TextInputAction.done,
+                      decoration: const InputDecoration(labelText: 'Senha'),
+                      validator: (value) {
+                        if (value?.isEmpty ?? true) {
+                          return 'Senha é obrigatório';
+                        }
+                        return null;
+                      },
+                    ),
                     SizedBox(
                       height: sizeSpaceItemButton,
                     ),
