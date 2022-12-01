@@ -2,7 +2,7 @@ import 'package:financial_app/design_sys/sizes.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/widgets/month_changer.dart';
-import '../components/total_tile.dart';
+import 'total_tile.dart';
 
 class ResumeInfoWidget extends StatefulWidget {
   const ResumeInfoWidget({
