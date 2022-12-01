@@ -35,6 +35,7 @@ class AppTheme {
         actionTextColor: AppColors.primary,
         disabledActionTextColor: AppColors.lightGrey,
         contentTextStyle: const TextStyle(color: AppColors.white),
+        behavior: SnackBarBehavior.floating,
       ),
       textTheme: const TextTheme(
         titleLarge: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
