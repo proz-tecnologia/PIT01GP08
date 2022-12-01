@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../design_sys/colors.dart';
 import '../../design_sys/sizes.dart';
+import '../../shared/models/transaction.dart';
 import '../../shared/widgets/top_bar_toggle_button.dart';
-import 'widgets/currency_field.dart';
-import 'widgets/date_picker_field.dart';
-import 'widgets/toggle_buttons.dart';
 import 'new_entry_controller.dart';
 import 'new_entry_states.dart';
+import 'widgets/widgets.dart';
 
 class NewEntryContent extends StatefulWidget {
-  const NewEntryContent({
-    Key? key,
-  }) : super(key: key);
+  const NewEntryContent({super.key});
 
   @override
   State<NewEntryContent> createState() => _NewEntryContentState();
@@ -22,6 +18,11 @@ class NewEntryContent extends StatefulWidget {
 class _NewEntryContentState extends State<NewEntryContent> {
   final formKey = GlobalKey<FormState>();
   final fulfilled = ValueNotifier(true);
+
+  final value = TextEditingController();
+  final description = TextEditingController();
+  final category = TextEditingController();
+  final date = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +40,11 @@ class _NewEntryContentState extends State<NewEntryContent> {
               children: [
                 TopBarToggleButton.expense(
                   isSelected: state is ExpenseNewEntryState,
-                  onPressed: () => controller.changeType(false),
+                  onPressed: () => controller.changeType(isIncome: false),
                 ),
                 TopBarToggleButton.income(
                   isSelected: state is IncomeNewEntryState,
-                  onPressed: () => controller.changeType(true),
+                  onPressed: () => controller.changeType(isIncome: true),
                 ),
               ],
             ),
@@ -53,57 +54,32 @@ class _NewEntryContentState extends State<NewEntryContent> {
                 padding: const EdgeInsets.all(Sizes.largeSpace),
                 child: Column(
                   children: <Widget>[
-                    CurrencyFormField(color: state.color),
-                    const SizedBox(height: Sizes.smallSpace),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        floatingLabelStyle: TextStyle(color: state.color),
-                        labelStyle:
-                            TextStyle(color: state.color.withOpacity(0.6)),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: state.color)),
-                        labelText: 'Descrição',
-                      ),
-                      cursorColor: AppColors.lightGrey,
+                    CurrencyFormField(
+                      color: state.color,
+                      textController: value,
                     ),
                     const SizedBox(height: Sizes.smallSpace),
-                    DropdownButtonFormField(
-                      decoration: InputDecoration(
-                        floatingLabelStyle: TextStyle(color: state.color),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: state.color)),
-                        labelText: 'Categoria',
-                      ),
-                      value: categories[0],
-                      items: categories
-                          .map((category) => DropdownMenuItem(
-                                value: category,
-                                child: Text(category),
-                              ))
-                          .toList(),
-                      onChanged: (value) {},
+                    DescriptionFormField(
+                      color: state.color,
+                      textController: description,
                     ),
+                    const SizedBox(height: Sizes.smallSpace),
+                    CategoryFormField(
+                        color: state.color,
+                        categories: categories,
+                        controller: category),
                     const SizedBox(height: Sizes.mediumSpace),
-                    AppToggleButtons(color: state.color),
+                    PaymentFormField(color: state.color),
                     const SizedBox(height: Sizes.smallSpace),
-                    AppDatePickerField(color: state.color),
+                    DatePickerFormField(
+                      color: state.color,
+                      textController: date,
+                    ),
                     const SizedBox(height: Sizes.smallSpace),
-                    ValueListenableBuilder(
-                      valueListenable: fulfilled,
-                      builder: (context, value, _) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text('Previsto'),
-                            Switch(
-                                activeTrackColor: state.color,
-                                activeColor: AppColors.white,
-                                value: value,
-                                onChanged: (value) => fulfilled.value = value),
-                            Text(state.initialFulfilledLabel),
-                          ],
-                        );
-                      },
+                    FulfilledFormField(
+                      boolController: fulfilled,
+                      color: state.color,
+                      label: state.initialFulfilledLabel,
                     ),
                   ],
                 ),
@@ -117,13 +93,30 @@ class _NewEntryContentState extends State<NewEntryContent> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (formKey.currentState?.validate() ?? false) {
+                          controller.saveTransaction(
+                            Transaction(
+                              date: DateTime(
+                                int.parse(date.text.substring(6)),
+                                int.parse(date.text.substring(3, 5)),
+                                int.parse(date.text.substring(0, 2)),
+                              ),
+                              description: description.text,
+                              value: double.parse(value.text),
+                              type: state is IncomeNewEntryState
+                                  ? Type.income
+                                  : Type.expense,
+                            ),
+                          );
+                        }
+                      },
                       child: const Text('OK'),
                     ),
                   ),
                   const SizedBox(height: Sizes.mediumSpace),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () => Navigator.of(context).pop(),
                     child: const Text('CANCELAR'),
                   ),
                 ],
@@ -135,3 +128,4 @@ class _NewEntryContentState extends State<NewEntryContent> {
     );
   }
 }
+

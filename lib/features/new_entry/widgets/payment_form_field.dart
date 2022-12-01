@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../design_sys/colors.dart';
 
-class AppToggleButtons extends StatefulWidget {
-  const AppToggleButtons({
+class PaymentFormField extends StatefulWidget {
+  const PaymentFormField({
     Key? key,
     required this.color,
   }) : super(key: key);
@@ -11,10 +11,10 @@ class AppToggleButtons extends StatefulWidget {
   final Color color;
 
   @override
-  State<AppToggleButtons> createState() => _AppToggleButtonsState();
+  State<PaymentFormField> createState() => _PaymentFormFieldState();
 }
 
-class _AppToggleButtonsState extends State<AppToggleButtons> {
+class _PaymentFormFieldState extends State<PaymentFormField> {
   final List<bool> _select = <bool>[true, false, false];
   @override
   Widget build(BuildContext context) {

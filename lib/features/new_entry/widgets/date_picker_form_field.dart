@@ -1,29 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class AppDatePickerField extends StatefulWidget {
-  const AppDatePickerField({
+class DatePickerFormField extends StatefulWidget {
+  const DatePickerFormField({
     Key? key,
     required Color color,
-    this.initialValue,
+    required this.textController,
   })  : _color = color,
         super(key: key);
 
   final Color _color;
-  final String? initialValue;
+  final TextEditingController textController;
 
   @override
-  State<AppDatePickerField> createState() => AppDatePickerFieldState();
+  State<DatePickerFormField> createState() => _DatePickerFormFieldState();
 }
 
-class AppDatePickerFieldState extends State<AppDatePickerField> {
-  TextEditingController dateInput = TextEditingController(
-      text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
+class _DatePickerFormFieldState extends State<DatePickerFormField> {
+  @override
+  void initState() {
+    super.initState();
+    widget.textController.text =
+        DateFormat('dd/MM/yyyy').format(DateTime.now());
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: dateInput,
-      initialValue: widget.initialValue,
+      controller: widget.textController,
       decoration: InputDecoration(
         suffixIcon: Icon(
           Icons.calendar_today_rounded,
@@ -44,9 +48,8 @@ class AppDatePickerFieldState extends State<AppDatePickerField> {
         );
 
         if (pickedDate != null) {
-          setState(() {
-            dateInput.text = DateFormat('dd/MM/yyyy').format(pickedDate);
-          });
+          widget.textController.text =
+              DateFormat('dd/MM/yyyy').format(pickedDate);
         }
       },
     );
