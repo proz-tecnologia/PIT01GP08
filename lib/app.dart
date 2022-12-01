@@ -27,7 +27,7 @@ class App extends StatelessWidget {
         '/splash-screen': (context) => SplashScreen(),
         '/register-page': (context) => const RegisterPage(),
         '/home-page': (context) =>
-            const HomePage(title: 'Flutter Demo Home Page'),
+            const HomePage(),
         '/new-entry': (context) => BlocProvider(
               create: (context) => NewEntryController(),
               child: const NewEntryPage(),

@@ -1,8 +1,8 @@
-import 'package:financial_app/design_sys/sizes.dart';
 import 'package:flutter/material.dart';
 
+import '../../../design_sys/sizes.dart';
 import '../../../shared/widgets/month_changer.dart';
-import '../components/total_tile.dart';
+import 'total_tile.dart';
 
 class ResumeInfoWidget extends StatefulWidget {
   const ResumeInfoWidget({
@@ -15,6 +15,13 @@ class ResumeInfoWidget extends StatefulWidget {
 
 class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
   bool visible = true;
+
+  void changeVisibility() {
+    setState(() {
+      visible = !visible;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -46,11 +53,7 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                 Expanded(
                   flex: 1,
                   child: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        visible = !visible;
-                      });
-                    },
+                    onPressed: changeVisibility,
                     icon: Icon(
                       visible ? Icons.visibility : Icons.visibility_off,
                       color: Theme.of(context).colorScheme.onPrimary,

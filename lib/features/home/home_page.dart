@@ -6,11 +6,11 @@ import '../statement/statement_page.dart';
 import '../statistics/statistics_controller.dart';
 import 'home_content_page.dart';
 import '../statistics/statistics_page.dart';
-import 'widgets/app_bottom_nav_bar.dart';
+import 'widgets/bottom_bar.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-  final String title;
+  const HomePage({super.key});
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -43,7 +43,9 @@ class _HomePageState extends State<HomePage> {
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: AppBottomNavBar(pageController: controller),
+      bottomNavigationBar: BottomBar(
+          navigate: (index) =>
+              controller.jumpToPage(index < 2 ? index : index - 1)),
     );
   }
 }
