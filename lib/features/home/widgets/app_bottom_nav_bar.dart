@@ -15,6 +15,14 @@ class AppBottomNavBar extends StatefulWidget {
 
 class _AppBottomNavBarState extends State<AppBottomNavBar> {
   int index = 0;
+
+  void navigate(int index) {
+    setState(() {
+      widget._pageController.jumpToPage(index < 2 ? index : index - 1);
+      this.index = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -40,12 +48,7 @@ class _AppBottomNavBarState extends State<AppBottomNavBar> {
         ),
       ],
       currentIndex: index,
-      onTap: ((index) {
-        setState(() {
-          widget._pageController.jumpToPage(index < 2 ? index : index - 1);
-          this.index = index;
-        });
-      }),
+      onTap: (index) => navigate(index),
     );
   }
 }
