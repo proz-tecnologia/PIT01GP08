@@ -1,7 +1,7 @@
-import 'package:financial_app/shared/transaction_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../shared/models/transaction.dart';
+import '../../shared/transaction_repository.dart';
 import 'new_entry_states.dart';
 
 class NewEntryController extends Cubit<NewEntryState> {
@@ -15,7 +15,7 @@ class NewEntryController extends Cubit<NewEntryState> {
   void init() async {
     emit(LoadingNewEntryState());
     try {
-      //trocar pela requisição na api
+      //trocar pela requisição na api - sprint 3
       expenseCategories = mockedExpenseCategories;
       incomeCategories = mockedIncomeCategories;
 
