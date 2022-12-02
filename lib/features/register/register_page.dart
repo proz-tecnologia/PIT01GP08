@@ -1,4 +1,3 @@
-import 'package:financial_app/features/login/login_controller.dart';
 import 'package:financial_app/features/register/models/user.dart';
 import 'package:financial_app/features/register/register_controller.dart';
 import 'package:financial_app/features/register/register_states.dart';
