@@ -25,19 +25,29 @@ class HomeController extends Cubit<HomeState> {
   }
 
   double displayBalance(String param) {
+    emit(LoadingHomeState());
     double balance = 0;
     double income = 0;
     double expense = 0;
+    double pendingIncome = 0;
+    double pendingExpense = 0;
 
     for (var element in _list) {
       if (element.type == Type.income) {
         balance += element.value;
         income += element.value;
+        if (!element.fulfilled) {
+          pendingIncome += element.value;
+        }
       } else {
         balance -= element.value;
         expense += element.value;
+        if (!element.fulfilled) {
+          pendingExpense += element.value;
+        }
       }
     }
+    emit(SuccessHomeState());
     switch (param) {
       case 'balance':
         return balance;
@@ -45,7 +55,12 @@ class HomeController extends Cubit<HomeState> {
         return income;
       case 'expense':
         return expense;
+      case 'pendingIncome':
+        return pendingIncome;
+      case 'pendingExpense':
+        return pendingExpense;
       default:
+        emit(ErrorHomeState());
         return balance;
     }
   }
