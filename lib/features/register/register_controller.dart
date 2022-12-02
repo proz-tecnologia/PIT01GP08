@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'models/user.dart';
@@ -9,16 +11,14 @@ class RegisterController extends Cubit<RegisterState> {
   final _users = <User>[];
   List<User> get users => _users;
 
-  void _registerUser(User user) {}
+  Future<void> registerUser(User user) async {
+    emit(LoadingRegisterState());
 
-  bool emailValid(String? email) {
-    if (email == null) {
-      return false;
+    await Future.delayed(const Duration(seconds: 2));
+    // verificar se o email já está cadastrado.
+    if (user.email.contains("@")) {
+      emit(SuccessRegisterState());
+      return;
     }
-    String p =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-
-    RegExp regExp = new RegExp(p);
-    return regExp.hasMatch(p);
   }
 }
