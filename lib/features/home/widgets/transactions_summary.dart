@@ -1,8 +1,7 @@
+import 'package:financial_app/design_sys/sizes.dart';
+import 'package:financial_app/shared/models/transaction.dart';
+import 'package:financial_app/shared/widgets/transaction_tile.dart';
 import 'package:flutter/material.dart';
-
-import '../../../design_sys/sizes.dart';
-import '../../../shared/models/transaction.dart';
-import '../../../shared/widgets/transaction_tile.dart';
 
 class TransactionsSummary extends StatelessWidget {
   const TransactionsSummary({
