@@ -31,69 +31,75 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
         child: BlocBuilder<HomeController, HomeState>(
           builder: (context, state) {
             final controller = context.read<HomeController>();
-            return ValueListenableBuilder(
-              valueListenable: _isVisible,
-              builder: (context, value, _) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(height: spaceBetween),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        MonthChanger('Dezembro'),
-                      ],
-                    ),
-                    SizedBox(height: spaceBetween),
-                    Row(
-                      children: [
-                        Expanded(flex: 1, child: Container()),
-                        TotalTile(
-                          label: 'Saldo',
-                          value:
-                              'R\$ ${controller.displayBalance('balance').toStringAsFixed(2).replaceAll('.', ',')}',
-                          visible: _isVisible.value,
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: IconButton(
-                            onPressed: () =>
-                                _isVisible.value = !_isVisible.value,
-                            icon: Icon(
-                              _isVisible.value
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              color: Theme.of(context).colorScheme.onPrimary,
+            if (state is ErrorHomeState) {
+              return const Center(child: Text('Erro ao carregar os dados'));
+            }
+            if (state is SuccessHomeState) {
+              return ValueListenableBuilder(
+                valueListenable: _isVisible,
+                builder: (context, value, _) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(height: spaceBetween),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          MonthChanger('Dezembro'),
+                        ],
+                      ),
+                      SizedBox(height: spaceBetween),
+                      Row(
+                        children: [
+                          Expanded(flex: 1, child: Container()),
+                          TotalTile(
+                            label: 'Saldo',
+                            value:
+                                'R\$ ${controller.displayBalance('balance').toStringAsFixed(2).replaceAll('.', ',')}',
+                            visible: _isVisible.value,
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: IconButton(
+                              onPressed: () =>
+                                  _isVisible.value = !_isVisible.value,
+                              icon: Icon(
+                                _isVisible.value
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: spaceBetween),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        TotalTile(
-                          icon: Icons.arrow_downward,
-                          label: 'Despesas',
-                          value:
-                              'R\$ ${controller.displayBalance('expense').toStringAsFixed(2).replaceAll('.', ',')}',
-                          visible: _isVisible.value,
-                        ),
-                        TotalTile(
-                          icon: Icons.arrow_upward,
-                          label: 'Receitas',
-                          value:
-                              'R\$ ${controller.displayBalance('income').toStringAsFixed(2).replaceAll('.', ',')}',
-                          visible: _isVisible.value,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: spaceBetween),
-                  ],
-                );
-              },
-            );
+                        ],
+                      ),
+                      SizedBox(height: spaceBetween),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          TotalTile(
+                            icon: Icons.arrow_downward,
+                            label: 'Despesas',
+                            value:
+                                'R\$ ${controller.displayBalance('expense').toStringAsFixed(2).replaceAll('.', ',')}',
+                            visible: _isVisible.value,
+                          ),
+                          TotalTile(
+                            icon: Icons.arrow_upward,
+                            label: 'Receitas',
+                            value:
+                                'R\$ ${controller.displayBalance('income').toStringAsFixed(2).replaceAll('.', ',')}',
+                            visible: _isVisible.value,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: spaceBetween),
+                    ],
+                  );
+                },
+              );
+            }
+            return const Center(child: CircularProgressIndicator());
           },
         ),
       ),
