@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:financial_app/shared/transaction_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../shared/models/transaction.dart';
@@ -38,16 +37,13 @@ class NewEntryController extends Cubit<NewEntryState> {
     final lastTypeState = state;
     emit(SavingNewEntryState());
     try {
-      //fazer post na api
-
-      // para testes de gerência de estado:
-      await Future.delayed(const Duration(seconds: 1));
-      final random = Random();
-      if (random.nextBool() && random.nextBool()) {
-        throw Exception();
+      final success =
+          await TransactionDioRepository().createTransaction(transaction);
+      if (success) {
+        emit(SuccessNewEntryState());
+        return;
       }
-
-      emit(SuccessNewEntryState());
+      throw Exception();
     } catch (e) {
       emit(SavingErrorNewEntryState());
       emit(lastTypeState);

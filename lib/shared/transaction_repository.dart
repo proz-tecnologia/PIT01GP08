@@ -18,9 +18,13 @@ class TransactionDioRepository implements TransactionRepository {
 
   @override
   Future<bool> createTransaction(Transaction transaction) async {
-    final response =
-        await _dio.post(transactionsUrl, data: transaction.toMap());
-    return response.statusCode == 201;
+    try {
+      final response =
+          await _dio.post(transactionsUrl, data: transaction.toMap());
+      return response.statusCode == 201;
+    } catch (e) {
+      return false;
+    }
   }
 
   @override
