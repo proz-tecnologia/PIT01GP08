@@ -38,7 +38,11 @@ class AppTheme {
         behavior: SnackBarBehavior.floating,
       ),
       textTheme: const TextTheme(
-        titleLarge: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+        caption: TextStyle(
+          fontSize: 27,
+          fontWeight: FontWeight.bold,
+          color: AppColors.black,
+        ),
       ),
       switchTheme: SwitchThemeData(
         thumbColor: MaterialStateProperty.resolveWith<Color?>(
@@ -146,7 +150,11 @@ class AppTheme {
         contentTextStyle: const TextStyle(color: AppColors.white),
       ),
       textTheme: const TextTheme(
-        titleLarge: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+        caption: TextStyle(
+          fontSize: 27,
+          fontWeight: FontWeight.bold,
+          color: AppColors.white,
+        ),
       ),
       switchTheme: SwitchThemeData(
         thumbColor: MaterialStateProperty.resolveWith<Color?>(

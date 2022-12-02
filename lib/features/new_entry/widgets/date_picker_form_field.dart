@@ -4,12 +4,11 @@ import 'package:intl/intl.dart';
 class DatePickerFormField extends StatefulWidget {
   const DatePickerFormField({
     Key? key,
-    required Color color,
+    required this.color,
     required this.textController,
-  })  : _color = color,
-        super(key: key);
+  })  : super(key: key);
 
-  final Color _color;
+  final Color color;
   final TextEditingController textController;
 
   @override
@@ -31,11 +30,11 @@ class _DatePickerFormFieldState extends State<DatePickerFormField> {
       decoration: InputDecoration(
         suffixIcon: Icon(
           Icons.calendar_today_rounded,
-          color: widget._color,
+          color: widget.color,
         ),
         focusedBorder:
-            UnderlineInputBorder(borderSide: BorderSide(color: widget._color)),
-        labelStyle: TextStyle(color: widget._color),
+            UnderlineInputBorder(borderSide: BorderSide(color: widget.color)),
+        labelStyle: TextStyle(color: widget.color),
         labelText: 'Vencimento',
       ),
       readOnly: true,
