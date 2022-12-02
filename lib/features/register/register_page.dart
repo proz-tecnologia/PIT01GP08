@@ -1,4 +1,11 @@
+import 'package:financial_app/features/login/login_controller.dart';
+import 'package:financial_app/features/register/models/user.dart';
+import 'package:financial_app/features/register/register_controller.dart';
+import 'package:financial_app/features/register/register_states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../design_sys/sizes.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -8,7 +15,11 @@ class RegisterPage extends StatefulWidget {
 }
 
 class RegisterPageState extends State<RegisterPage> {
-  final TextInputAction _textInputActionNext = TextInputAction.next;
+  final _formKey = GlobalKey<FormState>();
+
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +30,14 @@ class RegisterPageState extends State<RegisterPage> {
     final double sizeSpaceItemButton = sizeHeight * 0.055;
     final double sizeSpaceItemEnd = sizeHeight * 0.08;
 
-    final _formKey = GlobalKey<FormState>();
+    RegisterController controller = context.read<RegisterController>();
+
+    final navigator = Navigator.of(context);
 
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(Sizes.largeSpace),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -43,8 +56,8 @@ class RegisterPageState extends State<RegisterPage> {
                       height: sizeSpaceItem,
                     ),
                     TextFormField(
-                      textInputAction: _textInputActionNext,
                       decoration: const InputDecoration(labelText: 'Nome'),
+                      controller: nameController,
                       validator: (value) {
                         if (value?.isEmpty ?? true) {
                           return 'Nome é obrigatório';
@@ -56,12 +69,15 @@ class RegisterPageState extends State<RegisterPage> {
                       height: sizeSpaceItem,
                     ),
                     TextFormField(
-                      textInputAction: _textInputActionNext,
                       decoration: const InputDecoration(labelText: 'Email'),
+                      controller: emailController,
                       validator: (value) {
-                        if (value?.isEmpty ?? true) {
+                        if ((value?.isEmpty ?? true)) {
                           return 'Email é obrigatório';
+                        } else if (!value!.contains('@')) {
+                          return 'Email inválido';
                         }
+
                         return null;
                       },
                     ),
@@ -69,11 +85,13 @@ class RegisterPageState extends State<RegisterPage> {
                       height: sizeSpaceItem,
                     ),
                     TextFormField(
-                      textInputAction: TextInputAction.done,
                       decoration: const InputDecoration(labelText: 'Senha'),
+                      controller: passwordController,
                       validator: (value) {
                         if (value?.isEmpty ?? true) {
                           return 'Senha é obrigatório';
+                        } else if (value!.length < 6) {
+                          return 'Senha inválida, mínimo 6 caracteres';
                         }
                         return null;
                       },
@@ -84,12 +102,47 @@ class RegisterPageState extends State<RegisterPage> {
                     SizedBox(
                       height: sizeButton,
                       width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Validate will return true if the form is valid, or false if
-                          // the form is invalid.
+                      child: BlocListener<RegisterController, RegisterState>(
+                        listener: (context, state) {
+                          if (state is LoadingRegisterState) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => const Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          }
+
+                          if (state is ErrorRegisterState) {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: const Text('Ops, algo deu errado'),
+                                  content: Center(
+                                    heightFactor: Sizes.dialogFactor,
+                                    child: Text(state.error),
+                                  ),
+                                );
+                              },
+                            );
+                          }
+
+                          if (state is SuccessRegisterState) {
+                            navigator.pushReplacementNamed('/home-page');
+                          }
                         },
-                        child: const Text('CRIAR CONTA'),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            if (_formKey.currentState?.validate() ?? false) {
+                              await controller.registerUser(User(
+                                  name: nameController.text,
+                                  email: emailController.text,
+                                  passworld: passwordController.text));
+                            }
+                          },
+                          child: const Text('CRIAR CONTA'),
+                        ),
                       ),
                     ),
                   ],
@@ -99,7 +152,9 @@ class RegisterPageState extends State<RegisterPage> {
                 height: sizeSpaceItemEnd,
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  navigator.pushNamed('/login');
+                },
                 child: const Text('JÁ POSSUI CADASTRO?'),
               ),
             ],
