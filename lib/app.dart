@@ -1,3 +1,4 @@
+import 'package:financial_app/features/register/register_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:financial_app/design_sys/themes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +26,10 @@ class App extends StatelessWidget {
               child: const LoginPage(),
             ),
         '/splash-screen': (context) => SplashScreen(),
-        '/register-page': (context) => const RegisterPage(),
+        '/register-page': (context) => BlocProvider(
+              create: (_) => RegisterController(),
+              child: const RegisterPage(),
+            ),
         '/home-page': (context) =>
             const HomePage(),
         '/new-entry': (context) => BlocProvider(

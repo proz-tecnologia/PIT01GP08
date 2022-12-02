@@ -1,3 +1,5 @@
+import 'dart:math';
+
 enum Type { expense, income }
 
 enum Payment { normal, parcelled, fixed }
@@ -42,16 +44,20 @@ class Transaction {
   }
 
   factory Transaction.fromMap(Map<String, dynamic> map) {
-    final type_ = map['type'] == 'expense' ? Type.expense : Type.income;
+    final random = Random();
+    final type_ = random.nextBool()
+        ? Type.expense
+        : Type.income; //map['type'] == 'expense' ? Type.expense : Type.income;
     final payment_ = map['payment'] == 'normal'
         ? Payment.normal
         : map['payment'] == 'fixed'
             ? Payment.fixed
             : Payment.parcelled;
+
     return Transaction(
-      date: DateTime.fromMillisecondsSinceEpoch(map['date']),
+      date: DateTime.parse(map['date']),
       description: map['description'] ?? '',
-      value: map['value']?.toDouble() ?? 0.0,
+      value: (map['value']?.toDouble() ?? 0.0) / 100,
       type: type_,
       categoryId: map['categoryId']?.toInt() ?? 0,
       fulfilled: map['fulfilled'] ?? false,
@@ -73,7 +79,7 @@ class Transaction {
     return Transaction(
       date: date ?? this.date,
       description: description ?? this.description,
-      value: value ?? this.value,
+      value: value ?? this.value * 100,
       type: type ?? this.type,
       categoryId: categoryId ?? this.categoryId,
       fulfilled: fulfilled ?? this.fulfilled,

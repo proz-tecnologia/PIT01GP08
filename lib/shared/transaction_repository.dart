@@ -10,6 +10,7 @@ abstract class TransactionRepository {
   Future<Transaction?> getTransactionData(int id);
   Future<bool> editTransactionData(Transaction transaction);
   Future<bool> deleteTransaction(int id);
+  Future<List<Transaction>> getAllTransactions();
 }
 
 class TransactionDioRepository implements TransactionRepository {
@@ -42,5 +43,17 @@ class TransactionDioRepository implements TransactionRepository {
       return Transaction.fromMap(response.data);
     }
     return null;
+  }
+
+  @override
+  Future<List<Transaction>> getAllTransactions() async {
+    final response = await _dio.get(transactionsUrl);
+    if (response.statusCode == 200) {
+      final list = List<Transaction>.from(
+          response.data.map((e) => Transaction.fromMap(e)));
+      list.sort((a, b) => b.date.compareTo(a.date));
+      return list;
+    }
+    return [];
   }
 }
