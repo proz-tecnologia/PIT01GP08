@@ -11,7 +11,7 @@ class Transaction {
   final Type type;
   final int categoryId;
   final bool fulfilled;
-  final int id;
+  late final int id;
   final Payment payment;
 
   Transaction({
@@ -21,7 +21,6 @@ class Transaction {
     required this.type,
     required this.categoryId,
     required this.fulfilled,
-    required this.id,
     required this.payment,
   });
 
@@ -63,7 +62,6 @@ class Transaction {
       type: type_,
       categoryId: int.tryParse(map['categoryId']) ?? 0,
       fulfilled: map['fulfilled'] ?? false,
-      id: int.tryParse(map['id']) ?? 0,
       payment: payment_,
     );
   }
@@ -75,7 +73,6 @@ class Transaction {
     Type? type,
     int? categoryId,
     bool? fulfilled,
-    int? id,
     Payment? payment,
   }) {
     return Transaction(
@@ -85,7 +82,6 @@ class Transaction {
       type: type ?? this.type,
       categoryId: categoryId ?? this.categoryId,
       fulfilled: fulfilled ?? this.fulfilled,
-      id: id ?? this.id,
       payment: payment ?? this.payment,
     );
   }
