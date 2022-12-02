@@ -1,8 +1,8 @@
-import 'package:financial_app/features/register/models/user.dart';
-import 'package:financial_app/features/register/register_controller.dart';
-import 'package:financial_app/features/register/register_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'models/user.dart';
+import 'register_controller.dart';
+import 'register_states.dart';
 
 import '../../design_sys/sizes.dart';
 
