@@ -5,12 +5,11 @@ import 'package:intl/intl.dart';
 class CurrencyFormField extends StatelessWidget {
   const CurrencyFormField({
     Key? key,
-    required Color color,
+    required this.color,
     required this.textController,
-  })  : _color = color,
-        super(key: key);
+  })  : super(key: key);
 
-  final Color _color;
+  final Color color;
   final TextEditingController textController;
 
   @override
@@ -21,16 +20,16 @@ class CurrencyFormField extends StatelessWidget {
       textInputAction: TextInputAction.next,
       initialValue: textController.text,
       decoration: InputDecoration(
-        floatingLabelStyle: TextStyle(color: _color),
-        labelStyle: TextStyle(color: _color.withOpacity(0.6)),
+        floatingLabelStyle: TextStyle(color: color),
+        labelStyle: TextStyle(color: color.withOpacity(0.6)),
         focusedBorder:
-            UnderlineInputBorder(borderSide: BorderSide(color: _color)),
+            UnderlineInputBorder(borderSide: BorderSide(color: color)),
         labelText: 'Valor',
       ),
       keyboardType: TextInputType.number,
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
-        CurrencyInputFormatter(),
+        _CurrencyInputFormatter(),
       ],
       validator: (value) {
         textController.text = value
@@ -51,7 +50,7 @@ class CurrencyFormField extends StatelessWidget {
   }
 }
 
-class CurrencyInputFormatter extends TextInputFormatter {
+class _CurrencyInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
