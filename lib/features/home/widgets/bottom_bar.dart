@@ -1,27 +1,19 @@
 import 'package:flutter/material.dart';
 
-class AppBottomNavBar extends StatefulWidget {
-  const AppBottomNavBar({
+class BottomBar extends StatefulWidget {
+  const BottomBar({
     Key? key,
-    required PageController pageController,
-  })  : _pageController = pageController,
-        super(key: key);
+    required this.controller,
+  }) : super(key: key);
 
-  final PageController _pageController;
+  final PageController controller;
 
   @override
-  State<AppBottomNavBar> createState() => _AppBottomNavBarState();
+  State<BottomBar> createState() => _BottomBarState();
 }
 
-class _AppBottomNavBarState extends State<AppBottomNavBar> {
+class _BottomBarState extends State<BottomBar> {
   int index = 0;
-
-  void navigate(int index) {
-    setState(() {
-      widget._pageController.jumpToPage(index < 2 ? index : index - 1);
-      this.index = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +40,12 @@ class _AppBottomNavBarState extends State<AppBottomNavBar> {
         ),
       ],
       currentIndex: index,
-      onTap: (index) => navigate(index),
+      onTap: (index) {
+        setState(() {
+          widget.controller.jumpToPage(index < 2 ? index : index - 1);
+          this.index = index;
+        });
+      },
     );
   }
 }

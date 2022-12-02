@@ -28,13 +28,13 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.all(Sizes.largeSpace),
         child: Form(
           key: _formKey,
-          child: SingleChildScrollView(
+          child: Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: Sizes.largeSpace),
+                const SizedBox(height: Sizes.mediumSpace),
                 const Padding(
-                  padding: EdgeInsets.all(Sizes.largeSpace),
+                  padding: EdgeInsets.all(Sizes.mediumSpace),
                   child: Image(
                     width: Sizes.logoSize,
                     height: Sizes.logoSize,

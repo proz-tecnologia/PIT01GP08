@@ -50,9 +50,9 @@ class StatementController extends Cubit<StatementState> {
       return _list;
     }
     if (state is IncomeStatementState) {
-      return _list.where((element) => element.type == 'income').toList();
+      return _list.where((element) => element.type == Type.income).toList();
     }
-    return _list.where((element) => element.type == 'expense').toList();
+    return _list.where((element) => element.type == Type.expense).toList();
   }
 }
 
@@ -62,35 +62,59 @@ final List<Transaction> _mock = [
     description: 'Exemplo de despesa futura',
     value: 100.5,
     type: Type.expense,
+    categoryId: 1,
+    fulfilled: true,
+    id: 1,
+    payment: Payment.normal,
   ),
   Transaction(
     date: DateTime.now().add(const Duration(days: 2)),
     description: 'Exemplo de receita futura',
     value: 300.25,
     type: Type.income,
+    categoryId: 1,
+    fulfilled: true,
+    id: 1,
+    payment: Payment.normal,
   ),
   Transaction(
     date: DateTime.now(),
     description: 'Exemplo de despesa hoje',
     value: 200.25,
     type: Type.expense,
+    categoryId: 1,
+    fulfilled: true,
+    id: 1,
+    payment: Payment.normal,
   ),
   Transaction(
     date: DateTime.now(),
     description: 'Exemplo de receita hoje',
     value: 200.5,
     type: Type.income,
+    categoryId: 1,
+    fulfilled: true,
+    id: 1,
+    payment: Payment.normal,
   ),
   Transaction(
     date: DateTime.now().subtract(const Duration(days: 5)),
     description: 'Exemplo de despesa passada',
     value: 300,
     type: Type.expense,
+    categoryId: 1,
+    fulfilled: true,
+    id: 1,
+    payment: Payment.normal,
   ),
   Transaction(
     date: DateTime.now().subtract(const Duration(days: 5)),
     description: 'Exemplo de receita passada',
     value: 100.75,
     type: Type.income,
+    categoryId: 1,
+    fulfilled: true,
+    id: 1,
+    payment: Payment.normal,
   ),
 ];

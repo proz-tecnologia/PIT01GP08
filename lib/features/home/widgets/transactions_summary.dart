@@ -31,6 +31,10 @@ class TransactionsSummary extends StatelessWidget {
               date: DateTime.now().add(
                 const Duration(days: 3),
               ),
+              categoryId: 1,
+              fulfilled: true,
+              id: 1,
+              payment: Payment.normal,
             ),
           ),
           const Divider(),
@@ -42,6 +46,10 @@ class TransactionsSummary extends StatelessWidget {
               date: DateTime.now().add(
                 const Duration(days: 10),
               ),
+              categoryId: 1,
+              fulfilled: true,
+              id: 1,
+              payment: Payment.normal,
             ),
           ),
           const Divider(),
@@ -53,6 +61,10 @@ class TransactionsSummary extends StatelessWidget {
               date: DateTime.now().add(
                 const Duration(days: 12),
               ),
+              categoryId: 1,
+              fulfilled: true,
+              id: 1,
+              payment: Payment.normal,
             ),
           ),
         ],

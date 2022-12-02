@@ -46,7 +46,7 @@ class TransactionTile extends StatelessWidget {
       title: Text(
         transaction.valueString,
         style: TextStyle(
-          color: transaction.type == 'expense'
+          color: transaction.type == Type.expense
               ? AppColors.expense
               : AppColors.income,
           fontWeight: FontWeight.bold,

@@ -50,42 +50,43 @@ class _NewEntryContentState extends State<NewEntryContent> {
             ),
             Form(
               key: formKey,
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(Sizes.largeSpace),
-                child: Column(
-                  children: <Widget>[
-                    CurrencyFormField(
-                      color: state.color,
-                      textController: value,
-                    ),
-                    const SizedBox(height: Sizes.smallSpace),
-                    DescriptionFormField(
-                      color: state.color,
-                      textController: description,
-                    ),
-                    const SizedBox(height: Sizes.smallSpace),
-                    CategoryFormField(
+              child: Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(Sizes.largeSpace),
+                  child: Column(
+                    children: <Widget>[
+                      CurrencyFormField(
                         color: state.color,
-                        categories: categories,
-                        controller: category),
-                    const SizedBox(height: Sizes.mediumSpace),
-                    PaymentFormField(color: state.color),
-                    const SizedBox(height: Sizes.smallSpace),
-                    DatePickerFormField(
-                      color: state.color,
-                      textController: date,
-                    ),
-                    const SizedBox(height: Sizes.smallSpace),
-                    FulfilledFormField(
-                      boolController: fulfilled,
-                      color: state.color,
-                      label: state.initialFulfilledLabel,
-                    ),
-                  ],
+                        textController: value,
+                      ),
+                      const SizedBox(height: Sizes.smallSpace),
+                      DescriptionFormField(
+                        color: state.color,
+                        textController: description,
+                      ),
+                      const SizedBox(height: Sizes.smallSpace),
+                      CategoryFormField(
+                          color: state.color,
+                          categories: categories,
+                          controller: category),
+                      const SizedBox(height: Sizes.mediumSpace),
+                      PaymentFormField(color: state.color),
+                      const SizedBox(height: Sizes.smallSpace),
+                      DatePickerFormField(
+                        color: state.color,
+                        textController: date,
+                      ),
+                      const SizedBox(height: Sizes.smallSpace),
+                      FulfilledFormField(
+                        boolController: fulfilled,
+                        color: state.color,
+                        label: state.initialFulfilledLabel,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-            Expanded(child: Container()),
             Padding(
               padding: const EdgeInsets.all(Sizes.mediumSpace),
               child: Column(
@@ -107,6 +108,11 @@ class _NewEntryContentState extends State<NewEntryContent> {
                               type: state is IncomeNewEntryState
                                   ? Type.income
                                   : Type.expense,
+                              categoryId: 1,
+                              //pegar dados do form
+                              fulfilled: true,
+                              id: 1,
+                              payment: Payment.normal,
                             ),
                           );
                         }
@@ -128,4 +134,3 @@ class _NewEntryContentState extends State<NewEntryContent> {
     );
   }
 }
-
