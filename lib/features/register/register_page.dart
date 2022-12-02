@@ -21,6 +21,8 @@ class RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  final ValueNotifier<bool> _isVisible = ValueNotifier(false);
+
   @override
   Widget build(BuildContext context) {
     final sizeHeight = MediaQuery.of(context).size.height;
@@ -84,17 +86,34 @@ class RegisterPageState extends State<RegisterPage> {
                     SizedBox(
                       height: sizeSpaceItem,
                     ),
-                    TextFormField(
-                      decoration: const InputDecoration(labelText: 'Senha'),
-                      controller: passwordController,
-                      validator: (value) {
-                        if (value?.isEmpty ?? true) {
-                          return 'Senha é obrigatório';
-                        } else if (value!.length < 6) {
-                          return 'Senha inválida, mínimo 6 caracteres';
-                        }
-                        return null;
+                    ValueListenableBuilder(
+                      builder: (context, value, _) {
+                        return TextFormField(
+                          style: const TextStyle(fontSize: Sizes.mediumSpace),
+                          validator: (value) {
+                            if (value?.isEmpty ?? true) {
+                              return 'Senha é obrigatório';
+                            } else if (value!.length < 6) {
+                              return 'Senha inválida, mínimo 6 caracteres';
+                            }
+                            return null;
+                          },
+                          controller: passwordController,
+                          decoration: InputDecoration(
+                            hintText: 'Senha',
+                            suffixIcon: IconButton(
+                              onPressed: () =>
+                                  _isVisible.value = !_isVisible.value,
+                              icon: Icon(value
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                            ),
+                          ),
+                          obscureText: value ? false : true,
+                          obscuringCharacter: '*',
+                        );
                       },
+                      valueListenable: _isVisible,
                     ),
                     SizedBox(
                       height: sizeSpaceItemButton,
