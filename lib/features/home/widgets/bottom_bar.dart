@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 class BottomBar extends StatefulWidget {
   const BottomBar({
     Key? key,
-    required Function(int index) navigate,
-  })  : _navigate = navigate,
-        super(key: key);
+    required this.controller,
+  }) : super(key: key);
 
-  final Function(int index) _navigate;
+  final PageController controller;
 
   @override
   State<BottomBar> createState() => _BottomBarState();
@@ -42,8 +41,10 @@ class _BottomBarState extends State<BottomBar> {
       ],
       currentIndex: index,
       onTap: (index) {
-        widget._navigate;
-        this.index = index;
+        setState(() {
+          widget.controller.jumpToPage(index < 2 ? index : index - 1);
+          this.index = index;
+        });
       },
     );
   }

@@ -44,8 +44,8 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomBar(
-          navigate: (index) =>
-              controller.jumpToPage(index < 2 ? index : index - 1)),
+        controller: controller,
+      ),
     );
   }
 }
