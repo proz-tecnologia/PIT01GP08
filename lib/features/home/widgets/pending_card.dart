@@ -1,6 +1,5 @@
+import 'package:financial_app/design_sys/sizes.dart';
 import 'package:flutter/material.dart';
-
-import '../../../design_sys/sizes.dart';
 
 class PendingCard extends StatelessWidget {
   const PendingCard({
