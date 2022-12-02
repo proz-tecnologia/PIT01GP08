@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:financial_app/features/home/home_states.dart';
 import 'package:financial_app/shared/models/transaction.dart';
 import 'package:financial_app/shared/transaction_repository.dart';
@@ -17,7 +15,6 @@ class HomeController extends Cubit<HomeState> {
     try {
       final transactions = await repository.getAllTransactions();
       _list.addAll(transactions);
-      log(_list as num);
       emit(SuccessHomeState());
     } catch (e) {
       emit(ErrorHomeState());
@@ -61,7 +58,7 @@ class HomeController extends Cubit<HomeState> {
         return pendingExpense;
       default:
         emit(ErrorHomeState());
-        return balance;
     }
+    return 0;
   }
 }
