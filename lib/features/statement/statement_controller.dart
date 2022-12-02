@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:financial_app/shared/transaction_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../shared/models/transaction.dart';
@@ -15,16 +14,10 @@ class StatementController extends Cubit<StatementState> {
 
   void _init() async {
     emit(LoadingStatementState());
+    final repository = TransactionDioRepository();
     try {
-      // TODO: trocar pela requisição na API
-      _list.addAll(_mock);
-
-      // para testes de gerência de estado:
-      await Future.delayed(const Duration(seconds: 1));
-      final random = Random();
-      if (random.nextBool() && random.nextBool()) {
-        throw Exception();
-      }
+      final transactions = await repository.getAllTransactions();
+      _list.addAll(transactions);
 
       emit(BothStatementState());
     } catch (e) {
@@ -55,66 +48,3 @@ class StatementController extends Cubit<StatementState> {
     return _list.where((element) => element.type == Type.expense).toList();
   }
 }
-
-final List<Transaction> _mock = [
-  Transaction(
-    date: DateTime.now().add(const Duration(days: 2)),
-    description: 'Exemplo de despesa futura',
-    value: 100.5,
-    type: Type.expense,
-    categoryId: 1,
-    fulfilled: true,
-    id: 1,
-    payment: Payment.normal,
-  ),
-  Transaction(
-    date: DateTime.now().add(const Duration(days: 2)),
-    description: 'Exemplo de receita futura',
-    value: 300.25,
-    type: Type.income,
-    categoryId: 1,
-    fulfilled: true,
-    id: 1,
-    payment: Payment.normal,
-  ),
-  Transaction(
-    date: DateTime.now(),
-    description: 'Exemplo de despesa hoje',
-    value: 200.25,
-    type: Type.expense,
-    categoryId: 1,
-    fulfilled: true,
-    id: 1,
-    payment: Payment.normal,
-  ),
-  Transaction(
-    date: DateTime.now(),
-    description: 'Exemplo de receita hoje',
-    value: 200.5,
-    type: Type.income,
-    categoryId: 1,
-    fulfilled: true,
-    id: 1,
-    payment: Payment.normal,
-  ),
-  Transaction(
-    date: DateTime.now().subtract(const Duration(days: 5)),
-    description: 'Exemplo de despesa passada',
-    value: 300,
-    type: Type.expense,
-    categoryId: 1,
-    fulfilled: true,
-    id: 1,
-    payment: Payment.normal,
-  ),
-  Transaction(
-    date: DateTime.now().subtract(const Duration(days: 5)),
-    description: 'Exemplo de receita passada',
-    value: 100.75,
-    type: Type.income,
-    categoryId: 1,
-    fulfilled: true,
-    id: 1,
-    payment: Payment.normal,
-  ),
-];
