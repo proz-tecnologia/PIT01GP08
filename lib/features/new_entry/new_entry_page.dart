@@ -15,7 +15,7 @@ class NewEntryPage extends StatelessWidget {
         appBar: AppBar(title: const Text('Nova transação')),
         body: BlocConsumer<NewEntryController, NewEntryState>(
           listener: (context, currentState) {
-           if (currentState is SavingErrorNewEntryState) {
+            if (currentState is SavingErrorNewEntryState) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('Ocorreu um erro. Tente novamente.'),

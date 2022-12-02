@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../design_sys/colors.dart';
-
 class DescriptionFormField extends StatelessWidget {
   const DescriptionFormField({
     Key? key,
@@ -23,7 +21,7 @@ class DescriptionFormField extends StatelessWidget {
             UnderlineInputBorder(borderSide: BorderSide(color: color)),
         labelText: 'Descrição',
       ),
-      cursorColor: AppColors.lightGrey,
+      cursorColor: Theme.of(context).dividerColor,
     );
   }
 }

@@ -48,7 +48,7 @@ class RegisterPageState extends State<RegisterPage> {
               ),
               Text(
                 'Cadastre-se',
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).textTheme.caption,
               ),
               Form(
                 key: _formKey,
