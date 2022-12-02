@@ -4,8 +4,6 @@ import 'package:financial_app/features/home/home_controller.dart';
 import 'package:financial_app/features/home/home_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../statement/statement_states.dart';
 import 'pending_card.dart';
 
 class AppPending extends StatelessWidget {
@@ -18,7 +16,7 @@ class AppPending extends StatelessWidget {
     return BlocBuilder<HomeController, HomeState>(
       builder: (context, state) {
         final controller = context.read<HomeController>();
-        if (state is ErrorStatementState) {
+        if (state is ErrorHomeState) {
           return const Center(child: Text('Erro ao carregar os dados'));
         }
         if (state is SuccessHomeState) {
