@@ -13,5 +13,7 @@ class Sizes {
   static const largeIconSize = 40.0;
 
   static const threePercent = 0.03;
+  static const tenPercent = 0.1;
+  
   static const dialogFactor = 0.3;
 }

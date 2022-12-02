@@ -1,7 +1,8 @@
-import 'package:financial_app/features/statistics/index_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../design_sys/sizes.dart';
+import '../index_controller.dart';
 import '../statistics_controller.dart';
 
 class Legend extends StatelessWidget {
@@ -22,7 +23,7 @@ class Legend extends StatelessWidget {
             onTap: () =>
                 touchedIndex.value = touchedIndex.value == index ? -1 : index,
             leading: SizedBox(
-              width: width * 0.1,
+              width: width * Sizes.tenPercent,
               child: Center(
                 child: CircleAvatar(
                     radius: touchedIndex.value == index ? 12 : 8,
@@ -31,7 +32,7 @@ class Legend extends StatelessWidget {
             ),
             title: Text(controller.sections[index].description),
             trailing: Text(
-                'R\$${controller.sections[index].value.toStringAsFixed(2).replaceFirst('.', ',')}'),
+                'R\$ ${controller.sections[index].value.toStringAsFixed(2).replaceFirst('.', ',')}'),
           );
         },
       ),
