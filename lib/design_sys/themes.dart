@@ -38,10 +38,13 @@ class AppTheme {
         behavior: SnackBarBehavior.floating,
       ),
       textTheme: const TextTheme(
-        caption: TextStyle(
+        displayLarge: TextStyle(
           fontSize: 27,
           fontWeight: FontWeight.bold,
           color: AppColors.black,
+        ),
+        bodySmall: TextStyle(
+          fontSize: 12,
         ),
       ),
       switchTheme: SwitchThemeData(
