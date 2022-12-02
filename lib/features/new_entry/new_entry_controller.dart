@@ -1,8 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../shared/models/transaction.dart';
+import '../../shared/transaction_repository.dart';
 import 'new_entry_states.dart';
 
 class NewEntryController extends Cubit<NewEntryState> {
@@ -16,7 +15,7 @@ class NewEntryController extends Cubit<NewEntryState> {
   void init() async {
     emit(LoadingNewEntryState());
     try {
-      //trocar pela requisição na api
+      //trocar pela requisição na api - sprint 3
       expenseCategories = mockedExpenseCategories;
       incomeCategories = mockedIncomeCategories;
 
@@ -38,16 +37,13 @@ class NewEntryController extends Cubit<NewEntryState> {
     final lastTypeState = state;
     emit(SavingNewEntryState());
     try {
-      //fazer post na api
-
-      // para testes de gerência de estado:
-      await Future.delayed(const Duration(seconds: 1));
-      final random = Random();
-      if (random.nextBool() && random.nextBool()) {
-        throw Exception();
+      final success =
+          await TransactionDioRepository().createTransaction(transaction);
+      if (success) {
+        emit(SuccessNewEntryState());
+        return;
       }
-
-      emit(SuccessNewEntryState());
+      throw Exception();
     } catch (e) {
       emit(SavingErrorNewEntryState());
       emit(lastTypeState);
