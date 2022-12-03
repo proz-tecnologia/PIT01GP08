@@ -44,11 +44,9 @@ class Transaction {
 
   factory Transaction.fromMap(Map<String, dynamic> map) {
     final random = Random();
-    final type_ = random.nextBool()
-        ? Type.expense
-        : Type.income;
-        // era pra ser map['type'] == 'expense' ? Type.expense : Type.income;
-        // mas não tá vindo certo da API
+    final type_ = random.nextBool() ? Type.expense : Type.income;
+    // era pra ser map['type'] == 'expense' ? Type.expense : Type.income;
+    // mas não tá vindo certo da API
     final payment_ = map['payment'] == 'normal'
         ? Payment.normal
         : map['payment'] == 'fixed'
@@ -60,7 +58,7 @@ class Transaction {
       description: map['description'] ?? '',
       value: (map['value']?.toDouble() ?? 0.0) / 100,
       type: type_,
-      categoryId: int.tryParse(map['categoryId']) ?? 0,
+      categoryId: 8, //int.tryParse(map['categoryId']) ?? 0,
       fulfilled: map['fulfilled'] ?? false,
       payment: payment_,
     );

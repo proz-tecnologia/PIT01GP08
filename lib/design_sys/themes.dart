@@ -153,10 +153,13 @@ class AppTheme {
         contentTextStyle: const TextStyle(color: AppColors.white),
       ),
       textTheme: const TextTheme(
-        caption: TextStyle(
+        displayLarge: TextStyle(
           fontSize: 27,
           fontWeight: FontWeight.bold,
-          color: AppColors.white,
+          color: AppColors.black,
+        ),
+        bodySmall: TextStyle(
+          fontSize: 12,
         ),
       ),
       switchTheme: SwitchThemeData(
