@@ -6,9 +6,11 @@ class PaymentFormField extends StatefulWidget {
   const PaymentFormField({
     Key? key,
     required this.color,
+    required this.controller,
   }) : super(key: key);
 
   final Color color;
+  final ValueNotifier<int> controller;
 
   @override
   State<PaymentFormField> createState() => _PaymentFormFieldState();
@@ -24,6 +26,7 @@ class _PaymentFormFieldState extends State<PaymentFormField> {
           for (int i = 0; i < _select.length; i++) {
             _select[i] = i == index;
           }
+          widget.controller.value = index;
         });
       },
       borderRadius: const BorderRadius.all(Radius.circular(8)),

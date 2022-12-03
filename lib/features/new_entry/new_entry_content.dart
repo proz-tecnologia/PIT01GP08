@@ -18,6 +18,7 @@ class NewEntryContent extends StatefulWidget {
 class _NewEntryContentState extends State<NewEntryContent> {
   final formKey = GlobalKey<FormState>();
   final fulfilled = ValueNotifier(true);
+  final paymentOption = ValueNotifier(0);
 
   final value = TextEditingController();
   final description = TextEditingController();
@@ -70,7 +71,10 @@ class _NewEntryContentState extends State<NewEntryContent> {
                           categories: categories,
                           controller: category),
                       const SizedBox(height: Sizes.mediumSpace),
-                      PaymentFormField(color: state.color),
+                      PaymentFormField(
+                        color: state.color,
+                        controller: paymentOption,
+                      ),
                       const SizedBox(height: Sizes.smallSpace),
                       DatePickerFormField(
                         color: state.color,
@@ -109,10 +113,12 @@ class _NewEntryContentState extends State<NewEntryContent> {
                                   ? Type.income
                                   : Type.expense,
                               categoryId: 1,
-                              //pegar dados do form
-                              fulfilled: true,
-                              id: 1,
-                              payment: Payment.normal,
+                              fulfilled: fulfilled.value,
+                              payment: paymentOption.value == 0
+                                  ? Payment.normal
+                                  : paymentOption.value == 1
+                                      ? Payment.fixed
+                                      : Payment.parcelled,
                             ),
                           );
                         }
