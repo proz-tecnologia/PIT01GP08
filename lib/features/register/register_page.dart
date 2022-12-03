@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'models/user.dart';
 import 'register_controller.dart';
 import 'register_states.dart';
-
 import '../../design_sys/sizes.dart';
+import 'widgets/logo_app.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
   @override
-  State<RegisterPage> createState() => RegisterPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class RegisterPageState extends State<RegisterPage> {
-  final _formKey = GlobalKey<FormState>();
+class _RegisterPageState extends State<RegisterPage> {
+  final formKey = GlobalKey<FormState>();
 
   final nameController = TextEditingController();
   final emailController = TextEditingController();
@@ -33,8 +34,6 @@ class RegisterPageState extends State<RegisterPage> {
 
     RegisterController controller = context.read<RegisterController>();
 
-    final navigator = Navigator.of(context);
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -42,15 +41,13 @@ class RegisterPageState extends State<RegisterPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
-                height: sizeSpaceTitleTop,
-              ),
+              SizedBox(height: sizeSpaceTitleTop),
               Text(
                 'Cadastre-se',
                 style: Theme.of(context).textTheme.caption,
               ),
               Form(
-                key: _formKey,
+                key: formKey,
                 child: Column(
                   children: [
                     SizedBox(
@@ -78,7 +75,6 @@ class RegisterPageState extends State<RegisterPage> {
                         } else if (!value!.contains('@')) {
                           return 'Email inválido';
                         }
-
                         return null;
                       },
                     ),
@@ -109,7 +105,6 @@ class RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                           obscureText: value ? false : true,
-                          obscuringCharacter: '*',
                         );
                       },
                       valueListenable: _isVisible,
@@ -147,12 +142,13 @@ class RegisterPageState extends State<RegisterPage> {
                           }
 
                           if (state is SuccessRegisterState) {
-                            navigator.pushReplacementNamed('/home-page');
+                            Navigator.of(context)
+                                .pushReplacementNamed('/home-page');
                           }
                         },
                         child: ElevatedButton(
                           onPressed: () async {
-                            if (_formKey.currentState?.validate() ?? false) {
+                            if (formKey.currentState?.validate() ?? false) {
                               await controller.registerUser(User(
                                   name: nameController.text,
                                   email: emailController.text,
@@ -171,7 +167,7 @@ class RegisterPageState extends State<RegisterPage> {
               ),
               TextButton(
                 onPressed: () {
-                  navigator.pushNamed('/login');
+                  Navigator.of(context).pushNamed('/login');
                 },
                 child: const Text('JÁ POSSUI CADASTRO?'),
               ),
