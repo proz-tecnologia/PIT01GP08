@@ -10,41 +10,39 @@ class NewEntryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(title: const Text('Nova transação')),
-        body: BlocConsumer<NewEntryController, NewEntryState>(
-          listener: (context, currentState) {
-            if (currentState is SavingErrorNewEntryState) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Ocorreu um erro. Tente novamente.'),
-                ),
-              );
-            }
-            if (currentState is SuccessNewEntryState) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Transação salva com sucesso.'),
-                ),
-              );
-              Navigator.of(context).pop();
-            }
-          },
-          builder: (context, currentState) {
-            if (currentState is ErrorNewEntryState) {
-              return const Center(
-                child: Text('Erro'),
-              );
-            }
-            if (currentState is NewEntryTypeState) {
-              return const NewEntryContent();
-            }
-            return const Center(
-              child: CircularProgressIndicator(),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Nova transação')),
+      body: BlocConsumer<NewEntryController, NewEntryState>(
+        listener: (context, currentState) {
+          if (currentState is SavingErrorNewEntryState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Ocorreu um erro. Tente novamente.'),
+              ),
             );
-          },
-        ),
+          }
+          if (currentState is SuccessNewEntryState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Transação salva com sucesso.'),
+              ),
+            );
+            Navigator.of(context).pop();
+          }
+        },
+        builder: (context, currentState) {
+          if (currentState is ErrorNewEntryState) {
+            return const Center(
+              child: Text('Erro'),
+            );
+          }
+          if (currentState is NewEntryTypeState) {
+            return const NewEntryContent();
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
     );
   }
