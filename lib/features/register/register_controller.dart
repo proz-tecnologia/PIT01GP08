@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'models/user.dart';
@@ -14,10 +16,7 @@ class RegisterController extends Cubit<RegisterState> {
 
     await Future.delayed(const Duration(seconds: 2));
     // verificar se o email já está cadastrado.
-    if (user.email == 'jackson@gmail.com') {
-      emit(ErrorRegisterState('email já cadastrado'));
-      return;
-    } else {
+    if (user.email.contains("@")) {
       emit(SuccessRegisterState());
       return;
     }
