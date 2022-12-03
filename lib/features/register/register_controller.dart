@@ -19,6 +19,7 @@ class RegisterController extends Cubit<RegisterState> {
       return;
     } else {
       emit(SuccessRegisterState());
+      return;
     }
   }
 }
