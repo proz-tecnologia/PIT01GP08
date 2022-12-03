@@ -63,7 +63,12 @@ class TransactionTile extends StatelessWidget {
                 .bodySmall
                 ?.copyWith(color: Theme.of(context).secondaryHeaderColor),
           ),
-          trailingCondition ? trailingIcon : const SizedBox.shrink(),
+          trailingCondition
+              ? Padding(
+                  padding: const EdgeInsets.only(left: Sizes.smallSpace),
+                  child: trailingIcon,
+                )
+              : const SizedBox.shrink(),
         ],
       ),
     );
