@@ -44,7 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
               SizedBox(height: sizeSpaceTitleTop),
               Text(
                 'Cadastre-se',
-                style: Theme.of(context).textTheme.caption,
+                style: Theme.of(context).textTheme.displayLarge,
               ),
               Form(
                 key: formKey,

@@ -11,7 +11,7 @@ class Transaction {
   final Type type;
   final int categoryId;
   final bool fulfilled;
-  final int id;
+  late final int id;
   final Payment payment;
 
   Transaction({
@@ -21,7 +21,6 @@ class Transaction {
     required this.type,
     required this.categoryId,
     required this.fulfilled,
-    required this.id,
     required this.payment,
   });
 
@@ -31,7 +30,7 @@ class Transaction {
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    result.addAll({'date': date.millisecondsSinceEpoch});
+    result.addAll({'date': date.toString()});
     result.addAll({'description': description});
     result.addAll({'value': value});
     result.addAll({'type': type.name});
@@ -47,7 +46,9 @@ class Transaction {
     final random = Random();
     final type_ = random.nextBool()
         ? Type.expense
-        : Type.income; //map['type'] == 'expense' ? Type.expense : Type.income;
+        : Type.income;
+        // era pra ser map['type'] == 'expense' ? Type.expense : Type.income;
+        // mas não tá vindo certo da API
     final payment_ = map['payment'] == 'normal'
         ? Payment.normal
         : map['payment'] == 'fixed'
@@ -59,9 +60,8 @@ class Transaction {
       description: map['description'] ?? '',
       value: (map['value']?.toDouble() ?? 0.0) / 100,
       type: type_,
-      categoryId: map['categoryId']?.toInt() ?? 0,
+      categoryId: int.tryParse(map['categoryId']) ?? 0,
       fulfilled: map['fulfilled'] ?? false,
-      id: map['id']?.toInt() ?? 0,
       payment: payment_,
     );
   }
@@ -73,7 +73,6 @@ class Transaction {
     Type? type,
     int? categoryId,
     bool? fulfilled,
-    int? id,
     Payment? payment,
   }) {
     return Transaction(
@@ -83,7 +82,6 @@ class Transaction {
       type: type ?? this.type,
       categoryId: categoryId ?? this.categoryId,
       fulfilled: fulfilled ?? this.fulfilled,
-      id: id ?? this.id,
       payment: payment ?? this.payment,
     );
   }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 enum Type { expense, income }
@@ -28,10 +30,18 @@ class Category {
 
   factory Category.fromMap(Map<String, dynamic> map) {
     final type_ = map['type'] == 'expense' ? Type.expense : Type.income;
+    var color_ = int.parse('FFFFFF', radix: 16);
+    try {
+      color_ = int.parse(
+          map['color'].replaceFirst('#', '').replaceAll(' ', ''),
+          radix: 16);
+    } catch (e) {
+      log('Erro: ${map['color'].replaceFirst('#', '')}'); //log de cores que vieram da api e não conseguiram ser convertidas
+    }
 
     return Category(
-      color: Color(map['color']),
-      id: map['id']?.toInt() ?? 0,
+      color: Color(color_),
+      id: int.tryParse(map['id']) ?? 0,
       name: map['name'] ?? '',
       type: type_,
     );

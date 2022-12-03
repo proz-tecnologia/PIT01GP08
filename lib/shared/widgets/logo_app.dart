@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../design_sys/sizes.dart';
+import '../../design_sys/sizes.dart';
 
 class LogoApp extends StatelessWidget {
   const LogoApp({

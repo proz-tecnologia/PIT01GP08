@@ -10,6 +10,7 @@ abstract class CategoryRepository {
   Future<Category?> getCategoryData(int id);
   Future<bool> editCategoryData(Category category);
   Future<bool> deleteCategory(int id);
+  Future<List<Category>> getAllCategories();
 }
 
 class CategoryDioRepository implements CategoryRepository {
@@ -41,5 +42,15 @@ class CategoryDioRepository implements CategoryRepository {
       return Category.fromMap(response.data);
     }
     return null;
+  }
+
+  @override
+  Future<List<Category>> getAllCategories() async {
+    final response = await _dio.get(categoriesUrl);
+    if (response.statusCode == 200) {
+      final List list = response.data;
+      return List<Category>.from(list.map((e) => Category.fromMap(e)));
+    }
+    return [];
   }
 }
