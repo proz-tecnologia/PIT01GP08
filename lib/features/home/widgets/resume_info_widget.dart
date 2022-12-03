@@ -17,7 +17,7 @@ class ResumeInfoWidget extends StatefulWidget {
 }
 
 class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
-  final ValueNotifier<bool> _isVisible = ValueNotifier(true);
+  final ValueNotifier<bool> isVisible = ValueNotifier(true);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
             }
             if (state is SuccessHomeState) {
               return ValueListenableBuilder(
-                valueListenable: _isVisible,
+                valueListenable: isVisible,
                 builder: (context, value, _) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -56,15 +56,15 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                             label: 'Saldo',
                             value:
                                 'R\$ ${controller.displayBalance('balance').toStringAsFixed(2).replaceAll('.', ',')}',
-                            visible: _isVisible.value,
+                            visible: isVisible.value,
                           ),
                           Expanded(
                             flex: 1,
                             child: IconButton(
                               onPressed: () =>
-                                  _isVisible.value = !_isVisible.value,
+                                  isVisible.value = !isVisible.value,
                               icon: Icon(
-                                _isVisible.value
+                                isVisible.value
                                     ? Icons.visibility
                                     : Icons.visibility_off,
                                 color: Theme.of(context).colorScheme.onPrimary,
@@ -82,14 +82,14 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                             label: 'Despesas',
                             value:
                                 'R\$ ${controller.displayBalance('expense').toStringAsFixed(2).replaceAll('.', ',')}',
-                            visible: _isVisible.value,
+                            visible: isVisible.value,
                           ),
                           TotalTile(
                             icon: Icons.arrow_upward,
                             label: 'Receitas',
                             value:
                                 'R\$ ${controller.displayBalance('income').toStringAsFixed(2).replaceAll('.', ',')}',
-                            visible: _isVisible.value,
+                            visible: isVisible.value,
                           ),
                         ],
                       ),
