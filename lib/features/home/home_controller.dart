@@ -15,7 +15,6 @@ class HomeController extends Cubit<HomeState> {
     try {
       final transactions = await repository.getAllTransactions();
       _list.addAll(transactions);
-      print(_list[0]);
       emit(SuccessHomeState());
     } catch (e) {
       emit(ErrorHomeState());
@@ -24,7 +23,7 @@ class HomeController extends Cubit<HomeState> {
 
 //element.date.isBefore(DateTime.now())
   List<Transaction> displayTransactions() {
-    List<Transaction> transactions = List.empty();
+    List<Transaction> transactions = [];
     for (var element in _list) {
       if (element.type == Type.expense) {
         if (!element.fulfilled) {
