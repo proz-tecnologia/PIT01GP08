@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../design_sys/sizes.dart';
+
 class TotalTile extends StatelessWidget {
   const TotalTile({
     Key? key,
@@ -25,10 +27,10 @@ class TotalTile extends StatelessWidget {
     final leading = icon == null
         ? Container()
         : Padding(
-            padding: const EdgeInsets.only(right: 8.0),
+            padding: const EdgeInsets.only(right: Sizes.mediumSpace),
             child: Icon(
               icon,
-              size: 32,
+              size: Sizes.mediumIconSize,
               color: Theme.of(context).colorScheme.onPrimary,
             ),
           );
