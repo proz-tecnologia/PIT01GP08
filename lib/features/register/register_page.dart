@@ -5,7 +5,6 @@ import 'models/user.dart';
 import 'register_controller.dart';
 import 'register_states.dart';
 import '../../design_sys/sizes.dart';
-import 'widgets/logo_app.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -125,22 +124,14 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             );
                           }
-
                           if (state is ErrorRegisterState) {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: const Text('Ops, algo deu errado'),
-                                  content: Center(
-                                    heightFactor: Sizes.dialogFactor,
-                                    child: Text(state.error),
-                                  ),
-                                );
-                              },
+                            Navigator.of(context).pop();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(state.error),
+                              ),
                             );
                           }
-
                           if (state is SuccessRegisterState) {
                             Navigator.of(context)
                                 .pushReplacementNamed('/home-page');
