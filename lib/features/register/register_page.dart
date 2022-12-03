@@ -1,3 +1,4 @@
+import 'package:financial_app/shared/widgets/logo_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +21,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  final ValueNotifier<bool> _isVisible = ValueNotifier(false);
+  final ValueNotifier<bool> isVisible = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -34,85 +35,76 @@ class _RegisterPageState extends State<RegisterPage> {
     RegisterController controller = context.read<RegisterController>();
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(Sizes.largeSpace),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(height: sizeSpaceTitleTop),
-              Text(
-                'Cadastre-se',
-                style: Theme.of(context).textTheme.displayLarge,
-              ),
-              Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: sizeSpaceItem,
+      body: Padding(
+        padding: const EdgeInsets.all(Sizes.largeSpace),
+        child: Form(
+          key: formKey,
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(Sizes.mediumSpace),
+                    child: LogoApp(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(Sizes.mediumSpace),
+                    child: Text(
+                      'Cadastre-se',
+                      style: Theme.of(context).textTheme.displayLarge,
                     ),
-                    TextFormField(
-                      decoration: const InputDecoration(labelText: 'Nome'),
-                      controller: nameController,
-                      validator: (value) {
-                        if (value?.isEmpty ?? true) {
-                          return 'Nome é obrigatório';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(
-                      height: sizeSpaceItem,
-                    ),
-                    TextFormField(
-                      decoration: const InputDecoration(labelText: 'Email'),
-                      controller: emailController,
-                      validator: (value) {
-                        if ((value?.isEmpty ?? true)) {
-                          return 'Email é obrigatório';
-                        } else if (!value!.contains('@')) {
-                          return 'Email inválido';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(
-                      height: sizeSpaceItem,
-                    ),
-                    ValueListenableBuilder(
-                      builder: (context, value, _) {
-                        return TextFormField(
-                          style: const TextStyle(fontSize: Sizes.mediumSpace),
-                          validator: (value) {
-                            if (value?.isEmpty ?? true) {
-                              return 'Senha é obrigatório';
-                            } else if (value!.length < 6) {
-                              return 'Senha inválida, mínimo 6 caracteres';
-                            }
-                            return null;
-                          },
-                          controller: passwordController,
-                          decoration: InputDecoration(
-                            hintText: 'Senha',
-                            suffixIcon: IconButton(
-                              onPressed: () =>
-                                  _isVisible.value = !_isVisible.value,
-                              icon: Icon(value
-                                  ? Icons.visibility
-                                  : Icons.visibility_off),
-                            ),
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(labelText: 'Nome'),
+                    controller: nameController,
+                    validator: (value) {
+                      if (value?.isEmpty ?? true) {
+                        return 'Nome é obrigatório';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(labelText: 'Email'),
+                    controller: emailController,
+                    validator: (value) {
+                      if ((value?.isEmpty ?? true)) {
+                        return 'Email é obrigatório';
+                      } else if (!value!.contains('@')) {
+                        return 'Email inválido';
+                      }
+                      return null;
+                    },
+                  ),
+                  ValueListenableBuilder(
+                    builder: (context, value, _) {
+                      return TextFormField(
+                        validator: (value) {
+                          if (value?.isEmpty ?? true) {
+                            return 'Senha é obrigatório';
+                          } else if (value!.length < 6) {
+                            return 'Senha inválida, mínimo 6 caracteres';
+                          }
+                          return null;
+                        },
+                        controller: passwordController,
+                        decoration: InputDecoration(
+                          labelText: 'Senha',
+                          suffixIcon: IconButton(
+                            onPressed: () => isVisible.value = !isVisible.value,
+                            icon: Icon(value
+                                ? Icons.visibility
+                                : Icons.visibility_off),
                           ),
-                          obscureText: value ? false : true,
-                        );
-                      },
-                      valueListenable: _isVisible,
-                    ),
-                    SizedBox(
-                      height: sizeSpaceItemButton,
-                    ),
-                    SizedBox(
-                      height: sizeButton,
+                        ),
+                        obscureText: value ? false : true,
+                      );
+                    },
+                    valueListenable: isVisible,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: Sizes.mediumSpace),
+                    child: SizedBox(
                       width: double.infinity,
                       child: BlocListener<RegisterController, RegisterState>(
                         listener: (context, state) {
@@ -138,31 +130,31 @@ class _RegisterPageState extends State<RegisterPage> {
                           }
                         },
                         child: ElevatedButton(
+                          style: Theme.of(context).elevatedButtonTheme.style,
                           onPressed: () async {
                             if (formKey.currentState?.validate() ?? false) {
-                              await controller.registerUser(User(
-                                  name: nameController.text,
-                                  email: emailController.text,
-                                  passworld: passwordController.text));
+                              await controller.registerUser(
+                                User(
+                                    name: nameController.text,
+                                    email: emailController.text,
+                                    passworld: passwordController.text),
+                              );
                             }
                           },
                           child: const Text('CRIAR CONTA'),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/login');
+                    },
+                    child: const Text('JÁ POSSUI CADASTRO?'),
+                  ),
+                ],
               ),
-              SizedBox(
-                height: sizeSpaceItemEnd,
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/login');
-                },
-                child: const Text('JÁ POSSUI CADASTRO?'),
-              ),
-            ],
+            ),
           ),
         ),
       ),
