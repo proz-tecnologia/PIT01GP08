@@ -15,10 +15,32 @@ class HomeController extends Cubit<HomeState> {
     try {
       final transactions = await repository.getAllTransactions();
       _list.addAll(transactions);
+      print(_list[0]);
       emit(SuccessHomeState());
     } catch (e) {
       emit(ErrorHomeState());
     }
+  }
+
+//element.date.isBefore(DateTime.now())
+  List<Transaction> displayTransactions() {
+    List<Transaction> transactions = List.empty();
+    for (var element in _list) {
+      if (element.type == Type.expense) {
+        if (!element.fulfilled) {
+          transactions.add(element);
+        }
+      }
+    }
+
+    transactions.sort(
+      (a, b) {
+        int aDate = a.date.millisecondsSinceEpoch;
+        int bDate = b.date.millisecondsSinceEpoch;
+        return aDate.compareTo(bDate);
+      },
+    );
+    return transactions.toList();
   }
 
   double displayBalance(String param) {

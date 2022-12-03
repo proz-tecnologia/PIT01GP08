@@ -26,7 +26,7 @@ class App extends StatelessWidget {
             ),
         '/splash-screen': (context) => BlocProvider(
               create: (context) => SplashController(),
-              child: const SplashScreen(),
+              child: SplashScreen(),
             ),
         '/register-page': (context) => const RegisterPage(),
         '/home-page': (context) => const HomePage(),
