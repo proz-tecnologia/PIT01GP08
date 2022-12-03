@@ -25,13 +25,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final sizeHeight = MediaQuery.of(context).size.height;
-    final double sizeSpaceTitleTop = sizeHeight * 0.22;
-    final double sizeSpaceItem = sizeHeight * 0.01;
-    final double sizeButton = sizeHeight * 0.072;
-    final double sizeSpaceItemButton = sizeHeight * 0.055;
-    final double sizeSpaceItemEnd = sizeHeight * 0.08;
-
     RegisterController controller = context.read<RegisterController>();
 
     return Scaffold(
