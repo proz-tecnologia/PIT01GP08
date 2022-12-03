@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'new_entry_content.dart';
 import 'new_entry_controller.dart';
 import 'new_entry_states.dart';
-
 class NewEntryPage extends StatelessWidget {
   const NewEntryPage({super.key});
 
