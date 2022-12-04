@@ -29,8 +29,8 @@ Login                      | Home                      | New Transaction        
 
 
 ## Development
-- Developing the prototype/wireframe of what is expected at the end of sprint I
-- Configuring the repository created on Github by the work team
+- Adapting project to an architecture pattern (MVC, MVP, MVVM)
+- Implementing state managment
 
 </br>
 
@@ -42,10 +42,8 @@ Login                      | Home                      | New Transaction        
 </br>
 
 ## At the end of the sprint II
-- Project must contain reusable components
-- Project must follow language conventions and best practices
-- Project must present what was proposed by the prototype
-- Project must present the components and functionalities defined by the business rules
+- Project must be structured according to the defined architecture
+- It must show state changing behavior (empty, loading, success, error) in navigation and uses of funcionalities
 
 </br>
 
