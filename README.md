@@ -29,7 +29,7 @@ Login                      | Home                      | New Transaction        
 
 
 ## Development
-- Adapting project to an architecture pattern (MVC, MVP, MVVM)
+- Adapting project to an architecture pattern (MVC)
 - Implementing state managment
 
 </br>
