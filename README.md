@@ -41,7 +41,7 @@ Login                      | Home                      | New Transaction        
 
 </br>
 
-## At the end of the sprint I
+## At the end of the sprint II
 - Project must contain reusable components
 - Project must follow language conventions and best practices
 - Project must present what was proposed by the prototype
