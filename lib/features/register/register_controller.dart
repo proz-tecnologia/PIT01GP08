@@ -14,7 +14,10 @@ class RegisterController extends Cubit<RegisterState> {
 
     await Future.delayed(const Duration(seconds: 2));
     // verificar se o email já está cadastrado.
-    if (user.email.contains("@")) {
+    if (user.email == 'jackson@gmail.com') {
+      emit(ErrorRegisterState('email já cadastrado'));
+      return;
+    } else {
       emit(SuccessRegisterState());
       return;
     }
