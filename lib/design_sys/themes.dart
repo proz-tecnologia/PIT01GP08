@@ -95,19 +95,17 @@ class AppTheme {
         }),
       ),
       colorScheme: const ColorScheme(
-              brightness: Brightness.light,
-              primary: AppColors.primary,
-              onPrimary: AppColors.white,
-              secondary: AppColors.white,
-              onSecondary: AppColors.black,
-              error: AppColors.expense,
-              onError: AppColors.white,
-              background: AppColors.white,
-              onBackground: AppColors.black,
-              surface: AppColors.white,
-              onSurface: AppColors.black)
-          .copyWith(background: AppColors.white)
-          .copyWith(error: AppColors.expense),
+          brightness: Brightness.light,
+          primary: AppColors.primary,
+          onPrimary: AppColors.white,
+          secondary: AppColors.white,
+          onSecondary: AppColors.black,
+          error: AppColors.expense,
+          onError: AppColors.white,
+          background: AppColors.white,
+          onBackground: AppColors.black,
+          surface: AppColors.white,
+          onSurface: AppColors.black),
     );
   }
 
@@ -116,7 +114,7 @@ class AppTheme {
       brightness: Brightness.dark,
       canvasColor: AppColors.black,
       dialogBackgroundColor: AppColors.black,
-      disabledColor: AppColors.darkGrey,
+      disabledColor: AppColors.lightGrey,
       dividerColor: AppColors.darkGrey,
       primaryColor: AppColors.primary,
       secondaryHeaderColor: AppColors.lightGrey,
@@ -131,7 +129,10 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(style: _appButtonStyle),
       outlinedButtonTheme: OutlinedButtonThemeData(style: _appButtonStyle),
-      textButtonTheme: TextButtonThemeData(style: _appButtonStyle),
+      textButtonTheme: TextButtonThemeData(
+          style: _appButtonStyle.copyWith(
+              foregroundColor:
+                  const MaterialStatePropertyAll(AppColors.white))),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.black,
@@ -157,7 +158,7 @@ class AppTheme {
         displayLarge: TextStyle(
           fontSize: 27,
           fontWeight: FontWeight.bold,
-          color: AppColors.black,
+          color: AppColors.white,
         ),
         bodySmall: TextStyle(
           fontSize: 12,
@@ -210,19 +211,21 @@ class AppTheme {
         }),
       ),
       colorScheme: const ColorScheme(
-              brightness: Brightness.dark,
-              primary: AppColors.primary,
-              onPrimary: AppColors.black,
-              secondary: AppColors.black,
-              onSecondary: AppColors.white,
-              error: AppColors.expense,
-              onError: AppColors.black,
-              background: AppColors.black,
-              onBackground: AppColors.white,
-              surface: AppColors.black,
-              onSurface: AppColors.white)
-          .copyWith(background: AppColors.black)
-          .copyWith(error: AppColors.expense),
+          brightness: Brightness.dark,
+          primary: AppColors.primary,
+          onPrimary: AppColors.black,
+          secondary: AppColors.black,
+          onSecondary: AppColors.white,
+          error: AppColors.expense,
+          onError: AppColors.black,
+          background: AppColors.black,
+          onBackground: AppColors.white,
+          surface: AppColors.black,
+          onSurface: AppColors.white),
+      appBarTheme: const AppBarTheme(
+        color: AppColors.primary,
+        foregroundColor: AppColors.black,
+      ),
     );
   }
 }
