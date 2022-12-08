@@ -116,13 +116,13 @@ class AppTheme {
       dialogBackgroundColor: AppColors.black,
       disabledColor: AppColors.lightGrey,
       dividerColor: AppColors.darkGrey,
-      primaryColor: AppColors.primary,
+      primaryColor: AppColors.primaryOnDark,
       secondaryHeaderColor: AppColors.lightGrey,
       shadowColor: AppColors.darkGrey,
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         type: BottomNavigationBarType.fixed,
         elevation: 0,
-        selectedItemColor: AppColors.primary,
+        selectedItemColor: AppColors.primaryOnDark,
         unselectedItemColor: AppColors.darkGrey,
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -134,7 +134,7 @@ class AppTheme {
               foregroundColor:
                   const MaterialStatePropertyAll(AppColors.white))),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.primaryOnDark,
         foregroundColor: AppColors.black,
       ),
       cardTheme: CardTheme(
@@ -150,7 +150,7 @@ class AppTheme {
       ),
       snackBarTheme: SnackBarThemeData(
         backgroundColor: AppColors.darkGrey.withOpacity(0.6),
-        actionTextColor: AppColors.primary,
+        actionTextColor: AppColors.primaryOnDark,
         disabledActionTextColor: AppColors.lightGrey,
         contentTextStyle: const TextStyle(color: AppColors.white),
       ),
@@ -171,7 +171,7 @@ class AppTheme {
             return null;
           }
           if (states.contains(MaterialState.selected)) {
-            return AppColors.primary;
+            return AppColors.primaryOnDark;
           }
           return null;
         }),
@@ -181,7 +181,7 @@ class AppTheme {
             return null;
           }
           if (states.contains(MaterialState.selected)) {
-            return AppColors.primary;
+            return AppColors.primaryOnDark;
           }
           return null;
         }),
@@ -193,7 +193,7 @@ class AppTheme {
             return null;
           }
           if (states.contains(MaterialState.selected)) {
-            return AppColors.primary;
+            return AppColors.primaryOnDark;
           }
           return null;
         }),
@@ -205,14 +205,14 @@ class AppTheme {
             return null;
           }
           if (states.contains(MaterialState.selected)) {
-            return AppColors.primary;
+            return AppColors.primaryOnDark;
           }
           return null;
         }),
       ),
       colorScheme: const ColorScheme(
           brightness: Brightness.dark,
-          primary: AppColors.primary,
+          primary: AppColors.primaryOnDark,
           onPrimary: AppColors.black,
           secondary: AppColors.black,
           onSecondary: AppColors.white,
@@ -223,7 +223,7 @@ class AppTheme {
           surface: AppColors.black,
           onSurface: AppColors.white),
       appBarTheme: const AppBarTheme(
-        color: AppColors.primary,
+        color: AppColors.primaryOnDark,
         foregroundColor: AppColors.black,
       ),
     );

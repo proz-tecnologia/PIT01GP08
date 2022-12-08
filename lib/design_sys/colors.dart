@@ -10,4 +10,5 @@ class AppColors {
   static const Color income = Color(0xff2EB400);
   static const Color expense = Color(0xffCC3200);
   static const Color primary = Color(0xff007EA7);
+  static const Color primaryOnDark = Color(0xff0099CC);
 }
