@@ -49,7 +49,8 @@ class TopBarToggleButton extends StatelessWidget {
           child: TextButton(
             onPressed: onPressed,
             style: TextButton.styleFrom(
-              foregroundColor: isSelected ? color : AppColors.darkGrey,
+              foregroundColor:
+                  isSelected ? color : Theme.of(context).secondaryHeaderColor,
             ),
             child: Text(text),
           ),
