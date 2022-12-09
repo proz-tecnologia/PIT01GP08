@@ -30,7 +30,7 @@ class _PaymentFormFieldState extends State<PaymentFormField> {
         });
       },
       borderRadius: const BorderRadius.all(Radius.circular(8)),
-      color: Theme.of(context).colorScheme.background == AppColors.black
+      color: Theme.of(context).brightness == Brightness.dark
           ? AppColors.white
           : widget.color,
       selectedColor: Theme.of(context).colorScheme.background,

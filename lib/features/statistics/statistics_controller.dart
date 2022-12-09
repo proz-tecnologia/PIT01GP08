@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+//import '../../shared/category_repository.dart';
+//import '../../shared/transaction_repository.dart';
 import 'models/section.dart';
 import 'statistics_states.dart';
 
@@ -38,7 +40,7 @@ class StatisticsController extends Cubit<StatisticsState> {
       //         description: category.name, color: category.color),
       //   );
       // }
-      
+
       _sections.addAll([
         Section(5, description: 'Section 1', color: Colors.blue),
         Section(4, description: 'Section 2', color: Colors.amber),

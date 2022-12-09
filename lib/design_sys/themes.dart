@@ -1,5 +1,6 @@
-import 'package:financial_app/design_sys/colors.dart';
 import 'package:flutter/material.dart';
+
+import 'colors.dart';
 
 class AppTheme {
   AppTheme._();
@@ -94,19 +95,17 @@ class AppTheme {
         }),
       ),
       colorScheme: const ColorScheme(
-              brightness: Brightness.light,
-              primary: AppColors.primary,
-              onPrimary: AppColors.white,
-              secondary: AppColors.white,
-              onSecondary: AppColors.black,
-              error: AppColors.expense,
-              onError: AppColors.white,
-              background: AppColors.white,
-              onBackground: AppColors.black,
-              surface: AppColors.white,
-              onSurface: AppColors.black)
-          .copyWith(background: AppColors.white)
-          .copyWith(error: AppColors.expense),
+          brightness: Brightness.light,
+          primary: AppColors.primary,
+          onPrimary: AppColors.white,
+          secondary: AppColors.white,
+          onSecondary: AppColors.black,
+          error: AppColors.expense,
+          onError: AppColors.white,
+          background: AppColors.white,
+          onBackground: AppColors.black,
+          surface: AppColors.white,
+          onSurface: AppColors.black),
     );
   }
 
@@ -115,24 +114,27 @@ class AppTheme {
       brightness: Brightness.dark,
       canvasColor: AppColors.black,
       dialogBackgroundColor: AppColors.black,
-      disabledColor: AppColors.darkGrey,
+      disabledColor: AppColors.lightGrey,
       dividerColor: AppColors.darkGrey,
-      primaryColor: AppColors.primary,
+      primaryColor: AppColors.primaryOnDark,
       secondaryHeaderColor: AppColors.lightGrey,
       shadowColor: AppColors.darkGrey,
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         type: BottomNavigationBarType.fixed,
         elevation: 0,
-        selectedItemColor: AppColors.primary,
+        selectedItemColor: AppColors.primaryOnDark,
         unselectedItemColor: AppColors.darkGrey,
         showSelectedLabels: false,
         showUnselectedLabels: false,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(style: _appButtonStyle),
       outlinedButtonTheme: OutlinedButtonThemeData(style: _appButtonStyle),
-      textButtonTheme: TextButtonThemeData(style: _appButtonStyle),
+      textButtonTheme: TextButtonThemeData(
+          style: _appButtonStyle.copyWith(
+              foregroundColor:
+                  const MaterialStatePropertyAll(AppColors.white))),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.primaryOnDark,
         foregroundColor: AppColors.black,
       ),
       cardTheme: CardTheme(
@@ -148,15 +150,18 @@ class AppTheme {
       ),
       snackBarTheme: SnackBarThemeData(
         backgroundColor: AppColors.darkGrey.withOpacity(0.6),
-        actionTextColor: AppColors.primary,
+        actionTextColor: AppColors.primaryOnDark,
         disabledActionTextColor: AppColors.lightGrey,
         contentTextStyle: const TextStyle(color: AppColors.white),
       ),
       textTheme: const TextTheme(
-        caption: TextStyle(
+        displayLarge: TextStyle(
           fontSize: 27,
           fontWeight: FontWeight.bold,
           color: AppColors.white,
+        ),
+        bodySmall: TextStyle(
+          fontSize: 12,
         ),
       ),
       switchTheme: SwitchThemeData(
@@ -166,7 +171,7 @@ class AppTheme {
             return null;
           }
           if (states.contains(MaterialState.selected)) {
-            return AppColors.primary;
+            return AppColors.primaryOnDark;
           }
           return null;
         }),
@@ -176,7 +181,7 @@ class AppTheme {
             return null;
           }
           if (states.contains(MaterialState.selected)) {
-            return AppColors.primary;
+            return AppColors.primaryOnDark;
           }
           return null;
         }),
@@ -188,7 +193,7 @@ class AppTheme {
             return null;
           }
           if (states.contains(MaterialState.selected)) {
-            return AppColors.primary;
+            return AppColors.primaryOnDark;
           }
           return null;
         }),
@@ -200,25 +205,27 @@ class AppTheme {
             return null;
           }
           if (states.contains(MaterialState.selected)) {
-            return AppColors.primary;
+            return AppColors.primaryOnDark;
           }
           return null;
         }),
       ),
       colorScheme: const ColorScheme(
-              brightness: Brightness.dark,
-              primary: AppColors.primary,
-              onPrimary: AppColors.black,
-              secondary: AppColors.black,
-              onSecondary: AppColors.white,
-              error: AppColors.expense,
-              onError: AppColors.black,
-              background: AppColors.black,
-              onBackground: AppColors.white,
-              surface: AppColors.black,
-              onSurface: AppColors.white)
-          .copyWith(background: AppColors.black)
-          .copyWith(error: AppColors.expense),
+          brightness: Brightness.dark,
+          primary: AppColors.primaryOnDark,
+          onPrimary: AppColors.black,
+          secondary: AppColors.black,
+          onSecondary: AppColors.white,
+          error: AppColors.expense,
+          onError: AppColors.black,
+          background: AppColors.black,
+          onBackground: AppColors.white,
+          surface: AppColors.black,
+          onSurface: AppColors.white),
+      appBarTheme: const AppBarTheme(
+        color: AppColors.primaryOnDark,
+        foregroundColor: AppColors.black,
+      ),
     );
   }
 }

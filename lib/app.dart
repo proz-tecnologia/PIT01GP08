@@ -7,6 +7,7 @@ import 'features/login/login_controller.dart';
 import 'features/login/login_page.dart';
 import 'features/new_entry/new_entry_controller.dart';
 import 'features/new_entry/new_entry_page.dart';
+import 'features/register/register_controller.dart';
 import 'features/register/register_page.dart';
 import 'features/splash/splash.dart';
 import 'features/splash/splash_controller.dart';
@@ -26,9 +27,12 @@ class App extends StatelessWidget {
             ),
         '/splash-screen': (context) => BlocProvider(
               create: (context) => SplashController(),
-              child: SplashScreen(),
+              child: const SplashScreen(),
             ),
-        '/register-page': (context) => const RegisterPage(),
+        '/register-page': (context) => BlocProvider(
+              create: (context) => RegisterController(),
+              child: const RegisterPage(),
+            ),
         '/home-page': (context) => const HomePage(),
         '/new-entry': (context) => BlocProvider(
               create: (context) => NewEntryController(),

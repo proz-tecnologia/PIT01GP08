@@ -1,7 +1,7 @@
-import 'package:financial_app/shared/widgets/logo_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../shared/widgets/logo_app.dart';
 import 'models/user.dart';
 import 'register_controller.dart';
 import 'register_states.dart';

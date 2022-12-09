@@ -42,6 +42,18 @@ class TransactionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Icon trailingIconCopy = trailingIcon;
+    if (trailingIcon.color == AppColors.primary &&
+        Theme.of(context).brightness == Brightness.dark) {
+      trailingIconCopy = Icon(
+        trailingIcon.icon,
+        color: AppColors.primaryOnDark,
+        size: trailingIcon.size,
+        semanticLabel: trailingIcon.semanticLabel,
+        textDirection: trailingIcon.textDirection,
+        shadows: trailingIcon.shadows,
+      );
+    }
     return ListTile(
       title: Text(
         transaction.valueString,
@@ -66,7 +78,7 @@ class TransactionTile extends StatelessWidget {
           trailingCondition
               ? Padding(
                   padding: const EdgeInsets.only(left: Sizes.smallSpace),
-                  child: trailingIcon,
+                  child: trailingIconCopy,
                 )
               : const SizedBox.shrink(),
         ],

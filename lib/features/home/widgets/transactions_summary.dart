@@ -32,12 +32,15 @@ class TransactionsSummary extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                ListView.separated(
-                  itemBuilder: (BuildContext context, int index) =>
-                      TransactionTile.alert(listTransactions[index]),
-                  itemCount: 5,
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const Divider(),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  child: ListView.separated(
+                    itemBuilder: (BuildContext context, int index) =>
+                        TransactionTile.alert(listTransactions[index]),
+                    itemCount: 5,
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const Divider(),
+                  ),
                 ),
               ],
             ),
