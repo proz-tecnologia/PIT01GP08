@@ -13,7 +13,7 @@ class SplashController extends Cubit<SplashState> {
     final prefs = await SharedPreferences.getInstance();
     final logged = prefs.getBool(SharedPreferencesKeys.userLogged) ?? false;
 
-    if (logged) {
+    if (false) {
       emit(LoggedSplashState());
       return;
     }
