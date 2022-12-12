@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -126,11 +127,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           style: Theme.of(context).elevatedButtonTheme.style,
                           onPressed: () async {
                             if (formKey.currentState?.validate() ?? false) {
-                              await controller.registerUser(
-                                User(
-                                    name: nameController.text,
-                                    email: emailController.text,
-                                    passworld: passwordController.text),
+                              await controller.registerUser(email: emailController.text,
+                                    password: passwordController.text,
                               );
                             }
                           },
