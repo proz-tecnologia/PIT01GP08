@@ -72,31 +72,59 @@ class TransactionFirebaseRepository implements TransactionRepository {
 
   @override
   Future<bool> createTransaction(model.Transaction transaction) async {
-    // TODO: implement createTransaction
-    throw UnimplementedError();
+    try {
+      firestorePath.add(transaction.toMap());
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   @override
   Future<bool> deleteTransaction(String id) async {
-    // TODO: implement deleteTransaction
-    throw UnimplementedError();
+    try {
+      firestorePath.doc(id).delete();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   @override
   Future<bool> editTransactionData(model.Transaction transaction) async {
-    // TODO: implement editTransactionData
-    throw UnimplementedError();
+    try {
+      firestorePath.doc(transaction.id).set(transaction.toMap());
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   @override
   Future<List<model.Transaction>> getAllTransactions() async {
-    // TODO: implement getAllTransactions
-    throw UnimplementedError();
+    final list = <model.Transaction>[];
+    try {
+      final snapshot = await firestorePath.get();
+      final docs = snapshot.docs;
+      for (var doc in docs) {
+        list.add(
+          model.Transaction.fromMap(doc.id, doc.data()),
+        );
+      }
+      return list;
+    } catch (e) {
+      return [];
+    }
   }
 
   @override
   Future<model.Transaction?> getTransactionData(String id) async {
-    // TODO: implement getTransactionData
-    throw UnimplementedError();
+    try {
+      final snapshot = await firestorePath.doc(id).get();
+      final data = snapshot.data()!;
+      return model.Transaction.fromMap(id, data);
+    } catch (e) {
+      return null;
+    }
   }
 }
