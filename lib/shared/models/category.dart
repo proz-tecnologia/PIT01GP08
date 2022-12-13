@@ -7,21 +7,23 @@ class Category {
   final String? id;
   final String name;
   final Type type;
+  final IconData icon;
 
   Category({
     this.id,
     required this.color,
     required this.name,
     required this.type,
+    required this.icon,
   });
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
     result.addAll({'color': color.value});
-    result.addAll({'id': id});
     result.addAll({'name': name});
     result.addAll({'type': type.name});
+    result.addAll({'icon': icon.codePoint});
 
     return result;
   }
@@ -34,6 +36,7 @@ class Category {
       id: id,
       name: map['name'] ?? '',
       type: type_,
+      icon: IconData(map['icon']),
     );
   }
 
@@ -41,12 +44,14 @@ class Category {
     Color? color,
     String? name,
     Type? type,
+    IconData? icon,
   }) {
     return Category(
       color: color ?? this.color,
       id: id,
       name: name ?? this.name,
       type: type ?? this.type,
+      icon: icon ?? this.icon,
     );
   }
 }

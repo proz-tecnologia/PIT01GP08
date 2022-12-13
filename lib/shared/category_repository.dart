@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'models/category.dart';
 
@@ -39,7 +41,7 @@ class CategoryDioRepository implements CategoryRepository {
   Future<Category?> getCategoryData(String id) async {
     final response = await _dio.get('$categoriesUrl/$id');
     if (response.statusCode == 200) {
-      return Category.fromMap(id,response.data);
+      return Category.fromMap(id, response.data);
     }
     return null;
   }
@@ -49,40 +51,73 @@ class CategoryDioRepository implements CategoryRepository {
     final response = await _dio.get(categoriesUrl);
     if (response.statusCode == 200) {
       final List list = response.data;
-      return List<Category>.from(list.map((e) => Category.fromMap(e['id'],e)));
+      return List<Category>.from(list.map((e) => Category.fromMap(e['id'], e)));
     }
     return [];
   }
 }
 
 class CategoryFirebaseRepository implements CategoryRepository {
+  final firestorePath = FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection('categories');
+
   @override
-  Future<bool> createCategory(Category category) {
-    // TODO: implement createCategory
-    throw UnimplementedError();
+  Future<bool> createCategory(Category category) async {
+    try {
+      firestorePath.add(category.toMap());
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   @override
-  Future<bool> deleteCategory(String id) {
-    // TODO: implement deleteCategory
-    throw UnimplementedError();
+  Future<bool> deleteCategory(String id) async {
+    try {
+      firestorePath.doc(id).delete();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   @override
-  Future<bool> editCategoryData(Category category) {
-    // TODO: implement editCategoryData
-    throw UnimplementedError();
+  Future<bool> editCategoryData(Category category) async {
+    try {
+      firestorePath.doc(category.id).set(category.toMap());
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   @override
-  Future<List<Category>> getAllCategories() {
-    // TODO: implement getAllCategories
-    throw UnimplementedError();
+  Future<List<Category>> getAllCategories() async {
+    final list = <Category>[];
+    try {
+      final snapshot = await firestorePath.get();
+      final docs = snapshot.docs;
+      for (var doc in docs) {
+        list.add(
+          Category.fromMap(doc.id, doc.data()),
+        );
+      }
+      return list;
+    } catch (e) {
+      return [];
+    }
   }
 
   @override
-  Future<Category?> getCategoryData(String id) {
-    // TODO: implement getCategoryData
-    throw UnimplementedError();
+  Future<Category?> getCategoryData(String id) async {
+    try {
+      final snapshot = await firestorePath.doc(id).get();
+      final data = snapshot.data()!;
+      return Category.fromMap(id, data);
+    } catch (e) {
+      return null;
+    }
   }
 }
