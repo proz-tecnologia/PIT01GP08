@@ -7,6 +7,8 @@ import '../statistics/statistics_controller.dart';
 import '../home/home_content_page.dart';
 import '../statistics/statistics_page.dart';
 import '../home/widgets/bottom_bar.dart';
+import 'data_controller.dart';
+import 'data_states.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,21 +23,37 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: controller,
-        children: [
-          const HomeContentPage(),
-          BlocProvider(
-            create: (_) => StatementController(),
-            child: const StatementPage(),
-          ),
-          BlocProvider(
-            create: (_) => StatisticsController(),
-            child: const StatisticsPage(),
-          ),
-          const Center(child: Text('Page mais')),
-        ],
+      body: BlocBuilder<DataController, DataState>(
+        builder: (context, state) {
+          if (state is ErrorDataState) {
+            return const Center(
+              child: Text('Erro'),
+            );
+          }
+          if (state is SuccessDataState) {
+            return PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: controller,
+              children: [
+                const HomeContentPage(),
+                BlocProvider(
+                  create: (_) => StatementController(
+                    context.read<DataController>(),
+                  ),
+                  child: const StatementPage(),
+                ),
+                BlocProvider(
+                  create: (_) => StatisticsController(),
+                  child: const StatisticsPage(),
+                ),
+                const Center(child: Text('Page mais')),
+              ],
+            );
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(context).pushNamed('/new-entry'),

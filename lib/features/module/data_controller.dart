@@ -19,13 +19,14 @@ class DataController extends Cubit<DataState> {
     emit(LoadingDataState());
     try {
       final transactions = await transactionRepo.getAllTransactions();
-      final categories = await categoryRepo.getAllCategories();
+      //final categories = await categoryRepo.getAllCategories();
       emit(
-        SuccessDataState(transactions, categories),
+        //SuccessDataState(transactions, categories),
+        SuccessDataState(transactions, []),
       );
-      throw Exception;
+      return;
     } catch (e) {
-      emit(ErrorDataState(e.toString()));
+      emit(ErrorDataState('Falha ao carregar os dados.'));
     }
   }
 }

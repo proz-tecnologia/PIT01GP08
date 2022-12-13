@@ -1,30 +1,20 @@
-import 'package:financial_app/features/home/home_states.dart';
-import 'package:financial_app/shared/models/transaction.dart';
-import 'package:financial_app/shared/transaction_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeController extends Cubit<HomeState> {
-  HomeController() : super(LoadingHomeState()) {
-    _init();
-  }
-  final List<Transaction> _list = [];
+import '../../shared/models/transaction.dart';
+import '../module/data_controller.dart';
+import '../module/data_states.dart';
+import 'home_states.dart';
 
-  void _init() async {
-    emit(LoadingHomeState());
-    final repository = TransactionDioRepository();
-    try {
-      final transactions = await repository.getAllTransactions();
-      _list.addAll(transactions);
-      emit(SuccessHomeState());
-    } catch (e) {
-      emit(ErrorHomeState());
-    }
-  }
+class HomeController extends Cubit<HomeState> {
+  HomeController(this._dataController) : super(LoadingHomeState());
+
+  final DataController _dataController;
 
 //element.date.isBefore(DateTime.now())
   List<Transaction> displayTransactions() {
     List<Transaction> transactions = [];
-    for (var element in _list) {
+    for (var element
+        in (_dataController.state as SuccessDataState).transactionList) {
       if (element.type == Type.expense) {
         if (!element.fulfilled) {
           transactions.add(element);
@@ -39,6 +29,7 @@ class HomeController extends Cubit<HomeState> {
         return aDate.compareTo(bDate);
       },
     );
+    emit(SuccessHomeState());
     return transactions.toList();
   }
 
@@ -50,7 +41,8 @@ class HomeController extends Cubit<HomeState> {
     double pendingIncome = 0;
     double pendingExpense = 0;
 
-    for (var element in _list) {
+    for (var element
+        in (_dataController.state as SuccessDataState).transactionList) {
       if (element.type == Type.income) {
         balance += element.value;
         income += element.value;
