@@ -50,6 +50,8 @@ class StatisticsController extends Cubit<StatisticsState> {
         );
       }
 
+      sections.sort((a, b) => b.value.compareTo(a.value));
+
       for (var s in sections) {
         s.percent = s.value / total * 100;
       }
