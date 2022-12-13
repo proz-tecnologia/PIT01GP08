@@ -7,9 +7,9 @@ const categoriesUrl =
 
 abstract class CategoryRepository {
   Future<bool> createCategory(Category category);
-  Future<Category?> getCategoryData(int id);
+  Future<Category?> getCategoryData(String id);
   Future<bool> editCategoryData(Category category);
-  Future<bool> deleteCategory(int id);
+  Future<bool> deleteCategory(String id);
   Future<List<Category>> getAllCategories();
 }
 
@@ -23,7 +23,7 @@ class CategoryDioRepository implements CategoryRepository {
   }
 
   @override
-  Future<bool> deleteCategory(int id) async {
+  Future<bool> deleteCategory(String id) async {
     final response = await _dio.delete('$categoriesUrl/$id');
     return response.statusCode == 204;
   }
@@ -36,10 +36,10 @@ class CategoryDioRepository implements CategoryRepository {
   }
 
   @override
-  Future<Category?> getCategoryData(int id) async {
+  Future<Category?> getCategoryData(String id) async {
     final response = await _dio.get('$categoriesUrl/$id');
     if (response.statusCode == 200) {
-      return Category.fromMap(response.data);
+      return Category.fromMap(id,response.data);
     }
     return null;
   }
@@ -49,8 +49,40 @@ class CategoryDioRepository implements CategoryRepository {
     final response = await _dio.get(categoriesUrl);
     if (response.statusCode == 200) {
       final List list = response.data;
-      return List<Category>.from(list.map((e) => Category.fromMap(e)));
+      return List<Category>.from(list.map((e) => Category.fromMap(e['id'],e)));
     }
     return [];
+  }
+}
+
+class CategoryFirebaseRepository implements CategoryRepository {
+  @override
+  Future<bool> createCategory(Category category) {
+    // TODO: implement createCategory
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> deleteCategory(String id) {
+    // TODO: implement deleteCategory
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> editCategoryData(Category category) {
+    // TODO: implement editCategoryData
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Category>> getAllCategories() {
+    // TODO: implement getAllCategories
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Category?> getCategoryData(String id) {
+    // TODO: implement getCategoryData
+    throw UnimplementedError();
   }
 }
