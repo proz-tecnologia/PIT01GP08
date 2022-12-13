@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../statement/statement_controller.dart';
 import '../statement/statement_page.dart';
 import '../statistics/statistics_controller.dart';
-import 'home_content_page.dart';
+import '../home/home_content_page.dart';
 import '../statistics/statistics_page.dart';
-import 'widgets/bottom_bar.dart';
+import '../home/widgets/bottom_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
