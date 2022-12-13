@@ -6,7 +6,7 @@ import '../statement/statement_page.dart';
 import '../statistics/statistics_controller.dart';
 import '../home/home_content_page.dart';
 import '../statistics/statistics_page.dart';
-import '../home/widgets/bottom_bar.dart';
+import 'widgets/bottom_bar.dart';
 import 'data_controller.dart';
 import 'data_states.dart';
 

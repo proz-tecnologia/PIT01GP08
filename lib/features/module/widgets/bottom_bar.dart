@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../module/data_controller.dart';
-import '../../module/data_states.dart';
+import '../data_controller.dart';
+import '../data_states.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({
