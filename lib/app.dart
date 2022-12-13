@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:financial_app/design_sys/themes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'features/module/data_controller.dart';
 import 'features/module/home_page.dart';
 import 'features/login/login_controller.dart';
 import 'features/login/login_page.dart';
@@ -11,6 +12,8 @@ import 'features/register/register_controller.dart';
 import 'features/register/register_page.dart';
 import 'features/splash/splash.dart';
 import 'features/splash/splash_controller.dart';
+import 'shared/category_repository.dart';
+import 'shared/transaction_repository.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -33,7 +36,13 @@ class App extends StatelessWidget {
               create: (context) => RegisterController(),
               child: const RegisterPage(),
             ),
-        '/home-page': (context) => const HomePage(),
+        '/home-page': (context) => BlocProvider(
+              create: (context) => DataController(
+                transactionRepo: TransactionDioRepository(),
+                categoryRepo: CategoryDioRepository(),
+              ),
+              child: const HomePage(),
+            ),
         '/new-entry': (context) => BlocProvider(
               create: (context) => NewEntryController(),
               child: const NewEntryPage(),
