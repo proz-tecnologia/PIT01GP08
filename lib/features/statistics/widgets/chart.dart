@@ -4,7 +4,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../index_controller.dart';
 import '../statistics_controller.dart';
 import '../statistics_states.dart';
 
@@ -16,7 +15,6 @@ class Chart extends StatelessWidget {
     final screenMinSize = min(
         MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
     final state = context.read<StatisticsController>().state as SuccessStatisticsState;
-    final touchedIndex = IndexController();
 
     return Stack(
       alignment: AlignmentDirectional.center,
@@ -27,7 +25,7 @@ class Chart extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         AnimatedBuilder(
-          animation: touchedIndex,
+          animation: state.touchedIndex,
           builder: (context, child) => PieChart(
             PieChartData(
               pieTouchData: PieTouchData(
@@ -35,10 +33,10 @@ class Chart extends StatelessWidget {
                   if (!event.isInterestedForInteractions ||
                       pieTouchResponse == null ||
                       pieTouchResponse.touchedSection == null) {
-                    touchedIndex.value = -1;
+                    state.touchedIndex.value = -1;
                     return;
                   }
-                  touchedIndex.value =
+                  state.touchedIndex.value =
                       pieTouchResponse.touchedSection!.touchedSectionIndex;
                 },
               ),
@@ -48,7 +46,7 @@ class Chart extends StatelessWidget {
               sections: List.generate(
                 state.sections.length,
                 (i) {
-                  final isTouched = i == touchedIndex.value;
+                  final isTouched = i == state.touchedIndex.value;
                   return PieChartSectionData(
                     color: state.sections[i].color,
                     value: state.sections[i].percent,
