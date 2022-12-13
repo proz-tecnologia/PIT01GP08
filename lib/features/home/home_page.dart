@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../shared/category_repository.dart';
+import '../../shared/transaction_repository.dart';
 import '../statement/statement_controller.dart';
 import '../statement/statement_page.dart';
 import '../statistics/statistics_controller.dart';
@@ -31,7 +33,10 @@ class _HomePageState extends State<HomePage> {
             child: const StatementPage(),
           ),
           BlocProvider(
-            create: (_) => StatisticsController(),
+            create: (_) => StatisticsController(
+              CategoryFirebaseRepository(),
+              TransactionFirebaseRepository(),
+            ),
             child: const StatisticsPage(),
           ),
           const Center(child: Text('Page mais')),
