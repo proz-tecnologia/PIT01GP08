@@ -36,7 +36,7 @@ class Category {
       id: id,
       name: map['name'] ?? '',
       type: type_,
-      icon: IconData(map['icon']),
+      icon: IconData(map['icon'], fontFamily: 'MaterialIcons'),
     );
   }
 

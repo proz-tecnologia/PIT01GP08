@@ -41,8 +41,12 @@ class StatisticsController extends Cubit<StatisticsState> {
         final category =
             categories.firstWhere((element) => element.id == entry.key);
         sections.add(
-          Section(entry.value,
-              description: category.name, color: category.color),
+          Section(
+            entry.value,
+            description: category.name,
+            color: category.color,
+            icon: category.icon,
+          ),
         );
       }
 

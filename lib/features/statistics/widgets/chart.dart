@@ -4,6 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../design_sys/sizes.dart';
 import '../statistics_controller.dart';
 import '../statistics_states.dart';
 
@@ -14,7 +15,8 @@ class Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenMinSize = min(
         MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
-    final state = context.read<StatisticsController>().state as SuccessStatisticsState;
+    final state =
+        context.read<StatisticsController>().state as SuccessStatisticsState;
 
     return Stack(
       alignment: AlignmentDirectional.center,
@@ -50,13 +52,18 @@ class Chart extends StatelessWidget {
                   return PieChartSectionData(
                     color: state.sections[i].color,
                     value: state.sections[i].percent,
-                    title: '${state.sections[i].percent.toInt()}%',
-                    radius:
-                        isTouched ? screenMinSize * 0.23 : screenMinSize * 0.2,
-                    titleStyle: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onPrimary,
+                    title: '',
+                    badgeWidget: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(state.sections[i].icon),
+                        Text('${state.sections[i].percent.toInt()}%'),
+                      ],
                     ),
+                    badgePositionPercentageOffset: 2,
+                    radius: isTouched
+                        ? screenMinSize * Sizes.tenPercent
+                        : screenMinSize * Sizes.sevenPercent,
                   );
                 },
               ),
