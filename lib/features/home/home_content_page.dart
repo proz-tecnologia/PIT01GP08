@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../module/data_controller.dart';
 import 'home_controller.dart';
 import 'widgets/app_pending.dart';
 import 'widgets/transactions_summary.dart';
@@ -13,7 +14,9 @@ class HomeContentPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: BlocProvider(
-        create: (context) => HomeController(),
+        create: (context) => HomeController(
+          context.read<DataController>(),
+        ),
         child: Column(
           children: const [
             ResumeInfoWidget(),
