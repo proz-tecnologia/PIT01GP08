@@ -18,12 +18,7 @@ class StatementPage extends StatelessWidget {
         AppBar(
           centerTitle: true,
           titleTextStyle: Theme.of(context).textTheme.bodyLarge,
-          title: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              MonthChanger((month) {}),
-            ],
-          ),
+          title: MonthChanger((month) {}),
           actions: [
             IconButton(
               onPressed: () {},
