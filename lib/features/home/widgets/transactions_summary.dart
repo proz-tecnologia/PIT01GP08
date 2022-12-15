@@ -34,13 +34,19 @@ class TransactionsSummary extends StatelessWidget {
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.5,
-                  child: ListView.separated(
-                    itemBuilder: (BuildContext context, int index) =>
-                        TransactionTile.alert(listTransactions[index]),
-                    itemCount: 5,
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const Divider(),
-                  ),
+                  child: listTransactions.isEmpty
+                      ? const Padding(
+                          padding: EdgeInsets.only(top: Sizes.largeSpace),
+                          child: Text(
+                              'Você ainda não possui nenhuma despesa futura ou pendente!'),
+                        )
+                      : ListView.separated(
+                          itemBuilder: (BuildContext context, int index) =>
+                              TransactionTile.alert(listTransactions[index]),
+                          itemCount: listTransactions.length,
+                          separatorBuilder: (BuildContext context, int index) =>
+                              const Divider(),
+                        ),
                 ),
               ],
             ),
