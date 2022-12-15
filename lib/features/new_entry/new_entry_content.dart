@@ -112,7 +112,7 @@ class _NewEntryContentState extends State<NewEntryContent> {
                               type: state is IncomeNewEntryState
                                   ? Type.income
                                   : Type.expense,
-                              categoryId: 1,
+                              categoryId: '1',
                               fulfilled: fulfilled.value,
                               payment: paymentOption.value == 0
                                   ? Payment.normal

@@ -4,8 +4,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../design_sys/sizes.dart';
 import '../statistics_controller.dart';
-import '../index_controller.dart';
+import '../statistics_states.dart';
 
 class Chart extends StatelessWidget {
   const Chart({super.key});
@@ -14,19 +15,19 @@ class Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenMinSize = min(
         MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
-    final controller = context.read<StatisticsController>();
-    final touchedIndex = IndexController();
+    final state =
+        context.read<StatisticsController>().state as SuccessStatisticsState;
 
     return Stack(
       alignment: AlignmentDirectional.center,
       children: [
         Text(
-          'Total:\nR\$${controller.total.toStringAsFixed(2).replaceFirst('.', ',')}',
+          'Total:\nR\$${state.total.toStringAsFixed(2).replaceFirst('.', ',')}',
           style: Theme.of(context).textTheme.bodyLarge,
           textAlign: TextAlign.center,
         ),
         AnimatedBuilder(
-          animation: touchedIndex,
+          animation: state.touchedIndex,
           builder: (context, child) => PieChart(
             PieChartData(
               pieTouchData: PieTouchData(
@@ -34,10 +35,10 @@ class Chart extends StatelessWidget {
                   if (!event.isInterestedForInteractions ||
                       pieTouchResponse == null ||
                       pieTouchResponse.touchedSection == null) {
-                    touchedIndex.value = -1;
+                    state.touchedIndex.value = -1;
                     return;
                   }
-                  touchedIndex.value =
+                  state.touchedIndex.value =
                       pieTouchResponse.touchedSection!.touchedSectionIndex;
                 },
               ),
@@ -45,19 +46,24 @@ class Chart extends StatelessWidget {
               startDegreeOffset: 270,
               centerSpaceRadius: screenMinSize * 0.2,
               sections: List.generate(
-                controller.sections.length,
+                state.sections.length,
                 (i) {
-                  final isTouched = i == touchedIndex.value;
+                  final isTouched = i == state.touchedIndex.value;
                   return PieChartSectionData(
-                    color: controller.sections[i].color,
-                    value: controller.sections[i].percent,
-                    title: '${controller.sections[i].percent.toInt()}%',
-                    radius:
-                        isTouched ? screenMinSize * 0.23 : screenMinSize * 0.2,
-                    titleStyle: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onPrimary,
+                    color: state.sections[i].color,
+                    value: state.sections[i].percent,
+                    title: '',
+                    badgeWidget: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(state.sections[i].icon),
+                        Text('${state.sections[i].percent.toInt()}%'),
+                      ],
                     ),
+                    badgePositionPercentageOffset: 2,
+                    radius: isTouched
+                        ? screenMinSize * Sizes.tenPercent
+                        : screenMinSize * Sizes.sevenPercent,
                   );
                 },
               ),
