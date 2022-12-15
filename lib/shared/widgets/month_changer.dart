@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
+import 'month_picker.dart';
+
 class MonthChanger extends StatefulWidget {
   const MonthChanger(
     this.changeMonthAction, {
@@ -51,40 +53,14 @@ class _MonthChangerState extends State<MonthChanger> {
                     icon: const Icon(Icons.arrow_back_ios)),
                 InkWell(
                   onTap: () => showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                            title: Text(
-                              '${value.year}',
-                              textAlign: TextAlign.center,
-                            ),
-                            content: SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              child: GridView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  childAspectRatio: 1.5,
-                                ),
-                                itemCount: 12,
-                                itemBuilder: (_, index) => InkWell(
-                                  onTap: () {
-                                    widget.changeMonthAction(
-                                        DateTime(value.year, index + 1));
-                                    currentMonth.value =
-                                        DateTime(value.year, index + 1);
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Center(
-                                    child: Text(DateFormat('MMM', 'pt_Br')
-                                        .format(DateTime(value.year, index + 1))
-                                        .toUpperCase()),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )),
+                    context: context,
+                    builder: (context) => MonthPicker(
+                        changeMonthAction: (month) {
+                          widget.changeMonthAction(month);
+                          currentMonth.value = month;
+                        },
+                        currentMonth: currentMonth.value),
+                  ),
                   child: Text(
                     displayMonth,
                     style: TextStyle(
