@@ -17,12 +17,7 @@ class StatisticsPage extends StatelessWidget {
         AppBar(
           centerTitle: true,
           titleTextStyle: Theme.of(context).textTheme.bodyLarge,
-          title: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: const [
-              MonthChanger('Dezembro'),
-            ],
-          ),
+          title: MonthChanger((month) {}),
           actions: [
             IconButton(
               onPressed: () {},
