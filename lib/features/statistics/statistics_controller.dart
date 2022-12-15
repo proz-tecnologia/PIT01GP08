@@ -1,19 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../shared/category_repository.dart';
-import '../../shared/transaction_repository.dart';
 import '../../shared/models/transaction.dart';
+import '../module/data_controller.dart';
+import '../module/data_states.dart';
 import 'models/section.dart';
 import 'statistics_states.dart';
 
 class StatisticsController extends Cubit<StatisticsState> {
-  final CategoryRepository categoryRepo;
-  final TransactionRepository transactionRepo;
+  final DataController _dataController;
 
-  StatisticsController(
-    this.categoryRepo,
-    this.transactionRepo,
-  ) : super(LoadingStatisticsState()) {
+  StatisticsController(this._dataController) : super(LoadingStatisticsState()) {
     _getSections();
   }
 
@@ -21,9 +17,12 @@ class StatisticsController extends Cubit<StatisticsState> {
     emit(LoadingStatisticsState());
     final sections = <Section>[];
     double total = 0;
+
     try {
-      final categories = await categoryRepo.getAllCategories();
-      final transactions = await transactionRepo.getAllTransactions();
+      final categories =
+          (_dataController.state as SuccessDataState).categoryList;
+      final transactions =
+          (_dataController.state as SuccessDataState).transactionList;
       Map<String, double> map = {};
 
       for (var transaction in transactions) {

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../shared/category_repository.dart';
-import '../../shared/transaction_repository.dart';
 import '../home/home_content_page.dart';
 import '../statement/statement_controller.dart';
 import '../statement/statement_page.dart';
 import '../statistics/statistics_controller.dart';
 import '../statistics/statistics_page.dart';
 import 'data_controller.dart';
+import 'data_states.dart';
 import 'widgets/bottom_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -23,30 +22,37 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final data = context.read<DataController>();
     return Scaffold(
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: controller,
-        children: [
-          const HomeContentPage(),
-          BlocProvider(
-            create: (_) => StatementController(
-              DataController(
-                categoryRepo: CategoryFirebaseRepository(),
-                transactionRepo: TransactionFirebaseRepository(),
-              ),
-            ),
-            child: const StatementPage(),
-          ),
-          BlocProvider(
-            create: (_) => StatisticsController(
-              CategoryFirebaseRepository(),
-              TransactionFirebaseRepository(),
-            ),
-            child: const StatisticsPage(),
-          ),
-          const Center(child: Text('Page mais')),
-        ],
+      body: BlocBuilder<DataController, DataState>(
+        builder: (context, state) {
+          if (state is ErrorDataState) {
+            return const Center(
+              child: Text('Erro'),
+            );
+          }
+          if (state is SuccessDataState) {
+            return PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: controller,
+              children: [
+                const HomeContentPage(),
+                BlocProvider(
+                  create: (_) => StatementController(data),
+                  child: const StatementPage(),
+                ),
+                BlocProvider(
+                  create: (_) => StatisticsController(data),
+                  child: const StatisticsPage(),
+                ),
+                const Center(child: Text('Page mais')),
+              ],
+            );
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(context).pushNamed('/new-entry'),
