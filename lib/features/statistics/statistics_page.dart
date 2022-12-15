@@ -19,8 +19,8 @@ class StatisticsPage extends StatelessWidget {
           titleTextStyle: Theme.of(context).textTheme.bodyLarge,
           title: Row(
             mainAxisSize: MainAxisSize.min,
-            children: const [
-              MonthChanger('Dezembro'),
+            children: [
+              MonthChanger((month) {}),
             ],
           ),
           actions: [

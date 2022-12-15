@@ -44,8 +44,8 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                       SizedBox(height: spaceBetween),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          MonthChanger('Dezembro'),
+                        children: [
+                          MonthChanger((month) {}),
                         ],
                       ),
                       SizedBox(height: spaceBetween),
