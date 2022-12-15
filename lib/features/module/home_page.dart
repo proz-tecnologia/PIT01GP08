@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../home/home_content_page.dart';
 import '../statement/statement_controller.dart';
 import '../statement/statement_page.dart';
 import '../statistics/statistics_controller.dart';
-import '../home/home_content_page.dart';
 import '../statistics/statistics_page.dart';
-import 'widgets/bottom_bar.dart';
 import 'data_controller.dart';
 import 'data_states.dart';
+import 'widgets/bottom_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,6 +22,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final data = context.read<DataController>();
     return Scaffold(
       body: BlocBuilder<DataController, DataState>(
         builder: (context, state) {
@@ -37,13 +38,11 @@ class _HomePageState extends State<HomePage> {
               children: [
                 const HomeContentPage(),
                 BlocProvider(
-                  create: (_) => StatementController(
-                    context.read<DataController>(),
-                  ),
+                  create: (_) => StatementController(data),
                   child: const StatementPage(),
                 ),
                 BlocProvider(
-                  create: (_) => StatisticsController(),
+                  create: (_) => StatisticsController(data),
                   child: const StatisticsPage(),
                 ),
                 const Center(child: Text('Page mais')),

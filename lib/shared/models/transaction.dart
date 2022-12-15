@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum Type { expense, income }
 
@@ -9,12 +9,13 @@ class Transaction {
   final String description;
   final double value;
   final Type type;
-  final int categoryId;
+  final String categoryId;
   final bool fulfilled;
-  late final int id;
+  final String? id;
   final Payment payment;
 
   Transaction({
+    this.id,
     required this.date,
     required this.description,
     required this.value,
@@ -30,23 +31,19 @@ class Transaction {
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    result.addAll({'date': date.toString()});
+    result.addAll({'date': Timestamp.fromDate(date)});
     result.addAll({'description': description});
     result.addAll({'value': value});
     result.addAll({'type': type.name});
     result.addAll({'categoryId': categoryId});
     result.addAll({'fulfilled': fulfilled});
-    result.addAll({'id': id});
     result.addAll({'payment': payment.name});
 
     return result;
   }
 
-  factory Transaction.fromMap(Map<String, dynamic> map) {
-    final random = Random();
-    final type_ = random.nextBool() ? Type.expense : Type.income;
-    // era pra ser map['type'] == 'expense' ? Type.expense : Type.income;
-    // mas não tá vindo certo da API
+  factory Transaction.fromMap(String id,Map<String, dynamic> map) {
+    final type_ = map['type'] == 'expense' ? Type.expense : Type.income;
     final payment_ = map['payment'] == 'normal'
         ? Payment.normal
         : map['payment'] == 'fixed'
@@ -54,11 +51,12 @@ class Transaction {
             : Payment.parcelled;
 
     return Transaction(
-      date: DateTime.parse(map['date']),
+      id: id,
+      date: (map['date'] as Timestamp).toDate(),
       description: map['description'] ?? '',
-      value: (map['value']?.toDouble() ?? 0.0) / 100,
+      value: map['value'] ?? 0,
       type: type_,
-      categoryId: 8, //int.tryParse(map['categoryId']) ?? 0,
+      categoryId: map['categoryId'] ?? '',
       fulfilled: map['fulfilled'] ?? false,
       payment: payment_,
     );
@@ -69,11 +67,12 @@ class Transaction {
     String? description,
     double? value,
     Type? type,
-    int? categoryId,
+    String? categoryId,
     bool? fulfilled,
     Payment? payment,
   }) {
     return Transaction(
+      id: id,
       date: date ?? this.date,
       description: description ?? this.description,
       value: value ?? this.value * 100,

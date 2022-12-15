@@ -1,74 +1,63 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-//import '../../shared/category_repository.dart';
-//import '../../shared/transaction_repository.dart';
+import '../../shared/models/transaction.dart';
+import '../module/data_controller.dart';
+import '../module/data_states.dart';
 import 'models/section.dart';
 import 'statistics_states.dart';
 
 class StatisticsController extends Cubit<StatisticsState> {
-  final _sections = <Section>[];
-  late double _total;
+  final DataController _dataController;
 
-  StatisticsController() : super(LoadingStatisticsState()) {
+  StatisticsController(this._dataController) : super(LoadingStatisticsState()) {
     _getSections();
   }
 
-  List<Section> get sections => _sections;
-  double get total => _total;
-
   void _getSections() async {
     emit(LoadingStatisticsState());
+    final sections = <Section>[];
+    double total = 0;
+
     try {
-      // final categories = await CategoryDioRepository().getAllCategories();
-      // final transactions =
-      //     await TransactionDioRepository().getAllTransactions();
-      // Map<int, double> map = {};
+      final categories =
+          (_dataController.state as SuccessDataState).categoryList;
+      final transactions =
+          (_dataController.state as SuccessDataState).transactionList;
+      Map<String, double> map = {};
 
-      // for (var transaction in transactions) {
-      //   if (map.containsKey(transaction.categoryId)) {
-      //     map[transaction.categoryId] =
-      //         map[transaction.categoryId]! + transaction.value;
-      //   }
-      //   map.addAll({transaction.categoryId: transaction.value});
-      // }
-      // for (var entry in map.entries) {
-      //   final category =
-      //       categories.firstWhere((element) => element.id == entry.key);
-      //   _sections.add(
-      //     Section(entry.value,
-      //         description: category.name, color: category.color),
-      //   );
-      // }
+      for (var transaction in transactions) {
+        if (transaction.type == Type.expense) {
+          total += transaction.value;
+          if (map.containsKey(transaction.categoryId)) {
+            map[transaction.categoryId] =
+                map[transaction.categoryId]! + transaction.value;
+            continue;
+          }
+          map.addAll({transaction.categoryId: transaction.value});
+        }
+      }
+      for (var entry in map.entries) {
+        final category =
+            categories.firstWhere((element) => element.id == entry.key);
+        sections.add(
+          Section(
+            entry.value,
+            description: category.name,
+            color: category.color,
+            icon: category.icon,
+          ),
+        );
+      }
 
-      _sections.addAll([
-        Section(5, description: 'Section 1', color: Colors.blue),
-        Section(4, description: 'Section 2', color: Colors.amber),
-        Section(3, description: 'Section 3', color: Colors.purple),
-        Section(2, description: 'Section 4', color: Colors.green),
-        Section(0.5, description: 'Section 5', color: Colors.pink),
-      ]);
+      sections.sort((a, b) => b.value.compareTo(a.value));
 
-      _total = _getTotal();
-      _setPercents();
+      for (var s in sections) {
+        s.percent = s.value / total * 100;
+      }
 
-      emit(SuccessStatisticsState());
+      emit(SuccessStatisticsState(sections, total));
     } catch (e) {
       emit(ErrorStatisticsState());
-    }
-  }
-
-  double _getTotal() {
-    double total = 0;
-    for (var s in _sections) {
-      total += s.value;
-    }
-    return total;
-  }
-
-  void _setPercents() {
-    for (var s in _sections) {
-      s.percent = s.value / _total * 100;
     }
   }
 }

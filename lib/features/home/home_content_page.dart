@@ -14,9 +14,7 @@ class HomeContentPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: BlocProvider(
-        create: (context) => HomeController(
-          context.read<DataController>(),
-        ),
+        create: (context) => HomeController(context.read<DataController>()),
         child: Column(
           children: const [
             ResumeInfoWidget(),

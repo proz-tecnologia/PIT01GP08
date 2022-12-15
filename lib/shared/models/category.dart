@@ -1,63 +1,57 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 enum Type { expense, income }
 
 class Category {
   final Color color;
-  final int id;
+  final String? id;
   final String name;
   final Type type;
+  final IconData icon;
 
   Category({
+    this.id,
     required this.color,
-    required this.id,
     required this.name,
     required this.type,
+    required this.icon,
   });
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
     result.addAll({'color': color.value});
-    result.addAll({'id': id});
     result.addAll({'name': name});
     result.addAll({'type': type.name});
+    result.addAll({'icon': icon.codePoint});
 
     return result;
   }
 
-  factory Category.fromMap(Map<String, dynamic> map) {
+  factory Category.fromMap(String id, Map<String, dynamic> map) {
     final type_ = map['type'] == 'expense' ? Type.expense : Type.income;
-    var color_ = int.parse('FFFFFF', radix: 16);
-    try {
-      color_ = int.parse(
-          map['color'].replaceFirst('#', '').replaceAll(' ', ''),
-          radix: 16);
-    } catch (e) {
-      log('Erro: ${map['color'].replaceFirst('#', '')}'); //log de cores que vieram da api e não conseguiram ser convertidas
-    }
 
     return Category(
-      color: Color(color_),
-      id: int.tryParse(map['id']) ?? 0,
+      color: Color(map['color']),
+      id: id,
       name: map['name'] ?? '',
       type: type_,
+      icon: IconData(map['icon'], fontFamily: 'MaterialIcons'),
     );
   }
 
   Category copyWith({
     Color? color,
-    int? id,
     String? name,
     Type? type,
+    IconData? icon,
   }) {
     return Category(
       color: color ?? this.color,
-      id: id ?? this.id,
+      id: id,
       name: name ?? this.name,
       type: type ?? this.type,
+      icon: icon ?? this.icon,
     );
   }
 }

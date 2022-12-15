@@ -38,8 +38,8 @@ class App extends StatelessWidget {
             ),
         '/home-page': (context) => BlocProvider(
               create: (context) => DataController(
-                transactionRepo: TransactionDioRepository(),
-                categoryRepo: CategoryDioRepository(),
+                transactionRepo: TransactionFirebaseRepository(),
+                categoryRepo: CategoryFirebaseRepository(),
               ),
               child: const HomePage(),
             ),

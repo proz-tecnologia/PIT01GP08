@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../design_sys/sizes.dart';
-import '../index_controller.dart';
 import '../statistics_controller.dart';
+import '../statistics_states.dart';
 
 class Legend extends StatelessWidget {
   const Legend({super.key});
@@ -11,28 +11,27 @@ class Legend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final controller = context.read<StatisticsController>();
-    final touchedIndex = IndexController();
+    final state = context.read<StatisticsController>().state as SuccessStatisticsState;
 
     return ListView.builder(
-      itemCount: controller.sections.length,
+      itemCount: state.sections.length,
       itemBuilder: (context, index) => AnimatedBuilder(
-        animation: touchedIndex,
+        animation: state.touchedIndex,
         builder: (context, child) {
           return ListTile(
             onTap: () =>
-                touchedIndex.value = touchedIndex.value == index ? -1 : index,
+                state.touchedIndex.value = state.touchedIndex.value == index ? -1 : index,
             leading: SizedBox(
               width: width * Sizes.tenPercent,
               child: Center(
                 child: CircleAvatar(
-                    radius: touchedIndex.value == index ? 12 : 8,
-                    backgroundColor: controller.sections[index].color),
+                    radius: state.touchedIndex.value == index ? 12 : 8,
+                    backgroundColor: state.sections[index].color),
               ),
             ),
-            title: Text(controller.sections[index].description),
+            title: Text(state.sections[index].description),
             trailing: Text(
-                'R\$ ${controller.sections[index].value.toStringAsFixed(2).replaceFirst('.', ',')}'),
+                'R\$ ${state.sections[index].value.toStringAsFixed(2).replaceFirst('.', ',')}'),
           );
         },
       ),
