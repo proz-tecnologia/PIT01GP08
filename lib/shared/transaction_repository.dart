@@ -67,7 +67,8 @@ class TransactionDioRepository implements TransactionRepository {
 class TransactionFirebaseRepository implements TransactionRepository {
   final firestorePath = FirebaseFirestore.instance
       .collection('users')
-      .doc(FirebaseAuth.instance.currentUser!.uid)
+      //.doc(FirebaseAuth.instance.currentUser!.uid)
+      .doc('sUWdyeTWkHWy0PupifIhggoPeJ32')
       .collection('transactions');
 
   @override

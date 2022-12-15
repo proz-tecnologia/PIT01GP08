@@ -1,29 +1,15 @@
-import 'package:financial_app/shared/transaction_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../shared/models/transaction.dart';
+import '../module/data_controller.dart';
+import '../module/data_states.dart';
 import 'statement_states.dart';
 
 class StatementController extends Cubit<StatementState> {
-  StatementController() : super(LoadingStatementState()) {
-    _init();
-  }
-  final List<Transaction> _list = [];
+  StatementController(this._dataController) : super(BothStatementState());
 
+  final DataController _dataController;
   List<Transaction> get list => _showTransactions();
-
-  void _init() async {
-    emit(LoadingStatementState());
-    final repository = TransactionDioRepository();
-    try {
-      final transactions = await repository.getAllTransactions();
-      _list.addAll(transactions);
-
-      emit(BothStatementState());
-    } catch (e) {
-      emit(ErrorStatementState());
-    }
-  }
 
   void toggleState(bool isIncome) async {
     if (state is BothStatementState) {
@@ -39,12 +25,13 @@ class StatementController extends Cubit<StatementState> {
   }
 
   List<Transaction> _showTransactions() {
+    final list = (_dataController.state as SuccessDataState).transactionList;
     if (state is BothStatementState) {
-      return _list;
+      return list;
     }
     if (state is IncomeStatementState) {
-      return _list.where((element) => element.type == Type.income).toList();
+      return list.where((element) => element.type == Type.income).toList();
     }
-    return _list.where((element) => element.type == Type.expense).toList();
+    return list.where((element) => element.type == Type.expense).toList();
   }
 }

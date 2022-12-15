@@ -3,11 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../shared/category_repository.dart';
 import '../../shared/transaction_repository.dart';
+import '../home/home_content_page.dart';
 import '../statement/statement_controller.dart';
 import '../statement/statement_page.dart';
 import '../statistics/statistics_controller.dart';
-import 'home_content_page.dart';
 import '../statistics/statistics_page.dart';
+import 'data_controller.dart';
 import 'widgets/bottom_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,7 +30,12 @@ class _HomePageState extends State<HomePage> {
         children: [
           const HomeContentPage(),
           BlocProvider(
-            create: (_) => StatementController(),
+            create: (_) => StatementController(
+              DataController(
+                categoryRepo: CategoryFirebaseRepository(),
+                transactionRepo: TransactionFirebaseRepository(),
+              ),
+            ),
             child: const StatementPage(),
           ),
           BlocProvider(
