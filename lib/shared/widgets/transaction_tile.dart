@@ -19,8 +19,7 @@ class TransactionTile extends StatelessWidget {
   factory TransactionTile.alert(Transaction transaction) {
     return TransactionTile(
       transaction,
-      trailingCondition:
-          transaction.date.difference(DateTime.now()) < const Duration(days: 4),
+      trailingCondition: transaction.date.isBefore(DateTime.now()),
       trailingIcon: const Icon(
         Icons.warning_rounded,
         color: AppColors.expense,
@@ -31,7 +30,7 @@ class TransactionTile extends StatelessWidget {
   factory TransactionTile.check(Transaction transaction) {
     return TransactionTile(
       transaction,
-      trailingCondition: true,
+      trailingCondition: transaction.fulfilled,
       trailingIcon: const Icon(
         Icons.check_circle_rounded,
         color: AppColors.primary,
