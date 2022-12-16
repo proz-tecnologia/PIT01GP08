@@ -1,4 +1,5 @@
 import 'package:financial_app/design_sys/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,28 +27,29 @@ class _ProfilePageState extends State<ProfilePage> {
         return ValueListenableBuilder(
             valueListenable: testValue,
             builder: (context, value, _) {
-              const listButtons = [
+              final listButtons = [
                 ListTile(
-                  leading: Icon(Icons.person_rounded),
-                  title: Text("Conta"),
+                  onTap: () => FirebaseAuth.instance.signOut(),
+                  leading: const Icon(Icons.person_rounded),
+                  title: const Text("Sair da Conta"),
                 ),
-                ListTile(
+                const ListTile(
                   leading: Icon(Icons.label_rounded),
                   title: Text("Categorias"),
                 ),
-                ListTile(
+                const ListTile(
                   leading: Icon(Icons.credit_card_rounded),
                   title: Text(" Meus Cartões"),
                 ),
-                ListTile(
+                const ListTile(
                   leading: Icon(Icons.account_balance_rounded),
                   title: Text("Meus Bancos"),
                 ),
-                ListTile(
+                const ListTile(
                   leading: Icon(Icons.account_balance_wallet_rounded),
                   title: Text("Carteira"),
                 ),
-                ListTile(
+                const ListTile(
                   leading: Icon(Icons.settings_rounded),
                   title: Text("Configurações"),
                 ),
