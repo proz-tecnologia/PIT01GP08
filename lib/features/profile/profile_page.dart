@@ -29,7 +29,11 @@ class _ProfilePageState extends State<ProfilePage> {
             builder: (context, value, _) {
               final listButtons = [
                 ListTile(
-                  onTap: () => FirebaseAuth.instance.signOut(),
+                  onTap: () {
+                    FirebaseAuth.instance.signOut();
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil('/login', (route) => false);
+                  },
                   leading: const Icon(Icons.person_rounded),
                   title: const Text("Sair da Conta"),
                 ),

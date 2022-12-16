@@ -8,7 +8,7 @@ class ProfileController extends Cubit<ProfileState> {
   }
 
   Future<void> delay() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
     emit(SuccessProfileState());
     return;
   }
