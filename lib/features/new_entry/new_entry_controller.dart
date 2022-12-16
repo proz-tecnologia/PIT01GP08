@@ -38,7 +38,7 @@ class NewEntryController extends Cubit<NewEntryState> {
     emit(SavingNewEntryState());
     try {
       final success =
-          await TransactionDioRepository().createTransaction(transaction);
+          await TransactionFirebaseRepository().createTransaction(transaction);
       if (success) {
         emit(SuccessNewEntryState());
         return;
