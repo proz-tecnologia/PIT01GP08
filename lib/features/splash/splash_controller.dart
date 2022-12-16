@@ -1,22 +1,24 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../shared/shared_preferences_keys.dart';
-import 'splash_states.dart';
+import '../../firebase_options.dart';
+
+enum SplashState { loading, logged, unlogged }
 
 class SplashController extends Cubit<SplashState> {
-  SplashController() : super(LoadingSplashState()) {
-    init();
-  }
+  SplashController() : super(SplashState.loading);
 
   void init() async {
-    final prefs = await SharedPreferences.getInstance();
-    final logged = prefs.getBool(SharedPreferencesKeys.userLogged) ?? false;
-
-    if (false) {
-      emit(LoggedSplashState());
-      return;
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    //await Future.delayed(const Duration(seconds: 3));
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      emit(SplashState.unlogged);
+    } else {
+      emit(SplashState.logged);
     }
-    emit(UnloggedSplashState());
   }
 }
