@@ -16,32 +16,40 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final Image _logo = Image.asset('assets/logo_white_flat.png');
+  final controller = SplashController();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => controller.init());
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SplashController, SplashState>(
-      listener: (context, state) {
-        if (state is LoggedSplashState) {
-          Navigator.of(context).pushReplacementNamed('/home-page');
-        }
-        if (state is UnloggedSplashState) {
-          Navigator.of(context).pushReplacementNamed('/register-page');
-        }
-      },
-      child: Scaffold(
-        backgroundColor: AppColors.primary,
-        body: Center(
-          child: Stack(
-            alignment: AlignmentDirectional.center,
-            children: [
-              SizedBox(
-                height: 100,
-                width: 100,
-                child: AnimatedLogo(logo: _logo),
-              ),
-              const AppProgress(),
-            ],
-          ),
+    return Scaffold(
+      backgroundColor: AppColors.primary,
+      body: Center(
+        child: Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            SizedBox(
+              height: 100,
+              width: 100,
+              child: AnimatedLogo(logo: _logo),
+            ),
+            BlocListener<SplashController, SplashState>(
+              bloc: controller,
+              listener: (context, state) {
+                if (state is LoggedSplashState) {
+                  Navigator.of(context).pushReplacementNamed('/home-page');
+                }
+                if (state is UnloggedSplashState) {
+                  Navigator.of(context).pushReplacementNamed('/register-page');
+                }
+              },
+              child: const AppProgress(),
+            ),
+          ],
         ),
       ),
     );

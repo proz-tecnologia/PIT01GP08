@@ -11,7 +11,6 @@ import 'features/new_entry/new_entry_page.dart';
 import 'features/register/register_controller.dart';
 import 'features/register/register_page.dart';
 import 'features/splash/splash.dart';
-import 'features/splash/splash_controller.dart';
 import 'shared/category_repository.dart';
 import 'shared/transaction_repository.dart';
 
@@ -28,10 +27,7 @@ class App extends StatelessWidget {
               create: (_) => LoginController(),
               child: const LoginPage(),
             ),
-        '/splash-screen': (context) => BlocProvider(
-              create: (context) => SplashController(),
-              child: const SplashScreen(),
-            ),
+        '/splash-screen': (context) => const SplashScreen(),
         '/register-page': (context) => BlocProvider(
               create: (context) => RegisterController(),
               child: const RegisterPage(),
