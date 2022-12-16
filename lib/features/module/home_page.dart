@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../shared/views/error_view.dart';
+import '../../shared/views/loading_view.dart';
 import '../home/home_content_page.dart';
 import '../statement/statement_controller.dart';
 import '../statement/statement_page.dart';
@@ -27,8 +29,9 @@ class _HomePageState extends State<HomePage> {
       body: BlocBuilder<DataController, DataState>(
         builder: (context, state) {
           if (state is ErrorDataState) {
-            return const Center(
-              child: Text('Erro'),
+            return ErrorView(
+              icon: Icons.cloud_off_rounded,
+              text: state.message,
             );
           }
           if (state is SuccessDataState) {
@@ -49,9 +52,7 @@ class _HomePageState extends State<HomePage> {
               ],
             );
           }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const LoadingView();
         },
       ),
       floatingActionButton: FloatingActionButton(
