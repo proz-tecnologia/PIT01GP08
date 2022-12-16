@@ -42,7 +42,7 @@ class Transaction {
     return result;
   }
 
-  factory Transaction.fromMap(String id,Map<String, dynamic> map) {
+  factory Transaction.fromMap(String id, Map<String, dynamic> map) {
     final type_ = map['type'] == 'expense' ? Type.expense : Type.income;
     final payment_ = map['payment'] == 'normal'
         ? Payment.normal
@@ -54,7 +54,7 @@ class Transaction {
       id: id,
       date: (map['date'] as Timestamp).toDate(),
       description: map['description'] ?? '',
-      value: map['value'] ?? 0,
+      value: (map['value'] ?? 0).toDouble(),
       type: type_,
       categoryId: map['categoryId'] ?? '',
       fulfilled: map['fulfilled'] ?? false,

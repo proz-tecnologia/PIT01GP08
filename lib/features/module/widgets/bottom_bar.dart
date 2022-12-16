@@ -27,27 +27,25 @@ class BottomBar extends StatelessWidget {
               label: 'Início',
             ),
             BottomNavigationBarItem(
-              icon: Padding(
-                padding: EdgeInsets.only(right: Sizes.extraLargeSpace),
-                child: Icon(Icons.import_export_rounded),
-              ),
+              icon: Icon(Icons.import_export_rounded),
               label: 'Extrato',
             ),
             BottomNavigationBarItem(
-              icon: Padding(
-                padding: EdgeInsets.only(left: Sizes.extraLargeSpace),
-                child: Icon(Icons.equalizer_rounded),
-              ),
+              icon: Icon(Icons.equalizer_rounded),
               label: 'Estatística',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.more_horiz),
               label: 'Mais',
             ),
+            BottomNavigationBarItem(
+              icon: SizedBox.shrink(),
+              label: '',
+            ),
           ],
           currentIndex: value,
           onTap: (newIndex) {
-            if (state is! LoadingDataState) {
+            if (state is! LoadingDataState && newIndex < 4) {
               controller.jumpToPage(newIndex);
               index.value = newIndex;
             }

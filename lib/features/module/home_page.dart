@@ -1,3 +1,5 @@
+import 'package:financial_app/features/profile/profile_controller.dart';
+import 'package:financial_app/features/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -48,7 +50,10 @@ class _HomePageState extends State<HomePage> {
                   create: (_) => StatisticsController(data),
                   child: const StatisticsPage(),
                 ),
-                const Center(child: Text('Page mais')),
+                BlocProvider(
+                  create: (context) => ProfileController(),
+                  child: const ProfilePage(),
+                ),
               ],
             );
           }
@@ -60,7 +65,7 @@ class _HomePageState extends State<HomePage> {
         tooltip: 'Despesa',
         child: const Icon(Icons.add),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BottomBar(
         controller: controller,
       ),
