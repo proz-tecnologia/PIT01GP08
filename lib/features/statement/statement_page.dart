@@ -29,12 +29,6 @@ class StatementPage extends StatelessWidget {
         Expanded(
           child: BlocBuilder<StatementController, StatementState>(
             builder: (context, currentState) {
-              if (currentState is LoadingStatementState) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (currentState is ErrorStatementState) {
-                return const Center(child: Text('Erro'));
-              }
               final controller = context.read<StatementController>();
               final list = controller.list;
               return Column(
