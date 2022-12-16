@@ -11,8 +11,7 @@ class LoadingView extends StatelessWidget {
   Widget build(BuildContext context) {
     final Image logo = Image.asset('assets/logo_colors.png');
 
-    return Scaffold(
-      body: Center(
+    return Center(
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: [
@@ -23,7 +22,6 @@ class LoadingView extends StatelessWidget {
             const CustomCircularProgress(),
           ],
         ),
-      ),
     );
   }
 }
