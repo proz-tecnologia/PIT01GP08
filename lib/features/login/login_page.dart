@@ -97,9 +97,8 @@ class _LoginPageState extends State<LoginPage> {
                         final navigator = Navigator.of(context);
                         if (state is LoginStateError) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                  'Senha ou e-mail inválido, verifique por favor'),
+                            SnackBar(
+                              content: Text(state.error),
                             ),
                           );
                         }

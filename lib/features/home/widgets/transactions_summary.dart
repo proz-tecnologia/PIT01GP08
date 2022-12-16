@@ -34,9 +34,11 @@ class TransactionsSummary extends StatelessWidget {
                 ),
                 listTransactions.isEmpty
                     ? const Padding(
-                        padding: EdgeInsets.only(top: Sizes.largeSpace),
+                        padding: EdgeInsets.all(Sizes.largeSpace),
                         child: Text(
-                            'Você ainda não possui nenhuma despesa futura ou pendente!'),
+                          'Você ainda não possui nenhuma despesa\nfutura ou pendente!',
+                          textAlign: TextAlign.center,
+                        ),
                       )
                     : ListView.separated(
                         shrinkWrap: true,
