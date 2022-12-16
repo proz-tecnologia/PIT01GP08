@@ -7,7 +7,7 @@ class CurrencyFormField extends StatelessWidget {
     Key? key,
     required this.color,
     required this.textController,
-  })  : super(key: key);
+  }) : super(key: key);
 
   final Color color;
   final TextEditingController textController;
@@ -15,7 +15,6 @@ class CurrencyFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      autofocus: true,
       showCursor: false,
       textInputAction: TextInputAction.next,
       initialValue: textController.text,

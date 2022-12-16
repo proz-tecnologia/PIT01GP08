@@ -86,52 +86,54 @@ class _NewEntryContentState extends State<NewEntryContent> {
                         color: state.color,
                         label: state.initialFulfilledLabel,
                       ),
+                      const SizedBox(height: Sizes.mediumSpace),
+                      Padding(
+                        padding: const EdgeInsets.all(Sizes.mediumSpace),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (formKey.currentState?.validate() ??
+                                      false) {
+                                    controller.saveTransaction(
+                                      Transaction(
+                                        date: DateTime(
+                                          int.parse(date.text.substring(6)),
+                                          int.parse(date.text.substring(3, 5)),
+                                          int.parse(date.text.substring(0, 2)),
+                                        ),
+                                        description: description.text,
+                                        value: double.parse(value.text),
+                                        type: state is IncomeNewEntryState
+                                            ? Type.income
+                                            : Type.expense,
+                                        categoryId: '1',
+                                        fulfilled: fulfilled.value,
+                                        payment: paymentOption.value == 0
+                                            ? Payment.normal
+                                            : paymentOption.value == 1
+                                                ? Payment.fixed
+                                                : Payment.parcelled,
+                                      ),
+                                    );
+                                  }
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ),
+                            const SizedBox(height: Sizes.mediumSpace),
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text('CANCELAR'),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(Sizes.mediumSpace),
-              child: Column(
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (formKey.currentState?.validate() ?? false) {
-                          controller.saveTransaction(
-                            Transaction(
-                              date: DateTime(
-                                int.parse(date.text.substring(6)),
-                                int.parse(date.text.substring(3, 5)),
-                                int.parse(date.text.substring(0, 2)),
-                              ),
-                              description: description.text,
-                              value: double.parse(value.text),
-                              type: state is IncomeNewEntryState
-                                  ? Type.income
-                                  : Type.expense,
-                              categoryId: '1',
-                              fulfilled: fulfilled.value,
-                              payment: paymentOption.value == 0
-                                  ? Payment.normal
-                                  : paymentOption.value == 1
-                                      ? Payment.fixed
-                                      : Payment.parcelled,
-                            ),
-                          );
-                        }
-                      },
-                      child: const Text('OK'),
-                    ),
-                  ),
-                  const SizedBox(height: Sizes.mediumSpace),
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('CANCELAR'),
-                  ),
-                ],
               ),
             ),
           ],
