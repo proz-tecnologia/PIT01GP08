@@ -1,6 +1,8 @@
+import 'package:financial_app/shared/views/error_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../shared/views/loading_view.dart';
 import '../../shared/widgets/month_changer.dart';
 import 'statistics_controller.dart';
 import 'statistics_states.dart';
@@ -29,8 +31,9 @@ class StatisticsPage extends StatelessWidget {
           child: BlocBuilder<StatisticsController, StatisticsState>(
             builder: (context, currentState) {
               if (currentState is ErrorStatisticsState) {
-                return const Center(
-                  child: Text('Erro'),
+                return ErrorView(
+                  icon: Icons.sync_problem_rounded,
+                  text: currentState.message,
                 );
               }
               if (currentState is SuccessStatisticsState) {
@@ -61,9 +64,7 @@ class StatisticsPage extends StatelessWidget {
                         ],
                       );
               }
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const LoadingView();
             },
           ),
         ),

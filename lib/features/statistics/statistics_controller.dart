@@ -57,7 +57,8 @@ class StatisticsController extends Cubit<StatisticsState> {
 
       emit(SuccessStatisticsState(sections, total));
     } catch (e) {
-      emit(ErrorStatisticsState());
+      emit(ErrorStatisticsState(
+          'Não foi possível importar os dados.\nTente novamente.'));
     }
   }
 }
