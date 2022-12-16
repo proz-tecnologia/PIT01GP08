@@ -11,6 +11,7 @@ class Sizes {
   static const smallIconSize = 20.0;
   static const mediumIconSize = 32.0;
   static const largeIconSize = 40.0;
+  static const extraLargeIconSize = 64.0;
 
   static const threePercent = 0.03;
   static const sevenPercent = 0.07;

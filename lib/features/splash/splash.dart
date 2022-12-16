@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../design_sys/colors.dart';
+import '../../design_sys/sizes.dart';
 import 'splash_controller.dart';
 import 'splash_states.dart';
-import 'widgets/animated_logo.dart';
+import '../../shared/widgets/animated_logo.dart';
 import 'widgets/app_progress.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -15,7 +16,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final Image _logo = Image.asset('assets/logo_white_flat.png');
+  final Image _logo = Image.asset('assets/logo_white.png');
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
             alignment: AlignmentDirectional.center,
             children: [
               SizedBox(
-                height: 100,
-                width: 100,
+                height: Sizes.logoSize,
                 child: AnimatedLogo(logo: _logo),
               ),
               const AppProgress(),
