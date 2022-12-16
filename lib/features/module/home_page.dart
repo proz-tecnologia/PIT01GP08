@@ -1,6 +1,10 @@
+import 'package:financial_app/features/profile/profile_controller.dart';
+import 'package:financial_app/features/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../shared/views/error_view.dart';
+import '../../shared/views/loading_view.dart';
 import '../home/home_content_page.dart';
 import '../statement/statement_controller.dart';
 import '../statement/statement_page.dart';
@@ -27,8 +31,9 @@ class _HomePageState extends State<HomePage> {
       body: BlocBuilder<DataController, DataState>(
         builder: (context, state) {
           if (state is ErrorDataState) {
-            return const Center(
-              child: Text('Erro'),
+            return ErrorView(
+              icon: Icons.cloud_off_rounded,
+              text: state.message,
             );
           }
           if (state is SuccessDataState) {
@@ -45,13 +50,14 @@ class _HomePageState extends State<HomePage> {
                   create: (_) => StatisticsController(data),
                   child: const StatisticsPage(),
                 ),
-                const Center(child: Text('Page mais')),
+                BlocProvider(
+                  create: (context) => ProfileController(),
+                  child: const ProfilePage(),
+                ),
               ],
             );
           }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const LoadingView();
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -59,7 +65,7 @@ class _HomePageState extends State<HomePage> {
         tooltip: 'Despesa',
         child: const Icon(Icons.add),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BottomBar(
         controller: controller,
       ),

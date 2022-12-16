@@ -14,4 +14,8 @@ class SuccessStatisticsState implements StatisticsState {
   SuccessStatisticsState(this.sections, this.total);
 }
 
-class ErrorStatisticsState implements StatisticsState {}
+class ErrorStatisticsState implements StatisticsState {
+  final String message;
+
+  ErrorStatisticsState(this.message);
+}
