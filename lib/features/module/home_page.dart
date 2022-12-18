@@ -61,7 +61,11 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).pushNamed('/new-entry'),
+        onPressed: () {
+          if (data.state is SuccessDataState) {
+            Navigator.of(context).pushNamed('/new-entry');
+          }
+        },
         tooltip: 'Despesa',
         child: const Icon(Icons.add),
       ),
