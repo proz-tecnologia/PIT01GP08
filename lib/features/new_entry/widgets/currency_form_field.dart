@@ -7,7 +7,8 @@ import '../new_entry_controller.dart';
 import '../new_entry_states.dart';
 
 class CurrencyFormField extends StatelessWidget {
-  const CurrencyFormField(this.textController,{
+  const CurrencyFormField(
+    this.textController, {
     super.key,
   });
 
@@ -24,8 +25,8 @@ class CurrencyFormField extends StatelessWidget {
           decoration: InputDecoration(
             floatingLabelStyle: TextStyle(color: state.color),
             labelStyle: TextStyle(color: state.color.withOpacity(0.6)),
-            focusedBorder:
-                UnderlineInputBorder(borderSide: BorderSide(color: state.color)),
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: state.color)),
             labelText: 'Valor',
           ),
           keyboardType: TextInputType.number,
@@ -34,11 +35,7 @@ class CurrencyFormField extends StatelessWidget {
             _CurrencyInputFormatter(),
           ],
           validator: (value) {
-            textController.text = value
-                    ?.replaceAll(RegExp('[R\$]'), '')
-                    .replaceAll('.', '')
-                    .replaceAll(',', '.') ??
-                '';
+            textController.text = value ?? '';
             if (value == null || value.isEmpty) {
               return 'Campo obrigatório';
             }

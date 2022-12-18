@@ -40,7 +40,12 @@ class NewEntryController extends Cubit<NewEntryState> {
       final newTransaction = tmodel.Transaction(
         date: date,
         description: description,
-        value: double.parse(value),
+        value: double.parse(
+          value
+              .replaceAll(RegExp('[R\$]'), '')
+              .replaceAll('.', '')
+              .replaceAll(',', '.'),
+        ),
         type: type,
         categoryId: category.id!,
         fulfilled: fulfilled,
