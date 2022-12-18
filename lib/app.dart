@@ -38,7 +38,6 @@ class App extends StatelessWidget {
               ),
               child: const HomePage(),
             ),
-        '/new-entry': (context) => const NewEntryPage(),
       },
     );
   }

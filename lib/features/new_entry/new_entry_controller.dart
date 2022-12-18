@@ -1,26 +1,22 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../shared/models/transaction.dart';
+import '../../shared/models/category.dart';
+import '../../shared/models/transaction.dart' as tmodel;
 import '../../shared/transaction_repository.dart';
-import '../module/data_states.dart';
 import 'new_entry_states.dart';
 
 class NewEntryController extends Cubit<NewEntryState> {
-  final SuccessDataState dataState;
+  final TransactionRepository transactionRepository;
 
-  NewEntryController(this.dataState)
-      : super(ExpenseNewEntryState(
-          dataState.categoryList
-              .where((category) => category.type == Type.expense)
-              .toList(),
-        ));
+  NewEntryController(this.transactionRepository)
+      : super(InitialNewEntryState());
 
-  void saveTransaction(Transaction transaction) async {
+  void saveTransaction(tmodel.Transaction transaction) async {
     final lastTypeState = state;
     emit(SavingNewEntryState());
     try {
       final success =
-          await TransactionFirebaseRepository().createTransaction(transaction);
+          await transactionRepository.createTransaction(transaction);
       if (success) {
         emit(SuccessNewEntryState());
         return;
@@ -34,11 +30,11 @@ class NewEntryController extends Cubit<NewEntryState> {
 }
 
 class NewEntryTypeController extends Cubit<NewEntryTypeState> {
-  final SuccessDataState dataState;
+  final List<Category> categoryList;
 
-  NewEntryTypeController(this.dataState)
+  NewEntryTypeController(this.categoryList)
       : super(ExpenseNewEntryState(
-          dataState.categoryList
+          categoryList
               .where((category) => category.type == Type.expense)
               .toList(),
         ));
@@ -47,7 +43,7 @@ class NewEntryTypeController extends Cubit<NewEntryTypeState> {
     if (isIncome && state is ExpenseNewEntryState) {
       emit(
         IncomeNewEntryState(
-          dataState.categoryList
+          categoryList
               .where((category) => category.type == Type.income)
               .toList(),
         ),
@@ -55,7 +51,7 @@ class NewEntryTypeController extends Cubit<NewEntryTypeState> {
     } else if (state is IncomeNewEntryState) {
       emit(
         ExpenseNewEntryState(
-          dataState.categoryList
+          categoryList
               .where((category) => category.type == Type.expense)
               .toList(),
         ),

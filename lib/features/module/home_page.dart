@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../shared/views/error_view.dart';
 import '../../shared/views/loading_view.dart';
 import '../home/home_content_page.dart';
+import '../new_entry/new_entry_page.dart';
 import '../statement/statement_controller.dart';
 import '../statement/statement_page.dart';
 import '../statistics/statistics_controller.dart';
@@ -60,14 +61,22 @@ class _HomePageState extends State<HomePage> {
           return const LoadingView();
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if (data.state is SuccessDataState) {
-            Navigator.of(context).pushNamed('/new-entry');
-          }
-        },
-        tooltip: 'Despesa',
-        child: const Icon(Icons.add),
+      floatingActionButton: BlocBuilder<DataController, DataState>(
+        builder: (context, state) => data.state is SuccessDataState
+            ? FloatingActionButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => NewEntryPage(
+                        (state as SuccessDataState).categoryList,
+                      ),
+                    ),
+                  );
+                },
+                tooltip: 'Despesa',
+                child: const Icon(Icons.add),
+              )
+            : const SizedBox.shrink(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BottomBar(

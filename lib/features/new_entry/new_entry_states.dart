@@ -17,7 +17,7 @@ abstract class NewEntryTypeState {
   );
 }
 
-class IncomeNewEntryState implements NewEntryState, NewEntryTypeState {
+class IncomeNewEntryState implements NewEntryTypeState {
   @override
   List<Category> categories;
 
@@ -30,7 +30,7 @@ class IncomeNewEntryState implements NewEntryState, NewEntryTypeState {
   IncomeNewEntryState(this.categories);
 }
 
-class ExpenseNewEntryState implements NewEntryState, NewEntryTypeState {
+class ExpenseNewEntryState implements NewEntryTypeState {
   @override
   List<Category> categories;
 
@@ -42,6 +42,8 @@ class ExpenseNewEntryState implements NewEntryState, NewEntryTypeState {
 
   ExpenseNewEntryState(this.categories);
 }
+
+class InitialNewEntryState implements NewEntryState {}
 
 class SavingNewEntryState implements NewEntryState {}
 
