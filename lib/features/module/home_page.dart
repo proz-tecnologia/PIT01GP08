@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   );
                 },
-                tooltip: 'Despesa',
+                tooltip: 'Nova transação',
                 child: const Icon(Icons.add),
               )
             : const SizedBox.shrink(),
