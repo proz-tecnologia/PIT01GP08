@@ -1,37 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../new_entry_controller.dart';
+import '../new_entry_states.dart';
 
 class CategoryFormField extends StatelessWidget {
-  const CategoryFormField({
-    Key? key,
-    required this.color,
-    required this.categories,
-    required this.controller,
-  }) : super(key: key);
+  const CategoryFormField(
+    this.controller, {
+    super.key,
+  });
 
-  final Color color;
-  final List<String> categories;
   final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField(
-      decoration: InputDecoration(
-        floatingLabelStyle: TextStyle(color: color),
-        focusedBorder:
-            UnderlineInputBorder(borderSide: BorderSide(color: color)),
-        labelText: 'Categoria',
-      ),
-      value: categories[0],
-      items: categories
-          .map((category) => DropdownMenuItem(
-                value: category,
-                child: Text(category),
-              ))
-          .toList(),
-      onChanged: (value) {
-        controller.text = value!;
+    return BlocBuilder<NewEntryTypeController, NewEntryTypeState>(
+      builder: (context, state) {
+        return DropdownButtonFormField(
+          decoration: InputDecoration(
+            floatingLabelStyle: TextStyle(color: state.color),
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: state.color)),
+            labelText: 'Categoria',
+          ),
+          value: state.categories[0].id,
+          items: state.categories
+              .map((category) => DropdownMenuItem(
+                    value: category.id,
+                    child: Text(category.name),
+                  ))
+              .toList(),
+          onChanged: (value) {
+            controller.text = value!;
+          },
+        );
       },
     );
   }
 }
-

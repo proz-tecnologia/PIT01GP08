@@ -27,17 +27,13 @@ class _NewEntryContentState extends State<NewEntryContent> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NewEntryController, NewEntryState>(
-      builder: (_, __) {
-        final controller = context.read<NewEntryController>();
-        final state = controller.state as NewEntryTypeState;
-        final categories = state is IncomeNewEntryState
-            ? controller.incomeCategories
-            : controller.expenseCategories;
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        BlocBuilder<NewEntryTypeController, NewEntryTypeState>(
+          builder: (_, state) {
+            final controller = context.read<NewEntryTypeController>();
+            return Row(
               children: [
                 TopBarToggleButton.expense(
                   isSelected: state is ExpenseNewEntryState,
@@ -48,52 +44,39 @@ class _NewEntryContentState extends State<NewEntryContent> {
                   onPressed: () => controller.changeType(isIncome: true),
                 ),
               ],
-            ),
-            Form(
-              key: formKey,
-              child: Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(Sizes.largeSpace),
-                  child: Column(
-                    children: <Widget>[
-                      CurrencyFormField(
-                        color: state.color,
-                        textController: value,
-                      ),
-                      const SizedBox(height: Sizes.smallSpace),
-                      DescriptionFormField(
-                        color: state.color,
-                        textController: description,
-                      ),
-                      const SizedBox(height: Sizes.smallSpace),
-                      CategoryFormField(
-                          color: state.color,
-                          categories: categories,
-                          controller: category),
-                      const SizedBox(height: Sizes.mediumSpace),
-                      PaymentFormField(
-                        color: state.color,
-                        controller: paymentOption,
-                      ),
-                      const SizedBox(height: Sizes.smallSpace),
-                      DatePickerFormField(
-                        color: state.color,
-                        textController: date,
-                      ),
-                      const SizedBox(height: Sizes.smallSpace),
-                      FulfilledFormField(
-                        boolController: fulfilled,
-                        color: state.color,
-                        label: state.initialFulfilledLabel,
-                      ),
-                      const SizedBox(height: Sizes.mediumSpace),
-                      Padding(
-                        padding: const EdgeInsets.all(Sizes.mediumSpace),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
+            );
+          },
+        ),
+        Form(
+          key: formKey,
+          child: Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(Sizes.largeSpace),
+              child: Column(
+                children: <Widget>[
+                  CurrencyFormField(value),
+                  const SizedBox(height: Sizes.smallSpace),
+                  DescriptionFormField(description),
+                  const SizedBox(height: Sizes.smallSpace),
+                  CategoryFormField(category),
+                  const SizedBox(height: Sizes.mediumSpace),
+                  PaymentFormField(paymentOption),
+                  const SizedBox(height: Sizes.smallSpace),
+                  DatePickerFormField(date),
+                  const SizedBox(height: Sizes.smallSpace),
+                  FulfilledFormField(fulfilled),
+                  const SizedBox(height: Sizes.mediumSpace),
+                  Padding(
+                    padding: const EdgeInsets.all(Sizes.mediumSpace),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          child: BlocBuilder<NewEntryController, NewEntryState>(
+                            builder: (context, state) {
+                              final controller =
+                                  context.read<NewEntryController>();
+                              return ElevatedButton(
                                 onPressed: () {
                                   if (formKey.currentState?.validate() ??
                                       false) {
@@ -121,24 +104,24 @@ class _NewEntryContentState extends State<NewEntryContent> {
                                   }
                                 },
                                 child: const Text('OK'),
-                              ),
-                            ),
-                            const SizedBox(height: Sizes.mediumSpace),
-                            TextButton(
-                              onPressed: () => Navigator.of(context).pop(),
-                              child: const Text('CANCELAR'),
-                            ),
-                          ],
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: Sizes.mediumSpace),
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text('CANCELAR'),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
-          ],
-        );
-      },
+          ),
+        ),
+      ],
     );
   }
 }

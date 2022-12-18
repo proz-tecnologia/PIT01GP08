@@ -6,7 +6,6 @@ import 'features/module/data_controller.dart';
 import 'features/module/home_page.dart';
 import 'features/login/login_controller.dart';
 import 'features/login/login_page.dart';
-import 'features/new_entry/new_entry_controller.dart';
 import 'features/new_entry/new_entry_page.dart';
 import 'features/register/register_controller.dart';
 import 'features/register/register_page.dart';
@@ -39,10 +38,7 @@ class App extends StatelessWidget {
               ),
               child: const HomePage(),
             ),
-        '/new-entry': (context) => BlocProvider(
-              create: (context) => NewEntryController(),
-              child: const NewEntryPage(),
-            ),
+        '/new-entry': (context) => const NewEntryPage(),
       },
     );
   }

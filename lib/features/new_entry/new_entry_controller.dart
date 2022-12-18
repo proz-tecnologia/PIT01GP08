@@ -2,36 +2,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../shared/models/transaction.dart';
 import '../../shared/transaction_repository.dart';
+import '../module/data_states.dart';
 import 'new_entry_states.dart';
 
 class NewEntryController extends Cubit<NewEntryState> {
-  late final List<String> expenseCategories;
-  late final List<String> incomeCategories;
+  final SuccessDataState dataState;
 
-  NewEntryController() : super(LoadingNewEntryState()) {
-    init();
-  }
-
-  void init() async {
-    emit(LoadingNewEntryState());
-    try {
-      //trocar pela requisição na api - sprint 3
-      expenseCategories = mockedExpenseCategories;
-      incomeCategories = mockedIncomeCategories;
-
-      emit(ExpenseNewEntryState());
-    } catch (e) {
-      emit(ErrorNewEntryState());
-    }
-  }
-
-  void changeType({required bool isIncome}) {
-    if (isIncome && state is ExpenseNewEntryState) {
-      emit(IncomeNewEntryState());
-    } else if (state is IncomeNewEntryState) {
-      emit(ExpenseNewEntryState());
-    }
-  }
+  NewEntryController(this.dataState)
+      : super(ExpenseNewEntryState(
+          dataState.categoryList
+              .where((category) => category.type == Type.expense)
+              .toList(),
+        ));
 
   void saveTransaction(Transaction transaction) async {
     final lastTypeState = state;
@@ -45,22 +27,39 @@ class NewEntryController extends Cubit<NewEntryState> {
       }
       throw Exception();
     } catch (e) {
-      emit(SavingErrorNewEntryState());
+      emit(ErrorNewEntryState());
       emit(lastTypeState);
     }
   }
 }
 
-final mockedExpenseCategories = <String>[
-  'Alimentação',
-  'Combustível',
-  'Saúde',
-  'Água',
-  'Energia',
-];
+class NewEntryTypeController extends Cubit<NewEntryTypeState> {
+  final SuccessDataState dataState;
 
-final mockedIncomeCategories = <String>[
-  'Salário',
-  'Presente',
-  'Aluguel',
-];
+  NewEntryTypeController(this.dataState)
+      : super(ExpenseNewEntryState(
+          dataState.categoryList
+              .where((category) => category.type == Type.expense)
+              .toList(),
+        ));
+
+  void changeType({required bool isIncome}) {
+    if (isIncome && state is ExpenseNewEntryState) {
+      emit(
+        IncomeNewEntryState(
+          dataState.categoryList
+              .where((category) => category.type == Type.income)
+              .toList(),
+        ),
+      );
+    } else if (state is IncomeNewEntryState) {
+      emit(
+        ExpenseNewEntryState(
+          dataState.categoryList
+              .where((category) => category.type == Type.expense)
+              .toList(),
+        ),
+      );
+    }
+  }
+}
