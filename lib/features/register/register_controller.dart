@@ -12,12 +12,20 @@ class RegisterController extends Cubit<RegisterState> {
   // List<User> get users => _users;
 
   Future<void> registerUser(
-      {required String email, required String password}) async {
+      {required String name,
+      required String email,
+      required String password}) async {
     emit(LoadingRegisterState());
 
     try {
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      FirebaseAuth auth = FirebaseAuth.instance;
+      await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      await auth.signInWithEmailAndPassword(email: email, password: password);
+      await auth.currentUser!.updateDisplayName(name);
+      print('nome do usuário');
+      print(auth.currentUser!.displayName);
+
       emit(SuccessRegisterState());
     } catch (e) {
       if (e is FirebaseAuthException) {

@@ -127,8 +127,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           style: Theme.of(context).elevatedButtonTheme.style,
                           onPressed: () async {
                             if (formKey.currentState?.validate() ?? false) {
-                              await controller.registerUser(email: emailController.text,
-                                    password: passwordController.text,
+                              await controller.registerUser(
+                                name: nameController.text,
+                                email: emailController.text,
+                                password: passwordController.text,
                               );
                             }
                           },
