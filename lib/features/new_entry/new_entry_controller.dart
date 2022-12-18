@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../shared/models/category.dart';
-import '../../shared/models/transaction.dart' as tmodel;
+import '../../shared/models/transaction.dart';
 import '../../shared/transaction_repository.dart';
 import 'new_entry_states.dart';
 
@@ -28,16 +28,13 @@ class NewEntryController extends Cubit<NewEntryState> {
         int.parse(dateString.substring(3, 5)),
         int.parse(dateString.substring(0, 2)),
       );
-      final type = category!.type == Type.income
-          ? tmodel.Type.income
-          : tmodel.Type.expense;
       final payment = paymentOption == 0
-          ? tmodel.Payment.normal
+          ? Payment.normal
           : paymentOption == 1
-              ? tmodel.Payment.fixed
-              : tmodel.Payment.parcelled;
+              ? Payment.fixed
+              : Payment.parcelled;
 
-      final newTransaction = tmodel.Transaction(
+      final newTransaction = Transaction.fromCategory(
         date: date,
         description: description,
         value: double.parse(
@@ -46,8 +43,7 @@ class NewEntryController extends Cubit<NewEntryState> {
               .replaceAll('.', '')
               .replaceAll(',', '.'),
         ),
-        type: type,
-        categoryId: category.id!,
+        category: category!,
         fulfilled: fulfilled,
         payment: payment,
       );
@@ -71,11 +67,13 @@ class NewEntryTypeController extends Cubit<NewEntryTypeState> {
   final List<Category> categoryList;
 
   NewEntryTypeController(this.categoryList)
-      : super(ExpenseNewEntryState(
-          categoryList
-              .where((category) => category.type == Type.expense)
-              .toList(),
-        ));
+      : super(
+          ExpenseNewEntryState(
+            categoryList
+                .where((category) => category.type == Type.expense)
+                .toList(),
+          ),
+        );
 
   void changeType({required bool isIncome}) {
     if (isIncome && state is ExpenseNewEntryState) {
