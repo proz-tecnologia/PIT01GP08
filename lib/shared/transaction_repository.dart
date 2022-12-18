@@ -51,7 +51,8 @@ class TransactionFirebaseRepository implements TransactionRepository {
   Future<List<model.Transaction>> getAllTransactions() async {
     final list = <model.Transaction>[];
     try {
-      final snapshot = await firestorePath.get();
+      final snapshot =
+          await firestorePath.orderBy("date", descending: true).get();
       final docs = snapshot.docs;
       for (var doc in docs) {
         list.add(
