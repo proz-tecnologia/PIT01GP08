@@ -28,11 +28,7 @@ class NewEntryController extends Cubit<NewEntryState> {
         int.parse(dateString.substring(3, 5)),
         int.parse(dateString.substring(0, 2)),
       );
-      final payment = paymentOption == 0
-          ? Payment.normal
-          : paymentOption == 1
-              ? Payment.fixed
-              : Payment.parcelled;
+      final payment = Payment.values[paymentOption];
 
       final newTransaction = Transaction.fromCategory(
         date: date,
