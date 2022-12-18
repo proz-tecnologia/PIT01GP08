@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'category.dart';
 
-enum Payment { normal, parcelled, fixed }
+enum Payment { normal, parcelada, fixa }
 
 class Transaction {
   final DateTime date;
@@ -66,8 +66,8 @@ class Transaction {
     final payment_ = map['payment'] == 'normal'
         ? Payment.normal
         : map['payment'] == 'fixed'
-            ? Payment.fixed
-            : Payment.parcelled;
+            ? Payment.fixa
+            : Payment.parcelada;
 
     return Transaction(
       id: id,
