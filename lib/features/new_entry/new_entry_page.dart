@@ -34,7 +34,8 @@ class NewEntryPage extends StatelessWidget {
                     content: Text('Transação salva com sucesso.'),
                   ),
                 );
-                Navigator.of(context).pop();
+                 Navigator.of(context)
+                     .pushNamedAndRemoveUntil('/home-page', (route) => false);
               }
             },
             builder: (context, currentState) {
