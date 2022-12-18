@@ -1,7 +1,8 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'models/user.dart';
 import 'register_states.dart';
 
 class RegisterController extends Cubit<RegisterState> {
@@ -14,18 +15,22 @@ class RegisterController extends Cubit<RegisterState> {
       {required String email, required String password}) async {
     emit(LoadingRegisterState());
 
-    await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: email, password: password);
-
-    await Future.delayed(const Duration(seconds: 2));
-    // verificar se o email já está cadastrado.
-    // if (user.email == 'jackson@gmail.com') {
-      if (false) {
-      emit(ErrorRegisterState('email já cadastrado'));
-      return;
-    } else {
+    try {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
       emit(SuccessRegisterState());
-      return;
+    } catch (e) {
+      if (e is FirebaseAuthException) {
+        if (e.code == "email-already-in-use") {
+          emit(ErrorRegisterState(
+              'Email já cadastrado, se esqueceu a senha, recupera sua senha'));
+        }
+        if (e.code == "invalid-email") {
+          emit(ErrorRegisterState('Esse email não é válido'));
+        }
+        log(e.message ?? 'FirebaseAuthException');
+        //emit(ErrorRegisterState(e.message ?? 'Error on registerController'));
+      }
     }
   }
 }
