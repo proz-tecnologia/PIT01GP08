@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../shared/views/error_view.dart';
+import '../../shared/views/loading_view.dart';
 import 'new_entry_content.dart';
 import 'new_entry_controller.dart';
 import 'new_entry_states.dart';
+
 class NewEntryPage extends StatelessWidget {
   const NewEntryPage({super.key});
 
@@ -31,16 +35,15 @@ class NewEntryPage extends StatelessWidget {
           },
           builder: (context, currentState) {
             if (currentState is ErrorNewEntryState) {
-              return const Center(
-                child: Text('Erro'),
+              return const ErrorView(
+                icon: Icons.cloud_off_rounded,
+                text: 'Ocorreu um erro.\nTente novamente.',
               );
             }
             if (currentState is NewEntryTypeState) {
               return const NewEntryContent();
             }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const LoadingView();
           },
         ),
       ),
