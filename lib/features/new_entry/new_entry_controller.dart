@@ -15,7 +15,7 @@ class NewEntryController extends Cubit<NewEntryState> {
     required String dateString,
     required String description,
     required String value,
-    required Category category,
+    required Category? category,
     required bool fulfilled,
     required int paymentOption,
   }) async {
@@ -28,7 +28,7 @@ class NewEntryController extends Cubit<NewEntryState> {
         int.parse(dateString.substring(3, 5)),
         int.parse(dateString.substring(0, 2)),
       );
-      final type = category.type == Type.income
+      final type = category!.type == Type.income
           ? tmodel.Type.income
           : tmodel.Type.expense;
       final payment = paymentOption == 0

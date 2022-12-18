@@ -17,6 +17,7 @@ class CategoryFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<NewEntryTypeController, NewEntryTypeState>(
       builder: (context, state) {
+        controller.value = state.categories[0];
         return DropdownButtonFormField(
           decoration: InputDecoration(
             floatingLabelStyle: TextStyle(color: state.color),

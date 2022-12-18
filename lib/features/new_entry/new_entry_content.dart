@@ -77,17 +77,17 @@ class _NewEntryContentState extends State<NewEntryContent> {
                           width: double.infinity,
                           child: BlocBuilder<NewEntryController, NewEntryState>(
                             builder: (context, state) {
-                              final controller =
+                              final saveController =
                                   context.read<NewEntryController>();
                               return ElevatedButton(
                                 onPressed: () {
                                   if (formKey.currentState?.validate() ??
                                       false) {
-                                    controller.saveTransaction(
+                                    saveController.saveTransaction(
                                         dateString: date.text,
                                         description: description.text,
                                         value: value.text,
-                                        category: category.value!,
+                                        category: category.value,
                                         fulfilled: fulfilled.value,
                                         paymentOption: paymentOption.value);
                                   }
