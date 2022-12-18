@@ -71,38 +71,33 @@ class _NewEntryContentState extends State<NewEntryContent> {
                     const SizedBox(height: Sizes.smallSpace),
                     FulfilledFormField(fulfilled),
                     const SizedBox(height: Sizes.mediumSpace),
-                    Column(
-                      children: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: BlocBuilder<NewEntryController, NewEntryState>(
-                            builder: (context, state) {
-                              final saveController =
-                                  context.read<NewEntryController>();
-                              return ElevatedButton(
-                                onPressed: () {
-                                  if (formKey.currentState?.validate() ??
-                                      false) {
-                                    saveController.saveTransaction(
-                                        dateString: date.text,
-                                        description: description.text,
-                                        value: value.text,
-                                        category: category.value,
-                                        fulfilled: fulfilled.value,
-                                        paymentOption: paymentOption.value);
-                                  }
-                                },
-                                child: const Text('OK'),
-                              );
+                    SizedBox(
+                      width: double.infinity,
+                      child: BlocBuilder<NewEntryController, NewEntryState>(
+                        builder: (context, state) {
+                          final saveController =
+                              context.read<NewEntryController>();
+                          return ElevatedButton(
+                            onPressed: () {
+                              if (formKey.currentState?.validate() ?? false) {
+                                saveController.saveTransaction(
+                                    dateString: date.text,
+                                    description: description.text,
+                                    value: value.text,
+                                    category: category.value,
+                                    fulfilled: fulfilled.value,
+                                    paymentOption: paymentOption.value);
+                              }
                             },
-                          ),
-                        ),
-                        const SizedBox(height: Sizes.mediumSpace),
-                        TextButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: const Text('CANCELAR'),
-                        ),
-                      ],
+                            child: const Text('OK'),
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: Sizes.mediumSpace),
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text('CANCELAR'),
                     ),
                   ],
                 ),
