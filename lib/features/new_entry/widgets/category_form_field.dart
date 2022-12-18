@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../shared/models/category.dart';
 import '../new_entry_controller.dart';
 import '../new_entry_states.dart';
 
@@ -10,7 +11,7 @@ class CategoryFormField extends StatelessWidget {
     super.key,
   });
 
-  final TextEditingController controller;
+  final ValueNotifier<Category?> controller;
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +24,15 @@ class CategoryFormField extends StatelessWidget {
                 borderSide: BorderSide(color: state.color)),
             labelText: 'Categoria',
           ),
-          value: state.categories[0].id,
+          value: state.categories[0],
           items: state.categories
               .map((category) => DropdownMenuItem(
-                    value: category.id,
+                    value: category,
                     child: Text(category.name),
                   ))
               .toList(),
           onChanged: (value) {
-            controller.text = value!;
+            controller.value = value!;
           },
         );
       },

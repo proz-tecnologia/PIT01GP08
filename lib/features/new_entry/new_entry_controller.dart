@@ -11,17 +11,50 @@ class NewEntryController extends Cubit<NewEntryState> {
   NewEntryController(this.transactionRepository)
       : super(InitialNewEntryState());
 
-  void saveTransaction(tmodel.Transaction transaction) async {
+  void saveTransaction({
+    required String dateString,
+    required String description,
+    required String value,
+    required Category category,
+    required bool fulfilled,
+    required int paymentOption,
+  }) async {
     final lastTypeState = state;
     emit(SavingNewEntryState());
+
     try {
+      final date = DateTime(
+        int.parse(dateString.substring(6)),
+        int.parse(dateString.substring(3, 5)),
+        int.parse(dateString.substring(0, 2)),
+      );
+      final type = category.type == Type.income
+          ? tmodel.Type.income
+          : tmodel.Type.expense;
+      final payment = paymentOption == 0
+          ? tmodel.Payment.normal
+          : paymentOption == 1
+              ? tmodel.Payment.fixed
+              : tmodel.Payment.parcelled;
+
+      final newTransaction = tmodel.Transaction(
+        date: date,
+        description: description,
+        value: double.parse(value),
+        type: type,
+        categoryId: category.id!,
+        fulfilled: fulfilled,
+        payment: payment,
+      );
+
       final success =
-          await transactionRepository.createTransaction(transaction);
+          await transactionRepository.createTransaction(newTransaction);
+
       if (success) {
         emit(SuccessNewEntryState());
-        return;
+      } else {
+        throw Exception();
       }
-      throw Exception();
     } catch (e) {
       emit(ErrorNewEntryState());
       emit(lastTypeState);
