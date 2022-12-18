@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../shared/models/category.dart';
 import '../../shared/models/transaction.dart';
 import '../module/data_controller.dart';
 import '../module/data_states.dart';

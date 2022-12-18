@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-enum Type { expense, income }
+import 'category.dart';
 
-enum Payment { normal, parcelled, fixed }
+enum Payment { normal, parcelada, fixa }
 
 class Transaction {
   final DateTime date;
@@ -24,6 +24,25 @@ class Transaction {
     required this.fulfilled,
     required this.payment,
   });
+
+  factory Transaction.fromCategory({
+    required DateTime date,
+    required String description,
+    required double value,
+    required Category category,
+    required bool fulfilled,
+    required Payment payment,
+  }) {
+    return Transaction(
+      date: date,
+      description: description,
+      value: value,
+      type: category.type,
+      categoryId: category.id!,
+      fulfilled: fulfilled,
+      payment: payment,
+    );
+  }
 
   String get valueString =>
       'R\$ ${value.toStringAsFixed(2).replaceFirst('.', ',')}';
@@ -47,8 +66,8 @@ class Transaction {
     final payment_ = map['payment'] == 'normal'
         ? Payment.normal
         : map['payment'] == 'fixed'
-            ? Payment.fixed
-            : Payment.parcelled;
+            ? Payment.fixa
+            : Payment.parcelada;
 
     return Transaction(
       id: id,
