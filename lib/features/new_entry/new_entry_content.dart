@@ -27,9 +27,16 @@ class _NewEntryContentState extends State<NewEntryContent> {
   final category = ValueNotifier<Category?>(null);
   final date = TextEditingController();
 
+  late final NewEntryTypeController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = NewEntryTypeController(widget.categoryList);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final controller = NewEntryTypeController(widget.categoryList);
     return BlocProvider(
       create: (context) => controller,
       child: Column(
@@ -71,28 +78,31 @@ class _NewEntryContentState extends State<NewEntryContent> {
                     const SizedBox(height: Sizes.smallSpace),
                     FulfilledFormField(fulfilled),
                     const SizedBox(height: Sizes.mediumSpace),
-                    SizedBox(
-                      width: double.infinity,
-                      child: BlocBuilder<NewEntryController, NewEntryState>(
-                        builder: (context, state) {
-                          final saveController =
-                              context.read<NewEntryController>();
-                          return ElevatedButton(
-                            onPressed: () {
-                              if (formKey.currentState?.validate() ?? false) {
-                                saveController.saveTransaction(
-                                    dateString: date.text,
-                                    description: description.text,
-                                    value: value.text,
-                                    category: category.value,
-                                    fulfilled: fulfilled.value,
-                                    paymentOption: paymentOption.value);
-                              }
-                            },
-                            child: const Text('OK'),
-                          );
-                        },
-                      ),
+                    BlocBuilder<NewEntryController, NewEntryState>(
+                      builder: (context, state) {
+                        final saveController =
+                            context.read<NewEntryController>();
+                        return state is! InitialNewEntryState
+                            ? const CircularProgressIndicator()
+                            : SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    if (formKey.currentState?.validate() ??
+                                        false) {
+                                      saveController.saveTransaction(
+                                          dateString: date.text,
+                                          description: description.text,
+                                          value: value.text,
+                                          category: category.value,
+                                          fulfilled: fulfilled.value,
+                                          paymentOption: paymentOption.value);
+                                    }
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              );
+                      },
                     ),
                     const SizedBox(height: Sizes.mediumSpace),
                     TextButton(
