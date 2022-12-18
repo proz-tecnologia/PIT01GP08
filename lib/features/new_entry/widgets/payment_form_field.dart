@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../../../design_sys/colors.dart';
+import '../../../shared/models/transaction.dart';
 import '../new_entry_controller.dart';
 import '../new_entry_states.dart';
 
@@ -18,7 +20,13 @@ class PaymentFormField extends StatefulWidget {
 }
 
 class _PaymentFormFieldState extends State<PaymentFormField> {
-  final List<bool> _select = <bool>[true, false, false];
+  final List<bool> _select = List.from(Payment.values.map((e) => false));
+
+  @override
+  void initState() {
+    super.initState();
+    _select.first = true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +53,9 @@ class _PaymentFormFieldState extends State<PaymentFormField> {
             minWidth: 80.0,
           ),
           isSelected: _select,
-          children: const [
-            Text('Normal'),
-            Text('Fixa'),
-            Text('Parcelada'),
-          ],
+          children: Payment.values
+              .map((e) => Text(toBeginningOfSentenceCase(e.name)!))
+              .toList(),
         );
       },
     );
