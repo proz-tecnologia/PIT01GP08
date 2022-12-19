@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../shared/category_repository.dart';
 import '../../shared/widgets/logo_app.dart';
 import 'models/user.dart';
 import 'register_controller.dart';
@@ -24,9 +25,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final ValueNotifier<bool> isVisible = ValueNotifier(false);
 
+  RegisterController controller =
+      RegisterController(CategoryFirebaseRepository());
+
   @override
   Widget build(BuildContext context) {
-    RegisterController controller = context.read<RegisterController>();
+    //RegisterController controller = context.read<RegisterController>();
 
     return Scaffold(
       body: Padding(
@@ -101,6 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: SizedBox(
                       width: double.infinity,
                       child: BlocListener<RegisterController, RegisterState>(
+                        bloc: controller,
                         listener: (context, state) {
                           if (state is LoadingRegisterState) {
                             showDialog(
@@ -119,6 +124,12 @@ class _RegisterPageState extends State<RegisterPage> {
                             );
                           }
                           if (state is SuccessRegisterState) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content:
+                                    Text('Bem vindo, ${nameController.text}'),
+                              ),
+                            );
                             Navigator.of(context)
                                 .pushReplacementNamed('/home-page');
                           }
