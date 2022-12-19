@@ -18,8 +18,7 @@ abstract class CategoryRepository {
 class CategoryFirebaseRepository implements CategoryRepository {
   final firestorePath = FirebaseFirestore.instance
       .collection('users')
-      //.doc(FirebaseAuth.instance.currentUser!.uid)
-      .doc('sUWdyeTWkHWy0PupifIhggoPeJ32')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
       .collection('categories');
 
   @override
