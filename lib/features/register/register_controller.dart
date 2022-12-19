@@ -1,31 +1,48 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'models/user.dart';
+import '../../shared/category_repository.dart';
 import 'register_states.dart';
 
 class RegisterController extends Cubit<RegisterState> {
-  RegisterController() : super(LoadingRegisterState());
+  RegisterController(this.categoryRepo) : super(LoadingRegisterState());
+
+  final CategoryRepository categoryRepo;
 
   // final _users = <User>[];
   // List<User> get users => _users;
 
   Future<void> registerUser(
-      {required String email, required String password}) async {
+      {required String name,
+      required String email,
+      required String password}) async {
     emit(LoadingRegisterState());
 
-    await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: email, password: password);
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      await auth.signInWithEmailAndPassword(email: email, password: password);
+      await auth.currentUser!.updateDisplayName(name);
+      await categoryRepo.setInitialCategories(auth.currentUser!.uid);
 
-    await Future.delayed(const Duration(seconds: 2));
-    // verificar se o email já está cadastrado.
-    // if (user.email == 'jackson@gmail.com') {
-      if (false) {
-      emit(ErrorRegisterState('email já cadastrado'));
-      return;
-    } else {
       emit(SuccessRegisterState());
-      return;
+    } catch (e) {
+      if (e is FirebaseAuthException) {
+        if (e.code == "email-already-in-use") {
+          emit(ErrorRegisterState(
+              'Email já cadastrado, se esqueceu a senha, recupera sua senha'));
+        }
+        if (e.code == "invalid-email") {
+          emit(ErrorRegisterState('Esse email não é válido'));
+        }
+        log(e.message ?? 'FirebaseAuthException');
+        //emit(ErrorRegisterState(e.message ?? 'Error on registerController'));
+      } else {
+        emit(ErrorRegisterState('Erro de conexão, tente novamente!'));
+      }
     }
   }
 }

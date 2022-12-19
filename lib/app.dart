@@ -27,10 +27,7 @@ class App extends StatelessWidget {
               child: const LoginPage(),
             ),
         '/splash-screen': (context) => const SplashScreen(),
-        '/register-page': (context) => BlocProvider(
-              create: (context) => RegisterController(),
-              child: const RegisterPage(),
-            ),
+        '/register-page': (context) => const RegisterPage(),
         '/home-page': (context) => BlocProvider(
               create: (context) => DataController(
                 transactionRepo: TransactionFirebaseRepository(),
