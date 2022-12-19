@@ -12,6 +12,7 @@ abstract class CategoryRepository {
   Future<bool> editCategoryData(Category category);
   Future<bool> deleteCategory(String id);
   Future<List<Category>> getAllCategories();
+  Future<void> setInitialCategories(String uid);
 }
 
 class CategoryFirebaseRepository implements CategoryRepository {
@@ -76,6 +77,25 @@ class CategoryFirebaseRepository implements CategoryRepository {
       return Category.fromMap(id, data);
     } catch (e) {
       return null;
+    }
+  }
+
+  @override
+  Future<void> setInitialCategories(String uid) async {
+    try {
+      final newPath = FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection('categories');
+      final snapshot = await FirebaseFirestore.instance
+          .collection('initialCategories')
+          .get();
+      final docs = snapshot.docs;
+      for (var doc in docs) {
+        newPath.add(doc.data());
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 }

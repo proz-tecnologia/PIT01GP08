@@ -3,10 +3,13 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../shared/category_repository.dart';
 import 'register_states.dart';
 
 class RegisterController extends Cubit<RegisterState> {
-  RegisterController() : super(LoadingRegisterState());
+  RegisterController(this.categoryRepo) : super(LoadingRegisterState());
+
+  final CategoryRepository categoryRepo;
 
   // final _users = <User>[];
   // List<User> get users => _users;
@@ -23,8 +26,7 @@ class RegisterController extends Cubit<RegisterState> {
           email: email, password: password);
       await auth.signInWithEmailAndPassword(email: email, password: password);
       await auth.currentUser!.updateDisplayName(name);
-      print('nome do usuário');
-      print(auth.currentUser!.displayName);
+      await categoryRepo.setInitialCategories(auth.currentUser!.uid);
 
       emit(SuccessRegisterState());
     } catch (e) {
@@ -38,6 +40,8 @@ class RegisterController extends Cubit<RegisterState> {
         }
         log(e.message ?? 'FirebaseAuthException');
         //emit(ErrorRegisterState(e.message ?? 'Error on registerController'));
+      } else {
+        emit(ErrorRegisterState('Erro de conexão, tente novamente!'));
       }
     }
   }

@@ -29,7 +29,8 @@ class App extends StatelessWidget {
             ),
         '/splash-screen': (context) => const SplashScreen(),
         '/register-page': (context) => BlocProvider(
-              create: (context) => RegisterController(),
+              create: (context) =>
+                  RegisterController(CategoryFirebaseRepository()),
               child: const RegisterPage(),
             ),
         '/home-page': (context) => BlocProvider(
