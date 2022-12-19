@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../module/data_controller.dart';
+import '../module/data_states.dart';
 import 'home_controller.dart';
 import 'widgets/app_pending.dart';
 import 'widgets/transactions_summary.dart';
@@ -12,9 +13,12 @@ class HomeContentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final transactionList =
+        (context.read<DataController>().state as SuccessDataState)
+            .transactionList;
     return SingleChildScrollView(
       child: BlocProvider(
-        create: (context) => HomeController(context.read<DataController>()),
+        create: (context) => HomeController(transactionList),
         child: Column(
           children: const [
             ResumeInfoWidget(),
