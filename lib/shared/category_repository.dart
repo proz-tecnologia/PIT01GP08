@@ -3,9 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'models/category.dart';
 
-const categoriesUrl =
-    'https://mockend.com/rudarabello/flutter_dio_challenge/categorys';
-
 abstract class CategoryRepository {
   Future<bool> createCategory(Category category);
   Future<Category?> getCategoryData(String id);
@@ -18,7 +15,7 @@ abstract class CategoryRepository {
 class CategoryFirebaseRepository implements CategoryRepository {
   final firestorePath = FirebaseFirestore.instance
       .collection('users')
-      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .doc(FirebaseAuth.instance.currentUser?.uid)
       .collection('categories');
 
   @override
