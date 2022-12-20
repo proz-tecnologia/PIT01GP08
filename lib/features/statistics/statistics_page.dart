@@ -1,9 +1,10 @@
-import 'package:financial_app/shared/views/error_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../shared/views/error_view.dart';
 import '../../shared/views/loading_view.dart';
 import '../../shared/widgets/month_changer.dart';
+import '../module/data_controller.dart';
 import 'statistics_controller.dart';
 import 'statistics_states.dart';
 import 'widgets/chart.dart';
@@ -14,61 +15,64 @@ class StatisticsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AppBar(
-          centerTitle: true,
-          titleTextStyle: Theme.of(context).textTheme.bodyLarge,
-          title: MonthChanger((month) {}),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.settings_rounded),
-            ),
-          ],
-        ),
-        Expanded(
-          child: BlocBuilder<StatisticsController, StatisticsState>(
-            builder: (context, currentState) {
-              if (currentState is ErrorStatisticsState) {
-                return ErrorView(
-                  icon: Icons.sync_problem_rounded,
-                  text: currentState.message,
-                );
-              }
-              if (currentState is SuccessStatisticsState) {
-                final screenOrientation = MediaQuery.of(context).orientation;
-                return screenOrientation == Orientation.portrait
-                    ? Column(
-                        children: const [
-                          Expanded(
-                            flex: 3,
-                            child: Center(child: Chart()),
-                          ),
-                          Expanded(flex: 2, child: Legend()),
-                        ],
-                      )
-                    : Row(
-                        children: const [
-                          Expanded(
-                            flex: 3,
-                            child: Center(child: Chart()),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Legend(),
-                            ),
-                          ),
-                        ],
-                      );
-              }
-              return const LoadingView();
-            },
+    return BlocProvider(
+      create: (context) => StatisticsController(context.read<DataController>()),
+      child: Column(
+        children: [
+          AppBar(
+            centerTitle: true,
+            titleTextStyle: Theme.of(context).textTheme.bodyLarge,
+            title: MonthChanger((month) {}),
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.settings_rounded),
+              ),
+            ],
           ),
-        ),
-      ],
+          Expanded(
+            child: BlocBuilder<StatisticsController, StatisticsState>(
+              builder: (context, currentState) {
+                if (currentState is ErrorStatisticsState) {
+                  return ErrorView(
+                    icon: Icons.sync_problem_rounded,
+                    text: currentState.message,
+                  );
+                }
+                if (currentState is SuccessStatisticsState) {
+                  final screenOrientation = MediaQuery.of(context).orientation;
+                  return screenOrientation == Orientation.portrait
+                      ? Column(
+                          children: const [
+                            Expanded(
+                              flex: 3,
+                              child: Center(child: Chart()),
+                            ),
+                            Expanded(flex: 2, child: Legend()),
+                          ],
+                        )
+                      : Row(
+                          children: const [
+                            Expanded(
+                              flex: 3,
+                              child: Center(child: Chart()),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Legend(),
+                              ),
+                            ),
+                          ],
+                        );
+                }
+                return const LoadingView();
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
