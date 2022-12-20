@@ -22,14 +22,7 @@ class HomeController extends Cubit<HomeState> {
       }
     }
 
-    transactions.sort(
-      (a, b) {
-        int aDate = a.date.millisecondsSinceEpoch;
-        int bDate = b.date.millisecondsSinceEpoch;
-        return aDate.compareTo(bDate);
-      },
-    );
-    return transactions.sublist(0, 4);
+    return transactions.reversed.toList().sublist(0, 4);
   }
 
   void displayPending() {
