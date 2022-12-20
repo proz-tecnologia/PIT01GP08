@@ -15,64 +15,63 @@ class StatisticsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => StatisticsController(context.read<DataController>()),
-      child: Column(
-        children: [
-          AppBar(
-            centerTitle: true,
-            titleTextStyle: Theme.of(context).textTheme.bodyLarge,
-            title: MonthChanger((month) {}),
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.settings_rounded),
-              ),
-            ],
-          ),
-          Expanded(
-            child: BlocBuilder<StatisticsController, StatisticsState>(
-              builder: (context, currentState) {
-                if (currentState is ErrorStatisticsState) {
-                  return ErrorView(
-                    icon: Icons.sync_problem_rounded,
-                    text: currentState.message,
-                  );
-                }
-                if (currentState is SuccessStatisticsState) {
-                  final screenOrientation = MediaQuery.of(context).orientation;
-                  return screenOrientation == Orientation.portrait
-                      ? Column(
-                          children: const [
-                            Expanded(
-                              flex: 3,
-                              child: Center(child: Chart()),
-                            ),
-                            Expanded(flex: 2, child: Legend()),
-                          ],
-                        )
-                      : Row(
-                          children: const [
-                            Expanded(
-                              flex: 3,
-                              child: Center(child: Chart()),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Legend(),
-                              ),
-                            ),
-                          ],
-                        );
-                }
-                return const LoadingView();
-              },
+    final controller = StatisticsController(context.read<DataController>());
+    return Column(
+      children: [
+        AppBar(
+          centerTitle: true,
+          titleTextStyle: Theme.of(context).textTheme.bodyLarge,
+          title: MonthChanger((month) => controller.getSections(month)),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.settings_rounded),
             ),
+          ],
+        ),
+        Expanded(
+          child: BlocBuilder<StatisticsController, StatisticsState>(
+            bloc: controller,
+            builder: (context, state) {
+              if (state is ErrorStatisticsState) {
+                return ErrorView(
+                  icon: Icons.sync_problem_rounded,
+                  text: state.message,
+                );
+              }
+              if (state is SuccessStatisticsState) {
+                final screenOrientation = MediaQuery.of(context).orientation;
+                return screenOrientation == Orientation.portrait
+                    ? Column(
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: Center(child: Chart(state)),
+                          ),
+                          Expanded(flex: 2, child: Legend(state)),
+                        ],
+                      )
+                    : Row(
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: Center(child: Chart(state)),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Legend(state),
+                            ),
+                          ),
+                        ],
+                      );
+              }
+              return const LoadingView();
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

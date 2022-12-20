@@ -2,21 +2,19 @@ import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../design_sys/sizes.dart';
-import '../statistics_controller.dart';
 import '../statistics_states.dart';
 
 class Chart extends StatelessWidget {
-  const Chart({super.key});
+  const Chart(this.state, {super.key});
+
+  final SuccessStatisticsState state;
 
   @override
   Widget build(BuildContext context) {
     final screenMinSize = min(
         MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
-    final state =
-        context.read<StatisticsController>().state as SuccessStatisticsState;
 
     return Stack(
       alignment: AlignmentDirectional.center,
