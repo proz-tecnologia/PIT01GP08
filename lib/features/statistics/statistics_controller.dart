@@ -1,11 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../shared/models/category.dart';
-import '../../shared/models/transaction.dart';
 import '../module/data_controller.dart';
 import '../module/data_states.dart';
 import 'models/section.dart';
 import 'statistics_states.dart';
+
+import '../../get_month_range.dart';
 
 class StatisticsController extends Cubit<StatisticsState> {
   final DataController _dataController;
@@ -17,28 +18,9 @@ class StatisticsController extends Cubit<StatisticsState> {
   void getSections(DateTime displayMonth) async {
     emit(LoadingStatisticsState());
 
-    final List<Transaction> monthTransactions;
-    final startMonth = displayMonth.month;
-    final startYear = displayMonth.year;
-
-    final endMonth = startMonth == 1 ? 12 : startMonth - 1;
-    final endYear = startMonth == 1 ? startYear - 1 : startYear;
-
-    final transactionList =
-        (_dataController.state as SuccessDataState).transactionList;
-
-    int startIndex = transactionList.indexWhere((element) =>
-        element.date.year == startYear && element.date.month == startMonth);
-    int endIndex = transactionList.indexWhere((element) =>
-        element.date.year == endYear && element.date.month == endMonth);
-    if (startIndex == -1) {
-      startIndex = transactionList.length;
-      endIndex = transactionList.length;
-    } else if (endIndex == -1) {
-      endIndex = transactionList.length;
-    }
-
-    monthTransactions = transactionList.getRange(startIndex, endIndex).toList();
+    final monthTransactions = (_dataController.state as SuccessDataState)
+        .transactionList
+        .getMonthRange(displayMonth);
 
     final sections = <Section>[];
     double total = 0;
