@@ -18,12 +18,13 @@ class StatementPage extends StatelessWidget {
     final controller = StatementController(
         (context.read<DataController>().state as SuccessDataState)
             .transactionList);
+    controller.showTransactions(DateTime.now());
     return Column(
       children: [
         AppBar(
           centerTitle: true,
           titleTextStyle: Theme.of(context).textTheme.bodyLarge,
-          title: MonthChanger((month) {}),
+          title: MonthChanger((month) => controller.showTransactions(month)),
           actions: [
             IconButton(
               onPressed: () {},
@@ -34,20 +35,19 @@ class StatementPage extends StatelessWidget {
         Expanded(
           child: BlocBuilder<StatementController, StatementState>(
             bloc: controller,
-            builder: (context, currentState) {
-              final list = controller.list;
+            builder: (context, state) {
               return Column(
                 children: [
                   Row(
                     children: [
                       TopBarToggleButton.expense(
-                        isSelected: currentState is BothStatementState ||
-                            currentState is ExpenseStatementState,
+                        isSelected: state is BothStatementState ||
+                            state is ExpenseStatementState,
                         onPressed: () => controller.toggleState(false),
                       ),
                       TopBarToggleButton.income(
-                        isSelected: currentState is BothStatementState ||
-                            currentState is IncomeStatementState,
+                        isSelected: state is BothStatementState ||
+                            state is IncomeStatementState,
                         onPressed: () => controller.toggleState(true),
                       ),
                     ],
@@ -57,9 +57,9 @@ class StatementPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: Sizes.smallSpace),
                       child: ListView.builder(
-                        itemCount: list.length,
+                        itemCount: state.list.length,
                         itemBuilder: (context, index) => Card(
-                          child: TransactionTile.check(list[index]),
+                          child: TransactionTile.check(state.list[index]),
                         ),
                       ),
                     ),

@@ -1,36 +1,53 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../shared/models/category.dart';
 import '../../shared/models/transaction.dart';
 import 'statement_states.dart';
 
 class StatementController extends Cubit<StatementState> {
-  StatementController(this.transactionList) : super(BothStatementState());
+  StatementController(this.transactionList)
+      : super(BothStatementState(transactionList));
 
   final List<Transaction> transactionList;
-  List<Transaction> get list => _showTransactions();
+  DateTime currentMonth = DateTime.now();
 
   void toggleState(bool isIncome) async {
     if (state is BothStatementState) {
       if (isIncome) {
-        emit(ExpenseStatementState());
+        emit(ExpenseStatementState(transactionList));
       } else {
-        emit(IncomeStatementState());
+        emit(IncomeStatementState(transactionList));
       }
     } else if ((state is ExpenseStatementState && isIncome) ||
         (state is IncomeStatementState && !isIncome)) {
-      emit(BothStatementState());
+      emit(BothStatementState(transactionList));
     }
+    showTransactions(currentMonth);
   }
 
-  List<Transaction> _showTransactions() {
-    final list = transactionList;
-    if (state is BothStatementState) {
-      return list;
+  void showTransactions(DateTime displayMonth) {
+    currentMonth = displayMonth;
+
+    final List<Transaction> monthTransactionList;
+    final startMonth = displayMonth.month;
+    final startYear = displayMonth.year;
+
+    final endMonth = startMonth == 1 ? 12 : startMonth - 1;
+    final endYear = startMonth == 1 ? startYear - 1 : startYear;
+
+    int startIndex = transactionList.indexWhere((element) =>
+        element.date.year == startYear && element.date.month == startMonth);
+    int endIndex = transactionList.indexWhere((element) =>
+        element.date.year == endYear && element.date.month == endMonth);
+    if (startIndex == -1) {
+      startIndex = transactionList.length;
+      endIndex = transactionList.length;
+    } else if (endIndex == -1) {
+      endIndex = transactionList.length;
     }
-    if (state is IncomeStatementState) {
-      return list.where((element) => element.type == Type.income).toList();
-    }
-    return list.where((element) => element.type == Type.expense).toList();
+
+    monthTransactionList =
+        transactionList.getRange(startIndex, endIndex).toList();
+
+    emit(state.copyWith(monthTransactionList));
   }
 }
