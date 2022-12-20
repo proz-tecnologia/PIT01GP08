@@ -1,5 +1,3 @@
-import 'package:financial_app/features/profile/profile_controller.dart';
-import 'package:financial_app/features/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,9 +5,9 @@ import '../../shared/views/error_view.dart';
 import '../../shared/views/loading_view.dart';
 import '../home/home_content_page.dart';
 import '../new_entry/new_entry_page.dart';
-import '../statement/statement_controller.dart';
+import '../profile/profile_controller.dart';
+import '../profile/profile_page.dart';
 import '../statement/statement_page.dart';
-import '../statistics/statistics_controller.dart';
 import '../statistics/statistics_page.dart';
 import 'data_controller.dart';
 import 'data_states.dart';
