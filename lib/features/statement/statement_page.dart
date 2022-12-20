@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../design_sys/sizes.dart';
 import '../../shared/widgets/top_bar_toggle_button.dart';
 import '../../shared/widgets/month_changer.dart';
+import '../module/data_controller.dart';
+import '../module/data_states.dart';
 import 'statement_controller.dart';
 import 'statement_states.dart';
 import '../../shared/widgets/transaction_tile.dart';
@@ -13,6 +15,9 @@ class StatementPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = StatementController(
+        (context.read<DataController>().state as SuccessDataState)
+            .transactionList);
     return Column(
       children: [
         AppBar(
@@ -28,8 +33,8 @@ class StatementPage extends StatelessWidget {
         ),
         Expanded(
           child: BlocBuilder<StatementController, StatementState>(
+            bloc: controller,
             builder: (context, currentState) {
-              final controller = context.read<StatementController>();
               final list = controller.list;
               return Column(
                 children: [

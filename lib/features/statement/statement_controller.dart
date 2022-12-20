@@ -2,14 +2,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../shared/models/category.dart';
 import '../../shared/models/transaction.dart';
-import '../module/data_controller.dart';
-import '../module/data_states.dart';
 import 'statement_states.dart';
 
 class StatementController extends Cubit<StatementState> {
-  StatementController(this._dataController) : super(BothStatementState());
+  StatementController(this.transactionList) : super(BothStatementState());
 
-  final DataController _dataController;
+  final List<Transaction> transactionList;
   List<Transaction> get list => _showTransactions();
 
   void toggleState(bool isIncome) async {
@@ -26,7 +24,7 @@ class StatementController extends Cubit<StatementState> {
   }
 
   List<Transaction> _showTransactions() {
-    final list = (_dataController.state as SuccessDataState).transactionList;
+    final list = transactionList;
     if (state is BothStatementState) {
       return list;
     }

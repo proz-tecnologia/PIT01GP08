@@ -43,10 +43,7 @@ class _HomePageState extends State<HomePage> {
               controller: controller,
               children: [
                 const HomeContentPage(),
-                BlocProvider(
-                  create: (_) => StatementController(data),
-                  child: const StatementPage(),
-                ),
+                const StatementPage(),
                 BlocProvider(
                   create: (_) => StatisticsController(data),
                   child: const StatisticsPage(),
