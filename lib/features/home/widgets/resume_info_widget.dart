@@ -1,12 +1,12 @@
 import 'package:financial_app/design_sys/sizes.dart';
-import 'package:financial_app/features/home/home_controller.dart';
 import 'package:financial_app/features/home/home_states.dart';
 import 'package:financial_app/features/module/data_controller.dart';
 import 'package:financial_app/features/module/data_states.dart';
-import 'package:financial_app/shared/widgets/month_changer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
+import '../home_controller.dart';
 import 'total_tile.dart';
 
 class ResumeInfoWidget extends StatefulWidget {
@@ -23,11 +23,10 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = HomeController2(
+    final controller = HomeController(
         (context.read<DataController>().state as SuccessDataState)
             .transactionList);
-    controller.displayBalance(DateTime.now());
-    
+
     final height = MediaQuery.of(context).size.height;
     final spaceBetween = height * Sizes.threePercent;
 
@@ -36,7 +35,7 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
       width: MediaQuery.of(context).size.width,
       color: Theme.of(context).primaryColor,
       child: SafeArea(
-        child: BlocBuilder<HomeController2, HomeState>(
+        child: BlocBuilder<HomeController, HomeState>(
           bloc: controller,
           builder: (context, state) {
             if (state is ErrorHomeState) {
@@ -50,7 +49,11 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SizedBox(height: spaceBetween),
-                      MonthChanger((month) => controller.displayBalance(month)),
+                      Text(
+                        DateFormat('dd/MM/yyyy').format(DateTime.now()),
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary),
+                      ),
                       SizedBox(height: spaceBetween),
                       Row(
                         children: [
