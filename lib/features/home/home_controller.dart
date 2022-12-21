@@ -31,16 +31,16 @@ class HomeController extends Cubit<HomeState> {
     double pendingIncome = 0;
     double pendingExpense = 0;
     
-    for (var element in transactionList) {
-      if (element.type == Type.income) {
-        income += element.value;
-        if (!element.fulfilled) {
-          pendingIncome += element.value;
+    for (var transaction in transactionList) {
+      if (transaction.type == Type.income) {
+        income += transaction.value;
+        if (!transaction.fulfilled) {
+          pendingIncome += transaction.value;
         }
       } else {
-        expense += element.value;
-        if (!element.fulfilled) {
-          pendingExpense += element.value;
+        expense += transaction.value;
+        if (!transaction.fulfilled) {
+          pendingExpense += transaction.value;
         }
       }
     }
