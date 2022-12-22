@@ -1,3 +1,4 @@
+import 'package:financial_app/shared/views/empty_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -56,12 +57,14 @@ class StatementPage extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: Sizes.smallSpace),
-                      child: ListView.builder(
-                        itemCount: state.list.length,
-                        itemBuilder: (context, index) => Card(
-                          child: TransactionTile.check(state.list[index]),
-                        ),
-                      ),
+                      child: state.list.isEmpty
+                          ? const EmptyView('Ainda não há transações nesse mês')
+                          : ListView.builder(
+                              itemCount: state.list.length,
+                              itemBuilder: (context, index) => Card(
+                                child: TransactionTile.check(state.list[index]),
+                              ),
+                            ),
                     ),
                   ),
                 ],

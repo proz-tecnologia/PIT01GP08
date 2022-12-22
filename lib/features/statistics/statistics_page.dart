@@ -1,3 +1,4 @@
+import 'package:financial_app/shared/views/empty_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -45,6 +46,9 @@ class StatisticsPage extends StatelessWidget {
                 );
               }
               if (state is SuccessStatisticsState) {
+                if (state.sections.isEmpty) {
+                  return const EmptyView('Ainda não há despesas nesse mês');
+                }
                 final screenOrientation = MediaQuery.of(context).orientation;
                 return screenOrientation == Orientation.portrait
                     ? Column(
