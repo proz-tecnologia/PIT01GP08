@@ -2,20 +2,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../shared/models/category.dart';
 import '../../shared/models/transaction.dart';
-import '../module/data_controller.dart';
-import '../module/data_states.dart';
 import 'home_states.dart';
 
 class HomeController extends Cubit<HomeState> {
-  HomeController(this._dataController) : super(LoadingHomeState());
+  HomeController(this.transactionList) : super(LoadingHomeState()) {
+    displayBalance();
+  }
 
-  final DataController _dataController;
+  final List<Transaction> transactionList;
 
-//element.date.isBefore(DateTime.now())
   List<Transaction> displayTransactions() {
     List<Transaction> transactions = [];
-    for (var element
-        in (_dataController.state as SuccessDataState).transactionList) {
+    for (var element in transactionList) {
       if (element.type == Type.expense) {
         if (!element.fulfilled) {
           transactions.add(element);
@@ -23,56 +21,39 @@ class HomeController extends Cubit<HomeState> {
       }
     }
 
-    transactions.sort(
-      (a, b) {
-        int aDate = a.date.millisecondsSinceEpoch;
-        int bDate = b.date.millisecondsSinceEpoch;
-        return aDate.compareTo(bDate);
-      },
-    );
-    emit(SuccessHomeState());
-    return transactions.toList();
+    return transactions.reversed.toList().sublist(0, 4);
   }
 
-  double displayBalance(String param) {
-    emit(LoadingHomeState());
-    double balance = 0;
+  void displayBalance() {
     double income = 0;
     double expense = 0;
     double pendingIncome = 0;
     double pendingExpense = 0;
 
-    for (var element
-        in (_dataController.state as SuccessDataState).transactionList) {
-      if (element.type == Type.income) {
-        balance += element.value;
-        income += element.value;
-        if (!element.fulfilled) {
-          pendingIncome += element.value;
+    for (var transaction in transactionList) {
+      if (transaction.type == Type.income) {
+        income += transaction.value;
+        if (!transaction.fulfilled) {
+          pendingIncome += transaction.value;
         }
       } else {
-        balance -= element.value;
-        expense += element.value;
-        if (!element.fulfilled) {
-          pendingExpense += element.value;
+        expense += transaction.value;
+        if (!transaction.fulfilled) {
+          pendingExpense += transaction.value;
         }
       }
     }
-    emit(SuccessHomeState());
-    switch (param) {
-      case 'balance':
-        return balance;
-      case 'income':
-        return income;
-      case 'expense':
-        return expense;
-      case 'pendingIncome':
-        return pendingIncome;
-      case 'pendingExpense':
-        return pendingExpense;
-      default:
-        emit(ErrorHomeState());
-    }
-    return 0;
+
+    final balance = income - expense;
+
+    emit(
+      SuccessHomeState(
+        balance: balance,
+        income: income,
+        expense: expense,
+        pendingExpense: pendingExpense,
+        pendingIncome: pendingIncome,
+      ),
+    );
   }
 }

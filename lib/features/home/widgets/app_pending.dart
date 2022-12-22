@@ -15,7 +15,6 @@ class AppPending extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeController, HomeState>(
       builder: (context, state) {
-        final controller = context.read<HomeController>();
         if (state is ErrorHomeState) {
           return const Center(child: Text('Erro ao carregar os dados'));
         }
@@ -31,7 +30,7 @@ class AppPending extends StatelessWidget {
                     color: AppColors.expense,
                     label: 'A pagar',
                     value:
-                        'R\$ ${controller.displayBalance('pendingExpense').toStringAsFixed(2).replaceAll('.', ',')}',
+                        'R\$ ${state.pendingExpenseStr}',
                   ),
                 ),
                 Expanded(
@@ -41,7 +40,7 @@ class AppPending extends StatelessWidget {
                     icon: Icons.publish_rounded,
                     label: 'A receber',
                     value:
-                        'R\$ ${controller.displayBalance('pendingIncome').toStringAsFixed(2).replaceAll('.', ',')}',
+                        'R\$ ${state.pendingIncomeStr}',
                   ),
                 ),
               ],

@@ -1,9 +1,12 @@
-import 'package:financial_app/shared/views/error_view.dart';
+import 'package:financial_app/shared/views/empty_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../shared/views/error_view.dart';
 import '../../shared/views/loading_view.dart';
 import '../../shared/widgets/month_changer.dart';
+import '../module/data_controller.dart';
+import '../module/data_states.dart';
 import 'statistics_controller.dart';
 import 'statistics_states.dart';
 import 'widgets/chart.dart';
@@ -14,12 +17,17 @@ class StatisticsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dataState = context.read<DataController>().state as SuccessDataState;
+    final controller = StatisticsController(
+      dataState.transactionList,
+      dataState.categoryList,
+    );
     return Column(
       children: [
         AppBar(
           centerTitle: true,
           titleTextStyle: Theme.of(context).textTheme.bodyLarge,
-          title: MonthChanger((month) {}),
+          title: MonthChanger((month) => controller.getSections(month)),
           actions: [
             IconButton(
               onPressed: () {},
@@ -29,36 +37,40 @@ class StatisticsPage extends StatelessWidget {
         ),
         Expanded(
           child: BlocBuilder<StatisticsController, StatisticsState>(
-            builder: (context, currentState) {
-              if (currentState is ErrorStatisticsState) {
+            bloc: controller,
+            builder: (context, state) {
+              if (state is ErrorStatisticsState) {
                 return ErrorView(
                   icon: Icons.sync_problem_rounded,
-                  text: currentState.message,
+                  text: state.message,
                 );
               }
-              if (currentState is SuccessStatisticsState) {
+              if (state is SuccessStatisticsState) {
+                if (state.sections.isEmpty) {
+                  return const EmptyView('Ainda não há despesas nesse mês');
+                }
                 final screenOrientation = MediaQuery.of(context).orientation;
                 return screenOrientation == Orientation.portrait
                     ? Column(
-                        children: const [
+                        children: [
                           Expanded(
                             flex: 3,
-                            child: Center(child: Chart()),
+                            child: Center(child: Chart(state)),
                           ),
-                          Expanded(flex: 2, child: Legend()),
+                          Expanded(flex: 2, child: Legend(state)),
                         ],
                       )
                     : Row(
-                        children: const [
+                        children: [
                           Expanded(
                             flex: 3,
-                            child: Center(child: Chart()),
+                            child: Center(child: Chart(state)),
                           ),
                           Expanded(
                             flex: 2,
                             child: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Legend(),
+                              padding: const EdgeInsets.all(8.0),
+                              child: Legend(state),
                             ),
                           ),
                         ],

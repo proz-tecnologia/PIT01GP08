@@ -6,12 +6,13 @@ import '../statistics_controller.dart';
 import '../statistics_states.dart';
 
 class Legend extends StatelessWidget {
-  const Legend({super.key});
+  const Legend(this.state, {super.key});
+
+    final SuccessStatisticsState state;
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final state = context.read<StatisticsController>().state as SuccessStatisticsState;
 
     return ListView.builder(
       itemCount: state.sections.length,

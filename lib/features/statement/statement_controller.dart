@@ -1,38 +1,35 @@
+import 'package:financial_app/get_month_range.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../shared/models/category.dart';
 import '../../shared/models/transaction.dart';
-import '../module/data_controller.dart';
-import '../module/data_states.dart';
 import 'statement_states.dart';
 
 class StatementController extends Cubit<StatementState> {
-  StatementController(this._dataController) : super(BothStatementState());
+  StatementController(this.transactionList)
+      : super(BothStatementState(transactionList));
 
-  final DataController _dataController;
-  List<Transaction> get list => _showTransactions();
+  final List<Transaction> transactionList;
+  DateTime currentMonth = DateTime.now();
 
   void toggleState(bool isIncome) async {
     if (state is BothStatementState) {
       if (isIncome) {
-        emit(ExpenseStatementState());
+        emit(ExpenseStatementState(transactionList));
       } else {
-        emit(IncomeStatementState());
+        emit(IncomeStatementState(transactionList));
       }
     } else if ((state is ExpenseStatementState && isIncome) ||
         (state is IncomeStatementState && !isIncome)) {
-      emit(BothStatementState());
+      emit(BothStatementState(transactionList));
     }
+    showTransactions(currentMonth);
   }
 
-  List<Transaction> _showTransactions() {
-    final list = (_dataController.state as SuccessDataState).transactionList;
-    if (state is BothStatementState) {
-      return list;
-    }
-    if (state is IncomeStatementState) {
-      return list.where((element) => element.type == Type.income).toList();
-    }
-    return list.where((element) => element.type == Type.expense).toList();
+  void showTransactions(DateTime displayMonth) {
+    currentMonth = displayMonth;
+
+    final monthTransactionList = transactionList.getMonthRange(displayMonth);
+
+    emit(state.copyWith(monthTransactionList));
   }
 }
