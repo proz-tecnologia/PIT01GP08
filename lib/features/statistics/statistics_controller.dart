@@ -1,33 +1,29 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../shared/models/category.dart';
-import '../module/data_controller.dart';
-import '../module/data_states.dart';
+import '../../shared/models/transaction.dart';
+import '../../get_month_range.dart';
 import 'models/section.dart';
 import 'statistics_states.dart';
 
-import '../../get_month_range.dart';
-
 class StatisticsController extends Cubit<StatisticsState> {
-  final DataController _dataController;
+  final List<Transaction> transactionList;
+  final List<Category> categoryList;
 
-  StatisticsController(this._dataController) : super(LoadingStatisticsState()) {
+  StatisticsController(this.transactionList, this.categoryList)
+      : super(LoadingStatisticsState()) {
     getSections(DateTime.now());
   }
 
-  void getSections(DateTime displayMonth) async {
+  void getSections(DateTime displayMonth) {
     emit(LoadingStatisticsState());
 
-    final monthTransactions = (_dataController.state as SuccessDataState)
-        .transactionList
-        .getMonthRange(displayMonth);
+    final monthTransactions = transactionList.getMonthRange(displayMonth);
 
     final sections = <Section>[];
     double total = 0;
 
     try {
-      final categories =
-          (_dataController.state as SuccessDataState).categoryList;
       Map<String, double> map = {};
 
       for (var transaction in monthTransactions) {
@@ -43,7 +39,7 @@ class StatisticsController extends Cubit<StatisticsState> {
       }
       for (var entry in map.entries) {
         final category =
-            categories.firstWhere((element) => element.id == entry.key);
+            categoryList.firstWhere((element) => element.id == entry.key);
         sections.add(
           Section(
             entry.value,

@@ -5,6 +5,7 @@ import '../../shared/views/error_view.dart';
 import '../../shared/views/loading_view.dart';
 import '../../shared/widgets/month_changer.dart';
 import '../module/data_controller.dart';
+import '../module/data_states.dart';
 import 'statistics_controller.dart';
 import 'statistics_states.dart';
 import 'widgets/chart.dart';
@@ -15,7 +16,11 @@ class StatisticsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = StatisticsController(context.read<DataController>());
+    final dataState = context.read<DataController>().state as SuccessDataState;
+    final controller = StatisticsController(
+      dataState.transactionList,
+      dataState.categoryList,
+    );
     return Column(
       children: [
         AppBar(
