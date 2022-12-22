@@ -6,7 +6,6 @@ import 'home_states.dart';
 
 class HomeController extends Cubit<HomeState> {
   HomeController(this.transactionList) : super(LoadingHomeState()) {
-    displayTransactions();
     displayBalance();
   }
 
@@ -30,7 +29,7 @@ class HomeController extends Cubit<HomeState> {
     double expense = 0;
     double pendingIncome = 0;
     double pendingExpense = 0;
-    
+
     for (var transaction in transactionList) {
       if (transaction.type == Type.income) {
         income += transaction.value;
