@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../shared/models/category.dart';
 import '../../shared/models/transaction.dart';
-import '../../shared/transaction_repository.dart';
+import '../../shared/repositories/transaction_repository.dart';
 import 'new_entry_states.dart';
 
 class NewEntryController extends Cubit<NewEntryState> {
