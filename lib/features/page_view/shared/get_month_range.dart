@@ -1,6 +1,6 @@
 import 'models/transaction.dart';
 
-extension monthSelect on List<Transaction> {
+extension MonthSelect on List<Transaction> {
   List<Transaction> getMonthRange(DateTime displayMonth) {
     final startMonth = displayMonth.month;
     final startYear = displayMonth.year;

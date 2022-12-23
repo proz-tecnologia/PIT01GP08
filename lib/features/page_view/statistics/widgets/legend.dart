@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../design_sys/sizes.dart';
-import '../statistics_controller.dart';
 import '../statistics_states.dart';
 
 class Legend extends StatelessWidget {

@@ -7,8 +7,6 @@ import 'features/page_view/data_controller.dart';
 import 'features/page_view/app_page_view.dart';
 import 'features/login/login_controller.dart';
 import 'features/login/login_page.dart';
-import 'features/new_entry/new_entry_page.dart';
-import 'features/register/register_controller.dart';
 import 'features/register/register_page.dart';
 import 'features/splash/splash.dart';
 import 'features/page_view/shared/repositories/category_repository.dart';

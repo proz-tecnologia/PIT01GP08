@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../design_sys/sizes.dart';
 import '../data_controller.dart';
 import '../data_states.dart';
 
