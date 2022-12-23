@@ -21,6 +21,9 @@ class HomeController extends Cubit<HomeState> {
       }
     }
 
+    if (transactions.length < 4) {
+      return transactions.reversed.toList();
+    }
     return transactions.reversed.toList().sublist(0, 4);
   }
 
