@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'models/transaction.dart' as model;
+import '../models/transaction.dart' as model;
 
 abstract class TransactionRepository {
   Future<bool> createTransaction(model.Transaction transaction);

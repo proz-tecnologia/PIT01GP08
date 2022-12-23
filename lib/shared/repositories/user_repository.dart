@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import 'models/user.dart';
+import '../models/user.dart';
 
 const usersUrl = 'https://mockend.com/rudarabello/flutter_dio_challenge/users';
 
