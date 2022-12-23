@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../shared/category_repository.dart';
-import '../../shared/transaction_repository.dart';
+import '../../shared/repositories/category_repository.dart';
+import '../../shared/repositories/transaction_repository.dart';
 import 'data_states.dart';
 
 class DataController extends Cubit<DataState> {
@@ -20,6 +20,7 @@ class DataController extends Cubit<DataState> {
     try {
       final transactions = await transactionRepo.getAllTransactions();
       final categories = await categoryRepo.getAllCategories();
+
       emit(
         SuccessDataState(transactions, categories),
       );
