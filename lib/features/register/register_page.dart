@@ -2,9 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../shared/repositories/category_repository.dart';
+import '../page_view/shared/repositories/category_repository.dart';
 import '../../shared/widgets/logo_app.dart';
-import 'models/user.dart';
 import 'register_controller.dart';
 import 'register_states.dart';
 import '../../design_sys/sizes.dart';

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import '../../../design_sys/colors.dart';
-import '../../../shared/models/transaction.dart';
+import '../../page_view/shared/models/transaction.dart';
 import '../new_entry_controller.dart';
 import '../new_entry_states.dart';
 
