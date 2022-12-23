@@ -3,16 +3,14 @@ import 'package:financial_app/design_sys/themes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'features/account/account_page.dart';
-import 'features/module/data_controller.dart';
-import 'features/module/home_page.dart';
+import 'features/page_view/data_controller.dart';
+import 'features/page_view/app_page_view.dart';
 import 'features/login/login_controller.dart';
 import 'features/login/login_page.dart';
-import 'features/new_entry/new_entry_page.dart';
-import 'features/register/register_controller.dart';
 import 'features/register/register_page.dart';
 import 'features/splash/splash.dart';
-import 'shared/repositories/category_repository.dart';
-import 'shared/repositories/transaction_repository.dart';
+import 'features/page_view/shared/repositories/category_repository.dart';
+import 'features/page_view/shared/repositories/transaction_repository.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -34,7 +32,7 @@ class App extends StatelessWidget {
                 transactionRepo: TransactionFirebaseRepository(),
                 categoryRepo: CategoryFirebaseRepository(),
               ),
-              child: const HomePage(),
+              child: const AppPageView(),
             ),
         '/account-settings': (context) => const AccountPage(),
       },
