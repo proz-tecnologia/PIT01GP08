@@ -53,9 +53,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   leading: Icon(Icons.account_balance_wallet_rounded),
                   title: Text("Carteira"),
                 ),
-                const ListTile(
-                  leading: Icon(Icons.settings_rounded),
-                  title: Text("Configurações"),
+                InkWell(
+                  splashColor: AppColors.lightGrey,
+                  onTap: () {},
+                  child: const ListTile(
+                    leading: Icon(Icons.settings_rounded),
+                    title: Text("Configuções"),
+                  ),
                 ),
               ];
               return Column(

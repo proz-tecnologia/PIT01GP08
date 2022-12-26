@@ -26,20 +26,6 @@ class _SplashScreenState extends State<SplashScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) => controller.init());
   }
 
-  checkLocalAuth() async {
-    final isLocalAuthAvailable = await controller.isBiometricAvailable();
-    isLoadAuthFailed.value = false;
-    if (isLocalAuthAvailable) {
-      final autenticate = await controller.authenticate();
-      if (!autenticate) {
-        // enviar para tela de login manual
-        Navigator.of(context).pushReplacementNamed('/home-page');
-      } else {
-        Navigator.of(context).pushReplacementNamed('/home-page');
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,26 +41,24 @@ class _SplashScreenState extends State<SplashScreen> {
             BlocListener<SplashController, SplashState>(
               bloc: controller,
               listener: (context, state) async {
-                final isLocalAuthAvailable =
-                    await controller.isBiometricAvailable();
-                isLoadAuthFailed.value = false;
-                if (isLocalAuthAvailable) {
-                  final autenticate = await controller.authenticate();
-                  if (!autenticate) {
-                    // enviar para tela de login manual
-                    Navigator.of(context).pushReplacementNamed('/home-page');
-                  } else {
-                    FirebaseAuth.instance.signOut();
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil('/login', (route) => false);
-                  }
-                }
-
-                if (state == SplashState.logged) {
-                  Navigator.of(context).pushReplacementNamed('/home-page');
-                }
+                final cnxt = Navigator.of(context);
                 if (state == SplashState.unlogged) {
-                  Navigator.of(context).pushReplacementNamed('/register-page');
+                  cnxt.pushReplacementNamed('/register-page');
+                } else {
+                  final isLocalAuthAvailable =
+                      await controller.isBiometricAvailable();
+                  isLoadAuthFailed.value = false;
+                  if (isLocalAuthAvailable) {
+                    final autenticate = await controller.authenticate();
+                    if (!autenticate) {
+                      // enviar para tela de login manual
+                      cnxt.pushNamedAndRemoveUntil('/login', (route) => false);
+                    } else {
+                      cnxt.pushReplacementNamed('/home-page');
+                    }
+                  } else {
+                    cnxt.pushNamedAndRemoveUntil('/login', (route) => false);
+                  }
                 }
               },
               child: const AppProgress(),

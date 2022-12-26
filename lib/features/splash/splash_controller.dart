@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:local_auth_android/local_auth_android.dart';
 
 import '../../firebase_options.dart';
 
@@ -24,12 +25,23 @@ class SplashController extends Cubit<SplashState> {
     }
   }
 
+//Verificar se tem biometria cadastrada e se o dispositivo suporta biometria
+//Se for verdadeiro retorna true, se não retorna false
   Future<bool> isBiometricAvailable() async {
     final bool canAuthenticateWithBiometrics = await authBio.canCheckBiometrics;
     return canAuthenticateWithBiometrics || await authBio.isDeviceSupported();
   }
 
+// chama a autenticação se o retorno for verdadeiro
   Future<bool> authenticate() async {
-    return await authBio.authenticate(localizedReason: 'Autenticação manual');
+    return await authBio.authenticate(
+        localizedReason: 'Desbloqueie seu celular',
+        authMessages: const <AuthMessages>[
+          AndroidAuthMessages(
+            biometricHint: '',
+            signInTitle: 'Financial',
+            cancelButton: 'Cancelar',
+          ),
+        ]);
   }
 }

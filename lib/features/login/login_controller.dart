@@ -20,8 +20,19 @@ class LoginController extends Cubit<LoginState> {
       emit(LoginStateSuccess());
     } catch (e) {
       if (e is FirebaseAuthException) {
-        log(e.message ?? 'FirebaseAuthException');
-        emit(LoginStateError(e.message ?? 'Error on loginController'));
+        if (e.code == 'network-request-failed') {
+          emit(
+            LoginStateError('Sem conexão com internet'),
+          );
+        } else {
+          print(e.toString());
+          log(e.message ?? 'FirebaseAuthException');
+          print('CODIGO');
+          print(e.code);
+          emit(
+            LoginStateError(e.message ?? 'Error on loginController'),
+          );
+        }
       }
     }
   }
