@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../shared/category_repository.dart';
+import '../page_view/shared/repositories/category_repository.dart';
 import 'register_states.dart';
 
 class RegisterController extends Cubit<RegisterState> {

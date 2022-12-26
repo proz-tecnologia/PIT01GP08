@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../shared/models/category.dart';
-import '../../shared/transaction_repository.dart';
+import '../page_view/shared/models/category.dart';
+import '../page_view/shared/repositories/transaction_repository.dart';
 import 'new_entry_content.dart';
 import 'new_entry_controller.dart';
 import 'new_entry_states.dart';
