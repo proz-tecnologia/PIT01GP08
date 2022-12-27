@@ -1,5 +1,5 @@
-import '../shared/models/transaction.dart';
-import '../shared/models/category.dart';
+import '../../../shared/models/transaction.dart';
+import '../../../shared/models/category.dart';
 
 abstract class StatementState {
   final List<Transaction> list;

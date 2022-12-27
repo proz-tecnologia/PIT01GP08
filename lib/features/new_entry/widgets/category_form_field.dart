@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../page_view/shared/models/category.dart';
+import '../../../shared/models/category.dart';
 import '../new_entry_controller.dart';
 import '../new_entry_states.dart';
 

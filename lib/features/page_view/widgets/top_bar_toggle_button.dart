@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../design_sys/colors.dart';
+import '../../../design_sys/colors.dart';
 
 class TopBarToggleButton extends StatelessWidget {
   const TopBarToggleButton(

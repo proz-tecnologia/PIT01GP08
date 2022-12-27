@@ -1,6 +1,6 @@
 
-import 'shared/models/category.dart';
-import 'shared/models/transaction.dart';
+import '../../shared/models/category.dart';
+import '../../shared/models/transaction.dart';
 
 abstract class DataState {}
 

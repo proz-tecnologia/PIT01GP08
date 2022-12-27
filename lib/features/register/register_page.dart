@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../page_view/shared/repositories/category_repository.dart';
+import '../../design_sys/colors.dart';
+import '../../services/category_repository.dart';
 import '../../shared/widgets/logo_app.dart';
 import 'register_controller.dart';
 import 'register_states.dart';
@@ -28,8 +29,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    //RegisterController controller = context.read<RegisterController>();
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(Sizes.largeSpace),
@@ -47,7 +46,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     padding: const EdgeInsets.all(Sizes.mediumSpace),
                     child: Text(
                       'Cadastre-se',
-                      style: Theme.of(context).textTheme.displayLarge,
+                      style:
+                          Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                color: AppColors.white,
+                              ),
                     ),
                   ),
                   TextFormField(

@@ -9,8 +9,8 @@ import 'features/login/login_controller.dart';
 import 'features/login/login_page.dart';
 import 'features/register/register_page.dart';
 import 'features/splash/splash.dart';
-import 'features/page_view/shared/repositories/category_repository.dart';
-import 'features/page_view/shared/repositories/transaction_repository.dart';
+import 'services/category_repository.dart';
+import 'services/transaction_repository.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

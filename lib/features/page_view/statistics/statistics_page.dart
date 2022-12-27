@@ -1,10 +1,10 @@
-import 'package:financial_app/features/page_view/shared/views/empty_view.dart';
+import 'package:financial_app/shared/views/empty_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../shared/views/error_view.dart';
-import '../shared/views/loading_view.dart';
-import '../shared/widgets/month_changer.dart';
+import '../../../shared/views/error_view.dart';
+import '../../../shared/views/loading_view.dart';
+import '../widgets/month_changer.dart';
 import '../data_controller.dart';
 import '../data_states.dart';
 import 'statistics_controller.dart';

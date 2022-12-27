@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../design_sys/colors.dart';
-import '../page_view/shared/models/category.dart';
+import '../../shared/models/category.dart';
 
 abstract class NewEntryState {}
 
