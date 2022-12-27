@@ -4,16 +4,16 @@ import '../../../../design_sys/sizes.dart';
 
 class TotalTile extends StatelessWidget {
   const TotalTile({
-    Key? key,
+    super.key,
     this.icon,
     required this.label,
     required this.value,
     required this.visible,
-  }) : super(key: key);
+  });
 
   final IconData? icon;
   final String label;
-  final String value;
+  final String? value;
   final bool visible;
 
   @override
@@ -47,15 +47,28 @@ class TotalTile extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               ),
             ),
-            visible
+            value != null
                 ? Text(
-                    value,
+                    visible ? value! : 'R\$ -------',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
                   )
-                : hidden,
+                : Padding(
+                    padding: const EdgeInsets.only(top: 4.0),
+                    child: SizedBox(
+                      width: Sizes.extraLargeIconSize,
+                      child: LinearProgressIndicator(
+                        minHeight: Sizes.smallSpace,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onPrimary
+                            .withOpacity(0.2),
+                        backgroundColor: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
           ],
         ),
       ],

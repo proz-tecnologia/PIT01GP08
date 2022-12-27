@@ -66,7 +66,9 @@ class PendingCard extends StatelessWidget {
                     width: Sizes.extraLargeIconSize,
                     child: LinearProgressIndicator(
                       minHeight: Sizes.smallSpace,
-                      backgroundColor: Theme.of(context).dividerColor,
+                      color: Theme.of(context).primaryColor.withOpacity(0.2),
+                      backgroundColor:
+                          Theme.of(context).dividerColor.withOpacity(0.2),
                     ),
                   ),
                 );
