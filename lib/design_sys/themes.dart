@@ -7,6 +7,7 @@ class AppTheme {
 
   static ThemeData get lightTheme {
     return ThemeData(
+      fontFamily: 'MavenPro',
       dialogBackgroundColor: AppColors.white,
       disabledColor: AppColors.lightGrey,
       dividerColor: AppColors.lightGrey,
@@ -37,16 +38,6 @@ class AppTheme {
         disabledActionTextColor: AppColors.lightGrey,
         contentTextStyle: const TextStyle(color: AppColors.white),
         behavior: SnackBarBehavior.floating,
-      ),
-      textTheme: const TextTheme(
-        displayLarge: TextStyle(
-          fontSize: 27,
-          fontWeight: FontWeight.bold,
-          color: AppColors.black,
-        ),
-        bodySmall: TextStyle(
-          fontSize: 12,
-        ),
       ),
       switchTheme: SwitchThemeData(
         thumbColor: MaterialStateProperty.resolveWith<Color?>(
@@ -111,6 +102,7 @@ class AppTheme {
 
   static ThemeData get darkTheme {
     return ThemeData(
+      fontFamily: 'MavenPro',
       brightness: Brightness.dark,
       canvasColor: AppColors.black,
       dialogBackgroundColor: AppColors.black,
@@ -127,7 +119,8 @@ class AppTheme {
         showSelectedLabels: false,
         showUnselectedLabels: false,
       ),
-      elevatedButtonTheme: ElevatedButtonThemeData(style: _appButtonStyle),
+      elevatedButtonTheme:
+          ElevatedButtonThemeData(style: _appButtonStyle.copyWith()),
       outlinedButtonTheme: OutlinedButtonThemeData(style: _appButtonStyle),
       textButtonTheme: TextButtonThemeData(
           style: _appButtonStyle.copyWith(
@@ -153,16 +146,6 @@ class AppTheme {
         actionTextColor: AppColors.primaryOnDark,
         disabledActionTextColor: AppColors.lightGrey,
         contentTextStyle: const TextStyle(color: AppColors.white),
-      ),
-      textTheme: const TextTheme(
-        displayLarge: TextStyle(
-          fontSize: 27,
-          fontWeight: FontWeight.bold,
-          color: AppColors.white,
-        ),
-        bodySmall: TextStyle(
-          fontSize: 12,
-        ),
       ),
       switchTheme: SwitchThemeData(
         thumbColor: MaterialStateProperty.resolveWith<Color?>(
@@ -230,14 +213,8 @@ class AppTheme {
   }
 }
 
-ButtonStyle _appButtonStyle = const ButtonStyle(
-  padding: MaterialStatePropertyAll(EdgeInsets.all(16.0)),
-  textStyle: MaterialStatePropertyAll(
-    TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 1.0,
-    ),
-  ),
-  elevation: MaterialStatePropertyAll(0),
+ButtonStyle _appButtonStyle = ButtonStyle(
+  padding: const MaterialStatePropertyAll(EdgeInsets.all(16.0)),
+  textStyle: MaterialStatePropertyAll(const TextTheme().displayMedium),
+  elevation: const MaterialStatePropertyAll(0),
 );
