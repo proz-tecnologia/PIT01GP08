@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../shared/models/category.dart';
-import '../shared/models/transaction.dart';
+import '../../../shared/models/category.dart';
+import '../../../shared/models/transaction.dart';
 import 'home_states.dart';
 
 class HomeController extends Cubit<HomeState> {

@@ -79,7 +79,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: Sizes.largeSpace,
                   ),
                   Text(user.displayName ?? "Usuário",
-                      style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           color: Theme.of(context).colorScheme.onPrimary)),
                 ]),
               ),

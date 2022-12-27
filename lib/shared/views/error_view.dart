@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../../design_sys/sizes.dart';
+import '../../design_sys/sizes.dart';
 
-class EmptyView extends StatelessWidget {
-  const EmptyView(this.text, {super.key});
+class ErrorView extends StatelessWidget {
+  const ErrorView({super.key, required this.icon, required this.text});
+  final IconData icon;
   final String text;
 
   @override
@@ -12,8 +13,8 @@ class EmptyView extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
-            Icons.smart_toy_rounded,
+          Icon(
+            icon,
             size: Sizes.extraLargeIconSize,
           ),
           const SizedBox(height: Sizes.smallSpace),

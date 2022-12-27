@@ -1,15 +1,15 @@
-import 'package:financial_app/features/page_view/shared/views/empty_view.dart';
+import 'package:financial_app/shared/views/empty_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../design_sys/sizes.dart';
-import '../shared/widgets/top_bar_toggle_button.dart';
-import '../shared/widgets/month_changer.dart';
+import '../widgets/top_bar_toggle_button.dart';
+import '../widgets/month_changer.dart';
 import '../data_controller.dart';
 import '../data_states.dart';
 import 'statement_controller.dart';
 import 'statement_states.dart';
-import '../shared/widgets/transaction_tile.dart';
+import '../widgets/transaction_tile.dart';
 
 class StatementPage extends StatelessWidget {
   const StatementPage({super.key});

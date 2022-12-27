@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../models/category.dart';
+import '../shared/models/category.dart';
 
 abstract class CategoryRepository {
   Future<bool> createCategory(Category category);

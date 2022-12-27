@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'shared/views/error_view.dart';
-import 'shared/views/loading_view.dart';
+import '../../shared/views/error_view.dart';
+import '../../shared/views/loading_view.dart';
 import 'home/home_content_page.dart';
 import '../new_entry/new_entry_page.dart';
 import 'profile/profile_controller.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'shared/repositories/category_repository.dart';
-import 'shared/repositories/transaction_repository.dart';
+import '../../services/category_repository.dart';
+import '../../services/transaction_repository.dart';
 import 'data_states.dart';
 
 class DataController extends Cubit<DataState> {

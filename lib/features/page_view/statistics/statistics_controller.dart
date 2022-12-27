@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../shared/models/category.dart';
-import '../shared/models/transaction.dart';
-import '../shared/get_month_range.dart';
+import '../../../shared/models/category.dart';
+import '../../../shared/models/transaction.dart';
+import '../../../shared/utils/get_month_range.dart';
 import 'models/section.dart';
 import 'statistics_states.dart';
 

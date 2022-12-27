@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../design_sys/sizes.dart';
-import '../../../../shared/widgets/animated_logo.dart';
-import '../widgets/custom_circular_progress.dart';
+import '../../design_sys/sizes.dart';
+import '../widgets/animated_logo.dart';
+import '../../features/page_view/widgets/custom_circular_progress.dart';
 
 class LoadingView extends StatelessWidget {
   const LoadingView({super.key});
