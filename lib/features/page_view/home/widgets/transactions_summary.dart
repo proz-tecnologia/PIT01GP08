@@ -27,10 +27,10 @@ class TransactionsSummary extends StatelessWidget {
               children: [
                 Text(
                   'A vencer/vencidas',
-                  style: TextStyle(
-                    color: Theme.of(context).disabledColor,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: Theme.of(context).disabledColor,
+                        fontWeight: FontWeight.w700,
+                      ),
                 ),
                 listTransactions.isEmpty
                     ? const Padding(
