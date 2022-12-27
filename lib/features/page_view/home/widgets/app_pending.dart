@@ -1,15 +1,14 @@
-import 'package:financial_app/design_sys/colors.dart';
-import 'package:financial_app/design_sys/sizes.dart';
-import 'package:financial_app/features/page_view/home/home_controller.dart';
-import 'package:financial_app/features/page_view/home/home_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../design_sys/colors.dart';
+import '../../../../design_sys/sizes.dart';
+import '../home_controller.dart';
+import '../home_states.dart';
 import 'pending_card.dart';
 
 class AppPending extends StatelessWidget {
-  const AppPending({
-    Key? key,
-  }) : super(key: key);
+  const AppPending({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +28,7 @@ class AppPending extends StatelessWidget {
                     icon: Icons.download_rounded,
                     color: AppColors.expense,
                     label: 'A pagar',
-                    value:
-                        'R\$ ${state.pendingExpenseStr}',
+                    value: 'R\$ ${state.pendingExpenseStr}',
                   ),
                 ),
                 Expanded(
@@ -39,8 +37,7 @@ class AppPending extends StatelessWidget {
                     color: AppColors.income,
                     icon: Icons.publish_rounded,
                     label: 'A receber',
-                    value:
-                        'R\$ ${state.pendingIncomeStr}',
+                    value: 'R\$ ${state.pendingIncomeStr}',
                   ),
                 ),
               ],

@@ -1,14 +1,13 @@
-import 'package:financial_app/design_sys/sizes.dart';
-import 'package:financial_app/features/page_view/home/home_controller.dart';
-import 'package:financial_app/features/page_view/home/home_states.dart';
-import 'package:financial_app/features/page_view/widgets/transaction_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../design_sys/sizes.dart';
+import '../../widgets/transaction_tile.dart';
+import '../home_controller.dart';
+import '../home_states.dart';
+
 class TransactionsSummary extends StatelessWidget {
-  const TransactionsSummary({
-    Key? key,
-  }) : super(key: key);
+  const TransactionsSummary({super.key});
 
   @override
   Widget build(BuildContext context) {

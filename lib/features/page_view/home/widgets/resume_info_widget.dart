@@ -1,18 +1,16 @@
-import 'package:financial_app/design_sys/sizes.dart';
-import 'package:financial_app/features/page_view/home/home_states.dart';
-import 'package:financial_app/features/page_view/data_controller.dart';
-import 'package:financial_app/features/page_view/data_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../design_sys/sizes.dart';
+import '../../data_controller.dart';
+import '../../data_states.dart';
 import '../home_controller.dart';
+import '../home_states.dart';
 import 'total_tile.dart';
 
 class ResumeInfoWidget extends StatefulWidget {
-  const ResumeInfoWidget({
-    Key? key,
-  }) : super(key: key);
+  const ResumeInfoWidget({super.key});
 
   @override
   State<ResumeInfoWidget> createState() => _ResumeInfoWidgetState();
