@@ -15,44 +15,42 @@ class TransactionsSummary extends StatelessWidget {
       builder: (context, state) {
         final controller = context.read<HomeController>();
         final listTransactions = controller.displayTransactions();
-        if (state is ErrorHomeState) {
-          return const Center(child: Text('Erro ao carregar os dados'));
-        }
-        if (state is SuccessHomeState) {
-          return Container(
-            padding: const EdgeInsets.all(Sizes.mediumSpace),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'A vencer/vencidas',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Theme.of(context).disabledColor,
-                        fontWeight: FontWeight.w700,
-                      ),
-                ),
-                listTransactions.isEmpty
-                    ? const Padding(
-                        padding: EdgeInsets.all(Sizes.largeSpace),
-                        child: Text(
-                          'Você ainda não possui nenhuma despesa\nfutura ou pendente!',
-                          textAlign: TextAlign.center,
-                        ),
-                      )
-                    : ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) =>
-                            TransactionTile.alert(listTransactions[index]),
-                        itemCount: listTransactions.length,
-                        separatorBuilder: (BuildContext context, int index) =>
-                            const Divider(),
-                      ),
-              ],
-            ),
-          );
-        }
-        return const Center(child: CircularProgressIndicator());
+        return Container(
+          padding: const EdgeInsets.all(Sizes.mediumSpace),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'A vencer/vencidas',
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Theme.of(context).disabledColor,
+                    ),
+              ),
+              state is SuccessHomeState
+                  ? listTransactions.isEmpty
+                      ? const Padding(
+                          padding: EdgeInsets.all(Sizes.largeSpace),
+                          child: Text(
+                            'Você ainda não possui nenhuma despesa\nfutura ou pendente!',
+                            textAlign: TextAlign.center,
+                          ),
+                        )
+                      : ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (BuildContext context, int index) =>
+                              TransactionTile.alert(listTransactions[index]),
+                          itemCount: listTransactions.length,
+                          separatorBuilder: (BuildContext context, int index) =>
+                              const Divider(),
+                        )
+                  : const Padding(
+                      padding: EdgeInsets.only(top: 8.0),
+                      child: LinearProgressIndicator(),
+                    ),
+            ],
+          ),
+        );
       },
     );
   }
