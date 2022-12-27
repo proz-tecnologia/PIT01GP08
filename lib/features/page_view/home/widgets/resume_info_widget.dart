@@ -15,8 +15,6 @@ class ResumeInfoWidget extends StatefulWidget {
 }
 
 class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
-  final ValueNotifier<bool> isVisible = ValueNotifier(true);
-
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -29,69 +27,64 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
       child: SafeArea(
         child: BlocBuilder<HomeController, HomeState>(
           builder: (context, state) {
-            return ValueListenableBuilder(
-              valueListenable: isVisible,
-              builder: (context, value, _) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(height: spaceBetween),
+                Text(
+                  DateFormat('dd/MM/yyyy').format(DateTime.now()),
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                ),
+                SizedBox(height: spaceBetween),
+                Row(
                   children: [
-                    SizedBox(height: spaceBetween),
-                    Text(
-                      DateFormat('dd/MM/yyyy').format(DateTime.now()),
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.onPrimary),
+                    Expanded(flex: 1, child: Container()),
+                    TotalTile(
+                      label: 'Saldo',
+                      value:
+                          state is SuccessHomeState ? state.balanceStr : null,
                     ),
-                    SizedBox(height: spaceBetween),
-                    Row(
-                      children: [
-                        Expanded(flex: 1, child: Container()),
-                        TotalTile(
-                          label: 'Saldo',
-                          value: state is SuccessHomeState
-                              ? state.balanceStr
-                              : null,
-                          visible: isVisible.value,
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: IconButton(
-                            onPressed: () => isVisible.value = !isVisible.value,
+                    Expanded(
+                      flex: 1,
+                      child: ValueListenableBuilder(
+                        valueListenable:
+                            context.read<HomeController>().isVisible,
+                        builder: (context, value, _) {
+                          return IconButton(
+                            onPressed: () => context
+                                .read<HomeController>()
+                                .isVisible
+                                .value = !value,
                             icon: Icon(
-                              isVisible.value
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                              value ? Icons.visibility : Icons.visibility_off,
                               color: Theme.of(context).colorScheme.onPrimary,
                             ),
-                          ),
-                        ),
-                      ],
+                          );
+                        },
+                      ),
                     ),
-                    SizedBox(height: spaceBetween),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        TotalTile(
-                          icon: Icons.arrow_downward,
-                          label: 'Despesas',
-                          value: state is SuccessHomeState
-                              ? state.expenseStr
-                              : null,
-                          visible: isVisible.value,
-                        ),
-                        TotalTile(
-                          icon: Icons.arrow_upward,
-                          label: 'Receitas',
-                          value: state is SuccessHomeState
-                              ? state.incomeStr
-                              : null,
-                          visible: isVisible.value,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: spaceBetween),
                   ],
-                );
-              },
+                ),
+                SizedBox(height: spaceBetween),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    TotalTile(
+                      icon: Icons.arrow_downward,
+                      label: 'Despesas',
+                      value:
+                          state is SuccessHomeState ? state.expenseStr : null,
+                    ),
+                    TotalTile(
+                      icon: Icons.arrow_upward,
+                      label: 'Receitas',
+                      value: state is SuccessHomeState ? state.incomeStr : null,
+                    ),
+                  ],
+                ),
+                SizedBox(height: spaceBetween),
+              ],
             );
           },
         ),

@@ -49,16 +49,22 @@ class PendingCard extends StatelessWidget {
             BlocBuilder<HomeController, HomeState>(
               builder: (context, state) {
                 if (state is SuccessHomeState) {
-                  return Text(
-                    color == AppColors.expense
-                        ? state.pendingExpenseStr
-                        : state.pendingIncomeStr,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: color,
-                    ),
-                  );
+                  return ValueListenableBuilder(
+                      valueListenable: context.read<HomeController>().isVisible,
+                      builder: (_, isVisible, __) {
+                        return Text(
+                          isVisible
+                              ? color == AppColors.expense
+                                  ? state.pendingExpenseStr
+                                  : state.pendingIncomeStr
+                              : 'R\$ -------',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: color,
+                          ),
+                        );
+                      });
                 }
                 return Padding(
                   padding: const EdgeInsets.only(top: 4.0),

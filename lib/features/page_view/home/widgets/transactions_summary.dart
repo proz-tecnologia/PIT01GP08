@@ -26,28 +26,38 @@ class TransactionsSummary extends StatelessWidget {
                       color: Theme.of(context).disabledColor,
                     ),
               ),
-              state is SuccessHomeState
-                  ? listTransactions.isEmpty
-                      ? const Padding(
-                          padding: EdgeInsets.all(Sizes.largeSpace),
-                          child: Text(
-                            'Você ainda não possui nenhuma despesa\nfutura ou pendente!',
-                            textAlign: TextAlign.center,
-                          ),
-                        )
-                      : ListView.separated(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (BuildContext context, int index) =>
-                              TransactionTile.alert(listTransactions[index]),
-                          itemCount: listTransactions.length,
-                          separatorBuilder: (BuildContext context, int index) =>
-                              const Divider(),
-                        )
-                  : const Padding(
-                      padding: EdgeInsets.only(top: 8.0),
-                      child: LinearProgressIndicator(),
-                    ),
+              ValueListenableBuilder(
+                valueListenable: context.read<HomeController>().isVisible,
+                builder: (_, isVisible, __) {
+                  if (!context.read<HomeController>().isVisible.value) {
+                    return const SizedBox(width: double.infinity);
+                  }
+                  if (state is SuccessHomeState) {
+                    return listTransactions.isEmpty
+                        ? const Padding(
+                            padding: EdgeInsets.all(Sizes.largeSpace),
+                            child: Text(
+                              'Você ainda não possui nenhuma despesa\nfutura ou pendente!',
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        : ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (BuildContext context, int index) =>
+                                TransactionTile.alert(listTransactions[index]),
+                            itemCount: listTransactions.length,
+                            separatorBuilder:
+                                (BuildContext context, int index) =>
+                                    const Divider(),
+                          );
+                  }
+                  return const Padding(
+                    padding: EdgeInsets.only(top: 8.0),
+                    child: LinearProgressIndicator(),
+                  );
+                },
+              ),
             ],
           ),
         );

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../shared/models/category.dart';
@@ -10,6 +11,7 @@ class HomeController extends Cubit<HomeState> {
   }
 
   final List<Transaction> transactionList;
+  final ValueNotifier<bool> isVisible = ValueNotifier(true);
 
   List<Transaction> displayTransactions() {
     List<Transaction> transactions = [];

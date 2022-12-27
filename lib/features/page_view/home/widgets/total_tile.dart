@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../design_sys/sizes.dart';
+import '../home_controller.dart';
 
 class TotalTile extends StatelessWidget {
   const TotalTile({
@@ -8,22 +10,14 @@ class TotalTile extends StatelessWidget {
     this.icon,
     required this.label,
     required this.value,
-    required this.visible,
   });
 
   final IconData? icon;
   final String label;
   final String? value;
-  final bool visible;
 
   @override
   Widget build(BuildContext context) {
-    final hidden = Container(
-      color: Theme.of(context).colorScheme.onPrimary,
-      width: 72.0,
-      height: 11.0,
-      margin: const EdgeInsets.symmetric(vertical: 4.0),
-    );
     final leading = icon == null
         ? Container()
         : Padding(
@@ -48,13 +42,17 @@ class TotalTile extends StatelessWidget {
               ),
             ),
             value != null
-                ? Text(
-                    visible ? value! : 'R\$ -------',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                  )
+                ? ValueListenableBuilder(
+                    valueListenable: context.read<HomeController>().isVisible,
+                    builder: (_, isVisible, __) {
+                      return Text(
+                        isVisible ? value! : 'R\$ -------',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      );
+                    })
                 : Padding(
                     padding: const EdgeInsets.only(top: 4.0),
                     child: SizedBox(
