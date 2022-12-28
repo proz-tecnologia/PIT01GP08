@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../design_sys/colors.dart';
+import '../../services/category_repository.dart';
 import '../../shared/widgets/logo_app.dart';
-import 'models/user.dart';
 import 'register_controller.dart';
 import 'register_states.dart';
 import '../../design_sys/sizes.dart';
@@ -23,10 +24,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final ValueNotifier<bool> isVisible = ValueNotifier(false);
 
+  RegisterController controller =
+      RegisterController(CategoryFirebaseRepository());
+
   @override
   Widget build(BuildContext context) {
-    RegisterController controller = context.read<RegisterController>();
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(Sizes.largeSpace),
@@ -44,7 +46,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     padding: const EdgeInsets.all(Sizes.mediumSpace),
                     child: Text(
                       'Cadastre-se',
-                      style: Theme.of(context).textTheme.displayLarge,
+                      style:
+                          Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                color: AppColors.white,
+                              ),
                     ),
                   ),
                   TextFormField(
@@ -100,6 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: SizedBox(
                       width: double.infinity,
                       child: BlocListener<RegisterController, RegisterState>(
+                        bloc: controller,
                         listener: (context, state) {
                           if (state is LoadingRegisterState) {
                             showDialog(
@@ -118,6 +124,12 @@ class _RegisterPageState extends State<RegisterPage> {
                             );
                           }
                           if (state is SuccessRegisterState) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content:
+                                    Text('Bem vindo, ${nameController.text}'),
+                              ),
+                            );
                             Navigator.of(context)
                                 .pushReplacementNamed('/home-page');
                           }
@@ -127,10 +139,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           onPressed: () async {
                             if (formKey.currentState?.validate() ?? false) {
                               await controller.registerUser(
-                                User(
-                                    name: nameController.text,
-                                    email: emailController.text,
-                                    passworld: passwordController.text),
+                                name: nameController.text,
+                                email: emailController.text,
+                                password: passwordController.text,
                               );
                             }
                           },

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "776547417872",
+    "project_id": "cashfy-app-17cb4",
+    "storage_bucket": "cashfy-app-17cb4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776547417872:android:62f629ea512d5200846f95",
+        "android_client_info": {
+          "package_name": "com.example.financial_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "776547417872-64ecqe704lgqm2f34860j48u2e3ua7sv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaQD3Apt7syIo_TZrOwY0uvKH-cTLUQ2g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "776547417872-64ecqe704lgqm2f34860j48u2e3ua7sv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

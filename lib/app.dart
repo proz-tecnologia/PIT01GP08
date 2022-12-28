@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:financial_app/design_sys/themes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'features/home/home_page.dart';
+import 'features/account/account_page.dart';
+import 'features/page_view/data_controller.dart';
+import 'features/page_view/app_page_view.dart';
 import 'features/login/login_controller.dart';
 import 'features/login/login_page.dart';
-import 'features/new_entry/new_entry_controller.dart';
-import 'features/new_entry/new_entry_page.dart';
-import 'features/register/register_controller.dart';
 import 'features/register/register_page.dart';
 import 'features/splash/splash.dart';
-import 'features/splash/splash_controller.dart';
+import 'services/category_repository.dart';
+import 'services/transaction_repository.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -19,25 +19,22 @@ class App extends StatelessWidget {
     return MaterialApp(
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      initialRoute: '/splash-screen',
+      initialRoute: '/splash-screen', //TODO retirar nomes compostos das rotas
       routes: {
         '/login': (context) => BlocProvider(
               create: (_) => LoginController(),
               child: const LoginPage(),
             ),
-        '/splash-screen': (context) => BlocProvider(
-              create: (context) => SplashController(),
-              child: const SplashScreen(),
+        '/splash-screen': (context) => const SplashScreen(),
+        '/register-page': (context) => const RegisterPage(),
+        '/home-page': (context) => BlocProvider(
+              create: (context) => DataController(
+                transactionRepo: TransactionFirebaseRepository(),
+                categoryRepo: CategoryFirebaseRepository(),
+              ),
+              child: const AppPageView(),
             ),
-        '/register-page': (context) => BlocProvider(
-              create: (context) => RegisterController(),
-              child: const RegisterPage(),
-            ),
-        '/home-page': (context) => const HomePage(),
-        '/new-entry': (context) => BlocProvider(
-              create: (context) => NewEntryController(),
-              child: const NewEntryPage(),
-            ),
+        '/account-settings': (context) => const AccountPage(),
       },
     );
   }
