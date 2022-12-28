@@ -1,29 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../design_sys/sizes.dart';
+import '../home_controller.dart';
 
 class TotalTile extends StatelessWidget {
   const TotalTile({
-    Key? key,
+    super.key,
     this.icon,
     required this.label,
     required this.value,
-    required this.visible,
-  }) : super(key: key);
+  });
 
   final IconData? icon;
   final String label;
-  final String value;
-  final bool visible;
+  final String? value;
 
   @override
   Widget build(BuildContext context) {
-    final hidden = Container(
-      color: Theme.of(context).colorScheme.onPrimary,
-      width: 72.0,
-      height: 11.0,
-      margin: const EdgeInsets.symmetric(vertical: 4.0),
-    );
     final leading = icon == null
         ? Container()
         : Padding(
@@ -47,15 +41,32 @@ class TotalTile extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               ),
             ),
-            visible
-                ? Text(
-                    value,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onPrimary,
+            value != null
+                ? ValueListenableBuilder(
+                    valueListenable: context.read<HomeController>().isVisible,
+                    builder: (_, isVisible, __) {
+                      return Text(
+                        isVisible ? value! : 'R\$ -------',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      );
+                    })
+                : Padding(
+                    padding: const EdgeInsets.only(top: 4.0),
+                    child: SizedBox(
+                      width: Sizes.extraLargeIconSize,
+                      child: LinearProgressIndicator(
+                        minHeight: Sizes.smallSpace,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onPrimary
+                            .withOpacity(0.2),
+                        backgroundColor: Theme.of(context).primaryColor,
+                      ),
                     ),
-                  )
-                : hidden,
+                  ),
           ],
         ),
       ],

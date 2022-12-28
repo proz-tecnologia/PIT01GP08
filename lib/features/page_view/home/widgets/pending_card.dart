@@ -1,19 +1,37 @@
-import 'package:financial_app/design_sys/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../design_sys/colors.dart';
+import '../../../../design_sys/sizes.dart';
+import '../home_controller.dart';
+import '../home_states.dart';
 
 class PendingCard extends StatelessWidget {
-  const PendingCard({
-    Key? key,
+  const PendingCard._({
     required this.icon,
     required this.color,
     required this.label,
-    required this.value,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final Color color;
   final String label;
-  final String value;
+
+  factory PendingCard.expense() {
+    return const PendingCard._(
+      icon: Icons.download_rounded,
+      color: AppColors.expense,
+      label: 'A pagar',
+    );
+  }
+
+  factory PendingCard.income() {
+    return const PendingCard._(
+      color: AppColors.income,
+      icon: Icons.publish_rounded,
+      label: 'A receber',
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +46,39 @@ class PendingCard extends StatelessWidget {
               color: color,
             ),
             Text(label),
-            Text(
-              value,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: color,
-              ),
+            BlocBuilder<HomeController, HomeState>(
+              builder: (context, state) {
+                if (state is SuccessHomeState) {
+                  return ValueListenableBuilder(
+                      valueListenable: context.read<HomeController>().isVisible,
+                      builder: (_, isVisible, __) {
+                        return Text(
+                          isVisible
+                              ? color == AppColors.expense
+                                  ? state.pendingExpenseStr
+                                  : state.pendingIncomeStr
+                              : 'R\$ -------',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: color,
+                          ),
+                        );
+                      });
+                }
+                return Padding(
+                  padding: const EdgeInsets.only(top: 4.0),
+                  child: SizedBox(
+                    width: Sizes.extraLargeIconSize,
+                    child: LinearProgressIndicator(
+                      minHeight: Sizes.smallSpace,
+                      color: Theme.of(context).primaryColor.withOpacity(0.2),
+                      backgroundColor:
+                          Theme.of(context).dividerColor.withOpacity(0.2),
+                    ),
+                  ),
+                );
+              },
             ),
           ],
         ),

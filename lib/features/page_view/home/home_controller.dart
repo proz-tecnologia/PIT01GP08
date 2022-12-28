@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../shared/models/category.dart';
 import '../../../shared/models/transaction.dart';
+import '../../../shared/utils/select_by_date.dart';
 import 'home_states.dart';
 
 class HomeController extends Cubit<HomeState> {
@@ -10,6 +12,7 @@ class HomeController extends Cubit<HomeState> {
   }
 
   final List<Transaction> transactionList;
+  final ValueNotifier<bool> isVisible = ValueNotifier(true);
 
   List<Transaction> displayTransactions() {
     List<Transaction> transactions = [];
@@ -33,14 +36,21 @@ class HomeController extends Cubit<HomeState> {
     double pendingIncome = 0;
     double pendingExpense = 0;
 
-    for (var transaction in transactionList) {
+    final today = DateTime.now();
+    final untilCurrentMonth = transactionList.getUntilMonth(today);
+
+    for (var transaction in untilCurrentMonth) {
       if (transaction.type == Type.income) {
-        income += transaction.value;
+        if (!transaction.date.isAfter(today)) {
+          income += transaction.value;
+        }
         if (!transaction.fulfilled) {
           pendingIncome += transaction.value;
         }
       } else {
-        expense += transaction.value;
+        if (!transaction.date.isAfter(today)) {
+          expense += transaction.value;
+        }
         if (!transaction.fulfilled) {
           pendingExpense += transaction.value;
         }
