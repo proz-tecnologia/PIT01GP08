@@ -17,13 +17,16 @@ class SuccessHomeState implements HomeState {
     required this.pendingExpense,
   });
 
-  String get balanceStr => balance.toStringAsFixed(2).replaceAll('.', ',');
-  String get incomeStr => income.toStringAsFixed(2).replaceAll('.', ',');
-  String get expenseStr => expense.toStringAsFixed(2).replaceAll('.', ',');
+  String get balanceStr =>
+      'R\$ ${balance.toStringAsFixed(2).replaceAll('.', ',')}';
+  String get incomeStr =>
+      'R\$ ${income.toStringAsFixed(2).replaceAll('.', ',')}';
+  String get expenseStr =>
+      'R\$ ${expense.toStringAsFixed(2).replaceAll('.', ',')}';
   String get pendingIncomeStr =>
-      pendingIncome.toStringAsFixed(2).replaceAll('.', ',');
+      'R\$ ${pendingIncome.toStringAsFixed(2).replaceAll('.', ',')}';
   String get pendingExpenseStr =>
-      pendingExpense.toStringAsFixed(2).replaceAll('.', ',');
+      'R\$ ${pendingExpense.toStringAsFixed(2).replaceAll('.', ',')}';
 }
 
 class ErrorHomeState implements HomeState {}

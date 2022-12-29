@@ -1,6 +1,6 @@
 import '../models/transaction.dart';
 
-extension MonthSelect on List<Transaction> {
+extension SelectByDate on List<Transaction> {
   List<Transaction> getMonthRange(DateTime displayMonth) {
     final startMonth = displayMonth.month;
     final startYear = displayMonth.year;
@@ -20,5 +20,29 @@ extension MonthSelect on List<Transaction> {
     }
 
     return getRange(startIndex, endIndex).toList();
+  }
+
+  List<Transaction> getUntilDate(DateTime limitDate) {
+    int startIndex = indexWhere((element) => !element.date.isAfter(limitDate));
+
+    if (startIndex == -1) {
+      return [];
+    }
+
+    return getRange(startIndex, length - 1).toList();
+  }
+
+  List<Transaction> getUntilMonth(DateTime displayMonth) {
+    final startMonth = displayMonth.month;
+    final startYear = displayMonth.year;
+
+    int startIndex = indexWhere((element) =>
+        element.date.year == startYear && element.date.month == startMonth);
+
+    if (startIndex == -1) {
+      return [];
+    }
+
+    return getRange(startIndex, length - 1).toList();
   }
 }
