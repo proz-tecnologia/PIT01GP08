@@ -18,4 +18,14 @@ class AccountController extends Cubit<AccountState> {
       emit(ErrorAccountState('Erro de conexão, tente novamente!'));
     }
   }
+
+  // void updatePhoneNumber(String value) {
+  //   FirebaseAuth.instance.verifyPhoneNumber(
+  //       verificationCompleted: verificationCompleted,
+  //       verificationFailed: verificationFailed,
+  //       codeSent: codeSent,
+  //       codeAutoRetrievalTimeout: codeAutoRetrievalTimeout);
+  //   FirebaseAuth.instance.currentUser?.updatePhoneNumber();
+  //   return;
+  // }
 }

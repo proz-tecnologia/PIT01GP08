@@ -1,8 +1,12 @@
 import 'package:financial_app/features/account/account_states.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../design_sys/sizes.dart';
 import 'account_controller.dart';
+import 'widget/editable_info.dart';
+import 'widget/editable_password.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
@@ -10,7 +14,7 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = AccountController();
-    return BlocListener<AccountController, AccountState>(
+    return BlocConsumer<AccountController, AccountState>(
       bloc: controller,
       listener: (context, state) {
         if (state is ErrorAccountState) {
@@ -22,7 +26,7 @@ class AccountPage extends StatelessWidget {
               .showSnackBar(const SnackBar(content: Text("Sucesso!")));
         }
       },
-      child: Scaffold(
+      builder: (context, state) => Scaffold(
         appBar: AppBar(),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -39,22 +43,51 @@ class AccountPage extends StatelessWidget {
             //           foregroundImage: NetworkImage(user.photoURL!),
             //         ),
             //
-            Text(
-                //user.displayName ??
-                "Usuário",
-                style: Theme.of(context).textTheme.displayLarge),
-            Text(
-                //user.displayName ??
-                "Email",
-                style: Theme.of(context).textTheme.displayLarge),
-            Text(
-                //user.displayName ??
-                "Senha",
-                style: Theme.of(context).textTheme.displayLarge),
-            Text(
-                //user.displayName ??
-                "Telefone",
-                style: Theme.of(context).textTheme.displayLarge),
+            EditableInfo(
+              action: (value) {
+                FirebaseAuth.instance.currentUser?.updateDisplayName(value);
+              },
+              child: Text(
+                  state is SuccessAccountState
+                      ? state.user.displayName ?? "Usuário"
+                      : "Usuário",
+                  style: Theme.of(context).textTheme.headlineMedium),
+            ),
+            const SizedBox(
+              height: Sizes.largeSpace,
+              width: double.infinity,
+            ),
+            EditableInfo(
+              action: (value) {
+                FirebaseAuth.instance.currentUser?.updateEmail(value);
+              },
+              child: Text(
+                  state is SuccessAccountState
+                      ? state.user.email ?? "E-mail"
+                      : "Email",
+                  style: Theme.of(context).textTheme.headlineSmall),
+            ),
+            const SizedBox(
+              height: Sizes.largeSpace,
+            ),
+            EditablePassword(
+              action: (value) {
+                FirebaseAuth.instance.currentUser?.updatePassword(value);
+              },
+              child: Text("Altere sua Senha",
+                  style: Theme.of(context).textTheme.headlineSmall),
+            ),
+            const SizedBox(
+              height: Sizes.largeSpace,
+            ),
+            EditableInfo(
+              action: (value) {},
+              child: Text(
+                  state is SuccessAccountState
+                      ? state.user.phoneNumber ?? "Telefone"
+                      : "Telefone",
+                  style: Theme.of(context).textTheme.headlineSmall),
+            ),
           ],
         ),
       ),
