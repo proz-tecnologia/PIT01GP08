@@ -23,8 +23,8 @@ class _NewEntryContentState extends State<CategoryEditPage> {
   final formKey = GlobalKey<FormState>();
 
   final name = TextEditingController(text: 'Nova categoria');
-  final icon = ValueNotifier(Icons.monetization_on_rounded);
-  final color = ValueNotifier<Color>(Colors.indigo);
+  final icon = ValueNotifier(Icons.attach_money_rounded);
+  final color = ValueNotifier<Color>(Colors.blue);
   final type = ValueNotifier<Type>(Type.income);
 
   final controller =
@@ -59,7 +59,7 @@ class _NewEntryContentState extends State<CategoryEditPage> {
                       builder: (_, value, __) => InkWell(
                         onTap: () => showDialog(
                           context: context,
-                          builder: (context) => ColorPicker(icon),
+                          builder: (context) => ColorPicker(color),
                         ),
                         child: CircleAvatar(
                             radius: Sizes.largeIconSize,
