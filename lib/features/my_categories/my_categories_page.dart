@@ -1,4 +1,3 @@
-import 'package:financial_app/features/my_categories/category_edit_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,12 +12,13 @@ class MyCategoriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = MyCategoriesController(CategoryFirebaseRepository());
+    final controller =
+        MyCategoriesController.instance(CategoryFirebaseRepository());
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},// => Navigator.of(context).pushNamed('/category-edit'),
+            onPressed: () => Navigator.of(context).pushNamed('/category-edit'),
             icon: const Icon(Icons.add),
           ),
         ],
@@ -37,11 +37,18 @@ class MyCategoriesPage extends StatelessWidget {
               itemCount: state.list.length,
               separatorBuilder: (context, index) => const Divider(),
               itemBuilder: (context, index) => ListTile(
+                onLongPress: () => Navigator.of(context).pushNamed(
+                  '/category-edit',
+                  arguments: state.list[index],
+                ),
                 leading: Stack(
                   alignment: AlignmentDirectional.center,
                   children: [
                     CircleAvatar(backgroundColor: state.list[index].color),
-                    Icon(state.list[index].icon),
+                    Icon(
+                      state.list[index].icon,
+                      color: Theme.of(context).colorScheme.background,
+                    ),
                   ],
                 ),
                 title: Text(state.list[index].name),
