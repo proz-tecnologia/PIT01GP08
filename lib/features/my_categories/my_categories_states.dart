@@ -18,6 +18,8 @@ class ErrorMyCategoriesState extends MyCategoriesState {
 
 class SavingMyCategoriesState extends MyCategoriesState {}
 
+class SavedMyCategoriesState extends MyCategoriesState {}
+
 class SaveErrorMyCategoriesState extends MyCategoriesState {
   final String message;
 

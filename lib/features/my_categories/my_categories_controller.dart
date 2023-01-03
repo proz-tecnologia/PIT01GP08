@@ -6,7 +6,7 @@ import '../../shared/models/category.dart';
 import 'my_categories_states.dart';
 
 class MyCategoriesController extends Cubit<MyCategoriesState> {
-  static MyCategoriesController instance(CategoryRepository repository) =>
+  factory MyCategoriesController.instance(CategoryRepository repository) =>
       MyCategoriesController._(repository);
 
   MyCategoriesController._(this.repository)
@@ -50,6 +50,7 @@ class MyCategoriesController extends Cubit<MyCategoriesState> {
         await repository.editCategoryData(newCategory);
         list[list.indexWhere((category) => category.id == id)] = newCategory;
       }
+      emit(SavedMyCategoriesState());
       emit(SuccessMyCategoriesState(list));
     } catch (e) {
       emit(SaveErrorMyCategoriesState('Algo deu errado. Tente novamente.'));
