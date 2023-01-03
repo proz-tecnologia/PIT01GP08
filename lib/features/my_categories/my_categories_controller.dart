@@ -56,4 +56,15 @@ class MyCategoriesController extends Cubit<MyCategoriesState> {
       emit(SaveErrorMyCategoriesState('Algo deu errado. Tente novamente.'));
     }
   }
+
+  void deleteCategory(Category category) async {
+    List<Category> list = (state as SuccessMyCategoriesState).list;
+    try {
+      await repository.deleteCategory(category.id ?? '');
+      list.removeWhere((e) => e.id == category.id);
+      emit(SuccessMyCategoriesState(list));
+    } catch (e) {
+      emit(SaveErrorMyCategoriesState('Algo deu errado. Tente novamente.'));
+    }
+  }
 }

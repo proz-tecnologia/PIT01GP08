@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../design_sys/colors.dart';
 import '../../services/category_repository.dart';
 import '../../shared/views/error_view.dart';
 import '../../shared/views/loading_view.dart';
@@ -36,22 +37,49 @@ class MyCategoriesPage extends StatelessWidget {
             return ListView.separated(
               itemCount: state.list.length,
               separatorBuilder: (context, index) => const Divider(),
-              itemBuilder: (context, index) => ListTile(
-                onLongPress: () => Navigator.of(context).pushNamed(
-                  '/category-edit',
-                  arguments: state.list[index],
-                ),
-                leading: Stack(
-                  alignment: AlignmentDirectional.center,
-                  children: [
-                    CircleAvatar(backgroundColor: state.list[index].color),
-                    Icon(
-                      state.list[index].icon,
-                      color: Theme.of(context).colorScheme.background,
+              itemBuilder: (context, index) => PopupMenuButton(
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    onTap: () => Navigator.of(context).pushNamed(
+                      '/category-edit',
+                      arguments: state.list[index],
                     ),
-                  ],
+                    child: Row(
+                      children: const [
+                        Icon(Icons.edit_rounded),
+                        Text('Editar'),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    onTap: () => controller.deleteCategory(state.list[index]),
+                    child: Row(
+                      children: const [
+                        Icon(
+                          Icons.delete_outline_rounded,
+                          color: AppColors.expense,
+                        ),
+                        Text(
+                          'Excluir',
+                          style: TextStyle(color: AppColors.expense),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+                child: ListTile(
+                  leading: Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      CircleAvatar(backgroundColor: state.list[index].color),
+                      Icon(
+                        state.list[index].icon,
+                        color: Theme.of(context).colorScheme.background,
+                      ),
+                    ],
+                  ),
+                  title: Text(state.list[index].name),
                 ),
-                title: Text(state.list[index].name),
               ),
             );
           }
