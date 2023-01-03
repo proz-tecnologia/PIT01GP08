@@ -22,6 +22,8 @@ class ColorPicker extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: Sizes.largeIconSize,
+            mainAxisSpacing: Sizes.mediumSpace,
+            crossAxisSpacing: Sizes.mediumSpace,
           ),
           itemCount: colorOptions.length,
           itemBuilder: (_, index) => InkWell(
