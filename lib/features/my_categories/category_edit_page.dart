@@ -76,6 +76,7 @@ class _NewEntryContentState extends State<CategoryEditPage> {
                         child: Icon(
                           icon.value,
                           size: Sizes.largeIconSize,
+                          color: Theme.of(context).colorScheme.background,
                         ),
                       ),
                     ),
