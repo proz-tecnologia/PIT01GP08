@@ -6,7 +6,11 @@ import '../../shared/models/category.dart';
 import 'my_categories_states.dart';
 
 class MyCategoriesController extends Cubit<MyCategoriesState> {
-  MyCategoriesController(this.repository) : super(LoadingMyCategoriesState()) {
+  static MyCategoriesController instance(CategoryRepository repository) =>
+      MyCategoriesController._(repository);
+
+  MyCategoriesController._(this.repository)
+      : super(LoadingMyCategoriesState()) {
     init();
   }
 
