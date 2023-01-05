@@ -11,6 +11,7 @@ abstract class TransactionRepository {
   Future<bool> deleteTransaction(String id);
   Future<List<model.Transaction>> getAllTransactions();
   Future<List<model.Transaction>> getFixedTransactions();
+  Future<void> fulfillTransaction(model.Transaction transaction);
 }
 
 class TransactionFirebaseRepository implements TransactionRepository {
@@ -141,6 +142,47 @@ class TransactionFirebaseRepository implements TransactionRepository {
       return list;
     } catch (e) {
       return [];
+    }
+  }
+
+  @override
+  Future<void> fulfillTransaction(
+    model.Transaction transaction, {
+    fulfill = true,
+  }) async {
+    try {
+      if (transaction.payment == Payment.normal) {
+        await firestorePath
+            .collection('transactions')
+            .doc(transaction.id)
+            .set({'fulfilled': fulfill});
+      } else {
+        final doc = await firestorePath
+            .collection('fixed-transactions')
+            .doc(transaction.id)
+            .get();
+
+        DateTime newDate = ((doc.data() ?? {})['date'] as Timestamp).toDate();
+        int part = 0;
+        while (newDate.isBefore(transaction.date)) {
+          part++;
+          try {
+            newDate = DateTime(newDate.year, newDate.month + 1, newDate.day);
+          } catch (e) {
+            newDate = DateTime(newDate.year + 1, 1, newDate.day);
+          }
+        }
+
+        List list = (doc.data() ?? {})['fulfilled'];
+        list[part] = fulfill;
+
+        await firestorePath
+            .collection('fixed-transactions')
+            .doc(transaction.id)
+            .set({'fulfilled': list});
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 }
