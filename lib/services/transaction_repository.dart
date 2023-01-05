@@ -10,6 +10,7 @@ abstract class TransactionRepository {
   Future<bool> editTransactionData(model.Transaction transaction);
   Future<bool> deleteTransaction(String id);
   Future<List<model.Transaction>> getAllTransactions();
+  Future<List<model.Transaction>> getFixedTransactions();
 }
 
 class TransactionFirebaseRepository implements TransactionRepository {
@@ -23,7 +24,9 @@ class TransactionFirebaseRepository implements TransactionRepository {
       if (transaction.payment == Payment.fixa) {
         firestorePath.collection('fixed-transactions').add(transaction.toMap());
       } else if (transaction.payment == Payment.parcelada) {
-        firestorePath.collection('parcelled-transactions').add(transaction.toMap());
+        firestorePath
+            .collection('parcelled-transactions')
+            .add(transaction.toMap());
       } else {
         firestorePath.collection('transactions').add(transaction.toMap());
       }
@@ -70,6 +73,10 @@ class TransactionFirebaseRepository implements TransactionRepository {
           model.Transaction.fromMap(doc.id, doc.data()),
         );
       }
+      final fixed = await getFixedTransactions();
+      list.addAll(fixed);
+      list.sort((a, b) => b.date.millisecondsSinceEpoch
+          .compareTo(a.date.millisecondsSinceEpoch));
       return list;
     } catch (e) {
       return [];
@@ -85,6 +92,35 @@ class TransactionFirebaseRepository implements TransactionRepository {
       return model.Transaction.fromMap(id, data);
     } catch (e) {
       return null;
+    }
+  }
+
+  @override
+  Future<List<model.Transaction>> getFixedTransactions() async {
+    final list = <model.Transaction>[];
+    try {
+      final snapshot =
+          await firestorePath.collection('fixed-transactions').get();
+      final docs = snapshot.docs;
+      for (var doc in docs) {
+        Map<String, dynamic> data = doc.data();
+        DateTime endDate = (data['endDate'] as Timestamp).toDate();
+        DateTime newDate = (data['date'] as Timestamp).toDate();
+        do {
+          list.add(
+            model.Transaction.fromMap(doc.id, data),
+          );
+          try {
+            newDate = DateTime(newDate.year, newDate.month + 1, newDate.day);
+          } catch (e) {
+            newDate = DateTime(newDate.year + 1, 1, newDate.day);
+          }
+          data.update('date', (_) => Timestamp.fromDate(newDate));
+        } while (newDate.isBefore(endDate));
+      }
+      return list;
+    } catch (e) {
+      return [];
     }
   }
 }
