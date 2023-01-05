@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   Navigator.of(context).pushReplacementNamed('/home-page');
                 }
                 if (state == SplashState.unlogged) {
-                  Navigator.of(context).pushReplacementNamed('/register-page');
+                  Navigator.of(context).pushReplacementNamed('/register');
                 }
               },
               child: const AppProgress(),

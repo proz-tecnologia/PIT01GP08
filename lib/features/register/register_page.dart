@@ -131,7 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             );
                             Navigator.of(context)
-                                .pushReplacementNamed('/home-page');
+                                .pushReplacementNamed('/home');
                           }
                         },
                         child: ElevatedButton(
