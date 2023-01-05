@@ -22,7 +22,24 @@ class TransactionFirebaseRepository implements TransactionRepository {
   Future<bool> createTransaction(model.Transaction transaction) async {
     try {
       if (transaction.payment == Payment.fixa) {
-        firestorePath.collection('fixed-transactions').add(transaction.toMap());
+        final map = transaction.toMap();
+        final List<bool> fulfilledList = [transaction.fulfilled];
+        DateTime endDate = transaction.endDate ?? DateTime.now();
+        DateTime newDate = transaction.date;
+        do {
+          try {
+            newDate = DateTime(newDate.year, newDate.month + 1, newDate.day);
+          } catch (e) {
+            newDate = DateTime(newDate.year + 1, 1, newDate.day);
+          }
+          if (!newDate.isAfter(endDate)) {
+            fulfilledList.add(false);
+          } else {
+            break;
+          }
+        } while (true);
+        map.update('fulfilled', (value) => fulfilledList);
+        firestorePath.collection('fixed-transactions').add(map);
       } else if (transaction.payment == Payment.parcelada) {
         firestorePath
             .collection('parcelled-transactions')
@@ -106,7 +123,10 @@ class TransactionFirebaseRepository implements TransactionRepository {
         Map<String, dynamic> data = doc.data();
         DateTime endDate = (data['endDate'] as Timestamp).toDate();
         DateTime newDate = (data['date'] as Timestamp).toDate();
+        int i = 0;
         do {
+          data.update(
+              'fulfilled', (value) => doc.data()['fulfilled'][i++] ?? false);
           list.add(
             model.Transaction.fromMap(doc.id, data),
           );
@@ -116,7 +136,7 @@ class TransactionFirebaseRepository implements TransactionRepository {
             newDate = DateTime(newDate.year + 1, 1, newDate.day);
           }
           data.update('date', (_) => Timestamp.fromDate(newDate));
-        } while (newDate.isBefore(endDate));
+        } while (!newDate.isAfter(endDate));
       }
       return list;
     } catch (e) {
