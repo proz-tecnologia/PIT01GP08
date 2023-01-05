@@ -41,7 +41,8 @@ class MyCategoriesPage extends StatelessWidget {
               itemBuilder: (_, index) => PopupMenuButton(
                 itemBuilder: (_) => [
                   PopupMenuItem(
-                    onTap: () => Future( //Fixes the navigation problem (stackoverflow)
+                    // Future() fixes the navigation problem (stackoverflow)
+                    onTap: () => Future(
                       () => Navigator.of(context).pushNamed(
                         '/category-edit',
                         arguments: state.list[index],
@@ -56,7 +57,28 @@ class MyCategoriesPage extends StatelessWidget {
                     ),
                   ),
                   PopupMenuItem(
-                    onTap: () => controller.deleteCategory(state.list[index]),
+                    onTap: () => Future(
+                      () => showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text(
+                              'Tem certeza que deseja excluir ${state.list[index].name}?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text('CANCELAR'),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                controller.deleteCategory(state.list[index]);
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('EXCLUIR'),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
                     child: Row(
                       children: const [
                         Icon(
