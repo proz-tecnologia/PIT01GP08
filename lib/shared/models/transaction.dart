@@ -10,7 +10,7 @@ class Transaction {
   final double value;
   final Type type;
   final String categoryId;
-  final bool fulfilled;
+  bool _fulfilled;
   final String? id;
   final Payment payment;
   final DateTime? endDate;
@@ -22,10 +22,11 @@ class Transaction {
     required this.value,
     required this.type,
     required this.categoryId,
-    required this.fulfilled,
+    required bool fulfilled,
     required this.payment,
     this.endDate,
-  }) : assert(payment != Payment.fixa || endDate != null);
+  })  : _fulfilled = fulfilled,
+        assert(payment != Payment.fixa || endDate != null);
 
   factory Transaction.fromCategory({
     required DateTime date,
@@ -51,6 +52,9 @@ class Transaction {
   String get valueString =>
       'R\$ ${value.toStringAsFixed(2).replaceFirst('.', ',')}';
 
+  bool get fulfilled => _fulfilled;
+  void fulfill() => _fulfilled = true;
+
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
@@ -59,7 +63,7 @@ class Transaction {
     result.addAll({'value': value});
     result.addAll({'type': type.name});
     result.addAll({'categoryId': categoryId});
-    result.addAll({'fulfilled': fulfilled});
+    result.addAll({'fulfilled': _fulfilled});
     result.addAll({'payment': payment.name});
     if (endDate != null) {
       result.addAll({'endDate': Timestamp.fromDate(endDate!)});
@@ -75,7 +79,7 @@ class Transaction {
         : map['payment'] == 'fixa'
             ? Payment.fixa
             : Payment.parcelada;
-    
+
     DateTime? endDate;
     try {
       endDate = (map['endDate'] as Timestamp).toDate();
@@ -113,7 +117,7 @@ class Transaction {
       value: value ?? this.value * 100,
       type: type ?? this.type,
       categoryId: categoryId ?? this.categoryId,
-      fulfilled: fulfilled ?? this.fulfilled,
+      fulfilled: fulfilled ?? _fulfilled,
       payment: payment ?? this.payment,
       endDate: endDate ?? this.endDate,
     );

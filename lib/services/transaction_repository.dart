@@ -155,7 +155,7 @@ class TransactionFirebaseRepository implements TransactionRepository {
         await firestorePath
             .collection('transactions')
             .doc(transaction.id)
-            .set({'fulfilled': fulfill});
+            .update({'fulfilled': fulfill});
       } else {
         final doc = await firestorePath
             .collection('fixed-transactions')
@@ -179,7 +179,7 @@ class TransactionFirebaseRepository implements TransactionRepository {
         await firestorePath
             .collection('fixed-transactions')
             .doc(transaction.id)
-            .set({'fulfilled': list});
+            .update({'fulfilled': list});
       }
     } catch (e) {
       rethrow;
