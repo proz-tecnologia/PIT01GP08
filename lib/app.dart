@@ -42,7 +42,7 @@ class App extends StatelessWidget {
         '/account-settings': (context) {
           final user = (ModalRoute.of(context)?.settings.arguments) as User;
           return AccountPage(user);
-        }
+        },
         '/category-edit': (context) {
           final category =
               (ModalRoute.of(context)?.settings.arguments) as Category?;
