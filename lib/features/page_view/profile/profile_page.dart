@@ -27,7 +27,10 @@ class _ProfilePageState extends State<ProfilePage> {
         final user = state.user;
         final listButtons = [
           ListTile(
-            onTap: () => Navigator.of(context).pushNamed("/account-settings"),
+            onTap: () => Navigator.of(context).pushNamed(
+              "/account-settings",
+              arguments: state.user,
+            ),
             leading: const Icon(Icons.person_rounded),
             title: const Text("Conta"),
           ),

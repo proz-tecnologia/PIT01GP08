@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,8 +38,11 @@ class App extends StatelessWidget {
               ),
               child: const AppPageView(),
             ),
-        '/account-settings': (context) => const AccountPage(),
-        '/my-categories': (context) => const MyCategoriesPage(),
+
+        '/account-settings': (context) {
+          final user = (ModalRoute.of(context)?.settings.arguments) as User;
+          return AccountPage(user);
+        },
         '/category-edit': (context) {
           final category =
               (ModalRoute.of(context)?.settings.arguments) as Category?;
