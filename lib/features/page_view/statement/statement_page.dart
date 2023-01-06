@@ -1,15 +1,16 @@
-import 'package:financial_app/shared/views/empty_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../design_sys/colors.dart';
 import '../../../design_sys/sizes.dart';
-import '../widgets/top_bar_toggle_button.dart';
-import '../widgets/month_changer.dart';
+import '../../../shared/views/empty_view.dart';
 import '../data_controller.dart';
 import '../data_states.dart';
+import '../widgets/month_changer.dart';
+import '../widgets/top_bar_toggle_button.dart';
+import '../widgets/transaction_tile.dart';
 import 'statement_controller.dart';
 import 'statement_states.dart';
-import '../widgets/transaction_tile.dart';
 
 class StatementPage extends StatelessWidget {
   const StatementPage({super.key});
@@ -62,7 +63,36 @@ class StatementPage extends StatelessWidget {
                           : ListView.builder(
                               itemCount: state.list.length,
                               itemBuilder: (context, index) => Card(
-                                child: TransactionTile.check(state.list[index]),
+                                child: PopupMenuButton(
+                                    itemBuilder: (context) => [
+                                          PopupMenuItem(
+                                            onTap: () {
+                                              context
+                                                  .read<DataController>()
+                                                  .fulfillTransaction(
+                                                      state.list[index]);
+                                              controller.fulfillOnScreen(
+                                                  state.list[index]);
+                                            },
+                                            child: Row(
+                                              children: const [
+                                                Icon(
+                                                  Icons.attach_money,
+                                                  color: AppColors.income,
+                                                ),
+                                                SizedBox(
+                                                    width: Sizes.mediumSpace),
+                                                Text(
+                                                  'Efetuar pagamento',
+                                                  style: TextStyle(
+                                                      color: AppColors.income),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                    child: TransactionTile.check(
+                                        state.list[index])),
                               ),
                             ),
                     ),

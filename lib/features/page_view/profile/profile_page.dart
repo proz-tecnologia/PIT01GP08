@@ -34,9 +34,10 @@ class _ProfilePageState extends State<ProfilePage> {
             leading: const Icon(Icons.person_rounded),
             title: const Text("Conta"),
           ),
-          const ListTile(
-            leading: Icon(Icons.label_rounded),
-            title: Text("Categorias"),
+          ListTile(
+            onTap: () => Navigator.of(context).pushNamed("/my-categories"),
+            leading: const Icon(Icons.label_rounded),
+            title: const Text("Categorias"),
           ),
           const ListTile(
             leading: Icon(Icons.credit_card_rounded),

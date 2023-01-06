@@ -39,10 +39,10 @@ class _SplashScreenState extends State<SplashScreen> {
               bloc: controller,
               listener: (context, state) {
                 if (state == SplashState.logged) {
-                  Navigator.of(context).pushReplacementNamed('/home-page');
+                  Navigator.of(context).pushReplacementNamed('/home');
                 }
                 if (state == SplashState.unlogged) {
-                  Navigator.of(context).pushReplacementNamed('/register-page');
+                  Navigator.of(context).pushReplacementNamed('/register');
                 }
               },
               child: const AppProgress(),

@@ -103,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                           );
                         }
                         if (state is LoginStateSuccess) {
-                          navigator.pushReplacementNamed('/home-page');
+                          navigator.pushReplacementNamed('/home');
                         }
                       },
                       child: ElevatedButton(
@@ -124,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.all(Sizes.mediumSpace),
                     child: TextButton(
                       onPressed: () {
-                        navigator.pushNamed('/register-page');
+                        navigator.pushNamed('/register');
                       },
                       child: const Text('CADASTRAR?'),
                     ),

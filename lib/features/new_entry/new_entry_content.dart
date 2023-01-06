@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../design_sys/sizes.dart';
 import '../../shared/models/category.dart';
+import '../../shared/models/transaction.dart';
 import '../page_view/widgets/top_bar_toggle_button.dart';
 import 'new_entry_controller.dart';
 import 'new_entry_states.dart';
@@ -26,6 +27,7 @@ class _NewEntryContentState extends State<NewEntryContent> {
   final description = TextEditingController();
   final category = ValueNotifier<Category?>(null);
   final date = TextEditingController();
+  final endDate = TextEditingController();
 
   late final NewEntryTypeController controller;
 
@@ -74,8 +76,26 @@ class _NewEntryContentState extends State<NewEntryContent> {
                     const SizedBox(height: Sizes.mediumSpace),
                     PaymentFormField(paymentOption),
                     const SizedBox(height: Sizes.smallSpace),
-                    DatePickerFormField(date),
+                    DatePickerFormField(
+                      date,
+                      label: 'Vencimento',
+                    ),
                     const SizedBox(height: Sizes.smallSpace),
+                    ValueListenableBuilder(
+                        valueListenable: paymentOption,
+                        builder: (_, value, __) {
+                          if (Payment.values[value] == Payment.fixa) {
+                            return Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom: Sizes.smallSpace),
+                              child: DatePickerFormField(
+                                endDate,
+                                label: 'Repetir até',
+                              ),
+                            );
+                          }
+                          return const SizedBox.shrink();
+                        }),
                     FulfilledFormField(fulfilled),
                     const SizedBox(height: Sizes.mediumSpace),
                     BlocBuilder<NewEntryController, NewEntryState>(
@@ -91,12 +111,14 @@ class _NewEntryContentState extends State<NewEntryContent> {
                                     if (formKey.currentState?.validate() ??
                                         false) {
                                       saveController.saveTransaction(
-                                          dateString: date.text,
-                                          description: description.text,
-                                          value: value.text,
-                                          category: category.value,
-                                          fulfilled: fulfilled.value,
-                                          paymentOption: paymentOption.value);
+                                        dateString: date.text,
+                                        description: description.text,
+                                        value: value.text,
+                                        category: category.value,
+                                        fulfilled: fulfilled.value,
+                                        paymentOption: paymentOption.value,
+                                        endDateString: endDate.text,
+                                      );
                                     }
                                   },
                                   child: const Text('OK'),
