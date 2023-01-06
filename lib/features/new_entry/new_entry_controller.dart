@@ -18,6 +18,7 @@ class NewEntryController extends Cubit<NewEntryState> {
     required Category? category,
     required bool fulfilled,
     required int paymentOption,
+    String endDateString = '',
   }) async {
     final lastTypeState = state;
     emit(SavingNewEntryState());
@@ -27,6 +28,11 @@ class NewEntryController extends Cubit<NewEntryState> {
         int.parse(dateString.substring(6)),
         int.parse(dateString.substring(3, 5)),
         int.parse(dateString.substring(0, 2)),
+      );
+      final endDate = DateTime(
+        int.parse(endDateString.substring(6)),
+        int.parse(endDateString.substring(3, 5)),
+        int.parse(endDateString.substring(0, 2)),
       );
       final payment = Payment.values[paymentOption];
 
@@ -42,6 +48,7 @@ class NewEntryController extends Cubit<NewEntryState> {
         category: category!,
         fulfilled: fulfilled,
         payment: payment,
+        endDate: endDate,
       );
 
       final success =
