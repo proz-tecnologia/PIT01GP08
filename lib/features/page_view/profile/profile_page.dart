@@ -31,9 +31,10 @@ class _ProfilePageState extends State<ProfilePage> {
             leading: const Icon(Icons.person_rounded),
             title: const Text("Conta"),
           ),
-          const ListTile(
-            leading: Icon(Icons.label_rounded),
-            title: Text("Categorias"),
+          ListTile(
+            onTap: () => Navigator.of(context).pushNamed("/my-categories"),
+            leading: const Icon(Icons.label_rounded),
+            title: const Text("Categorias"),
           ),
           const ListTile(
             leading: Icon(Icons.credit_card_rounded),
@@ -79,8 +80,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: Sizes.largeSpace,
                   ),
                   Text(user.displayName ?? "Usuário",
-                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary)),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium
+                          ?.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimary)),
                 ]),
               ),
             ),

@@ -35,7 +35,7 @@ class NewEntryPage extends StatelessWidget {
                   ),
                 );
                 Navigator.of(context)
-                    .pushNamedAndRemoveUntil('/home-page', (route) => false);
+                    .pushNamedAndRemoveUntil('/home', (route) => false);
               }
             },
             builder: (context, currentState) {
