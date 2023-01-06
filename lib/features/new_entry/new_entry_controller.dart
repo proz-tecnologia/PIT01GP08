@@ -29,11 +29,13 @@ class NewEntryController extends Cubit<NewEntryState> {
         int.parse(dateString.substring(3, 5)),
         int.parse(dateString.substring(0, 2)),
       );
-      final endDate = DateTime(
-        int.parse(endDateString.substring(6)),
-        int.parse(endDateString.substring(3, 5)),
-        int.parse(endDateString.substring(0, 2)),
-      );
+      final endDate = endDateString == ''
+          ? null
+          : DateTime(
+              int.parse(endDateString.substring(6)),
+              int.parse(endDateString.substring(3, 5)),
+              int.parse(endDateString.substring(0, 2)),
+            );
       final payment = Payment.values[paymentOption];
 
       final newTransaction = Transaction.fromCategory(
