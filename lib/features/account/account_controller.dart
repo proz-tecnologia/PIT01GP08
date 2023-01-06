@@ -39,33 +39,69 @@ class AccountController extends Cubit<AccountState> {
       }
       emit(SuccessAccountState(FirebaseAuth.instance.currentUser!));
     } catch (e) {
-      emit(ErrorAccountState('Erro ao atualizar a imagem'));
+      emit(ErrorAccountState('Erro ao atualizar foto'));
     }
   }
 
-  void updateName(String name) {
+  void updateName(String name) async {
+    emit(LoadingAccountState());
     try {
-      FirebaseAuth.instance.currentUser?.updateDisplayName(name);
+      await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
+      emit(SuccessAccountState(FirebaseAuth.instance.currentUser!));
     } catch (e) {
       emit(ErrorAccountState('Erro ao atualizar o nome do usuário'));
     }
   }
 
-  // TODO: tratar FirebaseAuthException's
-  void updateEmail(String email) {
+  void updateEmail(String email) async {
+    emit(LoadingAccountState());
     try {
-      FirebaseAuth.instance.currentUser?.updateEmail(email);
+      await FirebaseAuth.instance.currentUser?.updateEmail(email);
+      emit(SuccessAccountState(FirebaseAuth.instance.currentUser!));
     } catch (e) {
-      emit(ErrorAccountState('Erro ao atualizar o email do usuário'));
+      if (e is FirebaseAuthException) {
+        switch (e.message) {
+          case 'invalid-email':
+            emit(ErrorAccountState('E-mail inválido'));
+            break;
+          case 'email-already-in-use':
+            emit(ErrorAccountState('Este e-mail já está sendo utilizado'));
+            break;
+          case 'requires-recent-login':
+            emit(ErrorAccountState(
+                'Esta alteração requer login recente.\nFaça login novamente para atualizar.'));
+            break;
+          default:
+            emit(ErrorAccountState('Erro ao atualizar o email'));
+        }
+      } else {
+        emit(ErrorAccountState('Erro de conexão'));
+      }
     }
   }
 
-  // TODO: tratar FirebaseAuthException's
-  void updatePassword(String password) {
+  void updatePassword(String password) async {
+    emit(LoadingAccountState());
     try {
-      FirebaseAuth.instance.currentUser?.updatePassword(password);
+      await FirebaseAuth.instance.currentUser?.updatePassword(password);
+      emit(SuccessAccountState(FirebaseAuth.instance.currentUser!));
     } catch (e) {
-      emit(ErrorAccountState('Erro ao atualizar o email do usuário'));
+      if (e is FirebaseAuthException) {
+        switch (e.message) {
+          case 'weak-password':
+            emit(ErrorAccountState('Sua senha precisa ter pelo menos 6 caracteres'));
+            break;
+          case 'requires-recent-login':
+            emit(ErrorAccountState(
+                'Esta alteração requer login recente.\nFaça login novamente para atualizar.'));
+            break;
+          default:
+            emit(ErrorAccountState('Erro ao atualizar a senha'));
+        }
+      } else {
+        emit(ErrorAccountState('Erro de conexão'));
+      }
+      
     }
   }
 
