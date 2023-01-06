@@ -27,8 +27,8 @@ class AccountController extends Cubit<AccountState> {
         final downloadUrl = await firebaseStorageRef.getDownloadURL();
         await FirebaseAuth.instance.currentUser!.updatePhotoURL(downloadUrl);
         photo.value = pickedFile.path;
+        emit(SuccessAccountState('Foto atualizada com sucesso!'));
       }
-      emit(SuccessAccountState('Foto atualizada com sucesso!'));
     } catch (e) {
       emit(ErrorAccountState('Erro ao atualizar foto'));
     }
