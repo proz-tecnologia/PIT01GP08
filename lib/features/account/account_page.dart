@@ -8,16 +8,11 @@ import 'account_states.dart';
 import 'widget/editable_info.dart';
 import 'widget/editable_password.dart';
 
-class AccountPage extends StatefulWidget {
+class AccountPage extends StatelessWidget {
   const AccountPage(this.user, {super.key});
 
   final User user;
 
-  @override
-  State<AccountPage> createState() => _AccountPageState();
-}
-
-class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     final controller = AccountController();
@@ -67,7 +62,7 @@ class _AccountPageState extends State<AccountPage> {
                 const SizedBox(height: Sizes.largeSpace),
                 EditableInfo(
                   action: (value) => controller.updateName(value),
-                  child: Text(widget.user.displayName ?? "Usuário",
+                  child: Text(user.displayName ?? "Usuário",
                       style: Theme.of(context).textTheme.headlineMedium),
                 ),
                 const SizedBox(
@@ -76,10 +71,10 @@ class _AccountPageState extends State<AccountPage> {
                 ),
                 EditableInfo(
                   action: (value) => controller.updateEmail(value),
-                  child: Text(widget.user.email ?? "E-mail",
+                  child: Text(user.email ?? "E-mail",
                       style: Theme.of(context).textTheme.headlineSmall),
                 ),
-                widget.user.emailVerified
+                user.emailVerified
                     ? const SizedBox.shrink()
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -108,7 +103,7 @@ class _AccountPageState extends State<AccountPage> {
                 EditableInfo(
                   action: (value) {},
                   child: Text(
-                    widget.user.phoneNumber ?? "Adicionar telefone",
+                    user.phoneNumber ?? "Adicionar telefone",
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
