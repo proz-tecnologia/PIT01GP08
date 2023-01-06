@@ -47,5 +47,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Deseja permitir que o Cashfy acesse sua galeria?</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Deseja permitir que o Cashfy acesse sua camera?</string>
 </dict>
 </plist>
