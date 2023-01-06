@@ -96,7 +96,7 @@ class AccountPage extends StatelessWidget {
                 const SizedBox(height: Sizes.largeSpace),
                 EditablePassword(
                   action: (value) => controller.updatePassword(value),
-                  child: Text("Altere sua Senha",
+                  child: Text("Alterar senha",
                       style: Theme.of(context).textTheme.headlineSmall),
                 ),
                 const SizedBox(height: Sizes.extraLargeSpace),
