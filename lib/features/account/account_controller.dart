@@ -2,26 +2,16 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'account_states.dart';
 
 class AccountController extends Cubit<AccountState> {
-  AccountController() : super(LoadingAccountState()) {
-    getAllInfosfromUser();
-  }
+  AccountController() : super(LoadingAccountState());
 
-  void getAllInfosfromUser() {
-    emit(LoadingAccountState());
-    try {
-      User userInfo = FirebaseAuth.instance.currentUser!;
-      emit(SuccessAccountState(userInfo));
-      userInfo;
-    } catch (e) {
-      emit(ErrorAccountState('Erro de conexão, tente novamente!'));
-    }
-  }
+  final photo = ValueNotifier(FirebaseAuth.instance.currentUser?.photoURL);
 
   void updateImage() async {
     try {
@@ -36,8 +26,9 @@ class AccountController extends Cubit<AccountState> {
         await firebaseStorageRef.putFile(file);
         final downloadUrl = await firebaseStorageRef.getDownloadURL();
         await FirebaseAuth.instance.currentUser!.updatePhotoURL(downloadUrl);
+        photo.value = downloadUrl;
       }
-      emit(SuccessAccountState(FirebaseAuth.instance.currentUser!));
+      emit(SuccessAccountState('Foto atualizada com sucesso!'));
     } catch (e) {
       emit(ErrorAccountState('Erro ao atualizar foto'));
     }
@@ -47,7 +38,7 @@ class AccountController extends Cubit<AccountState> {
     emit(LoadingAccountState());
     try {
       await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
-      emit(SuccessAccountState(FirebaseAuth.instance.currentUser!));
+      emit(SuccessAccountState('Nome atualizado com sucesso!'));
     } catch (e) {
       emit(ErrorAccountState('Erro ao atualizar o nome do usuário'));
     }
@@ -57,10 +48,10 @@ class AccountController extends Cubit<AccountState> {
     emit(LoadingAccountState());
     try {
       await FirebaseAuth.instance.currentUser?.updateEmail(email);
-      emit(SuccessAccountState(FirebaseAuth.instance.currentUser!));
+      emit(SuccessAccountState('Email atualizado com sucesso!'));
     } catch (e) {
       if (e is FirebaseAuthException) {
-        switch (e.message) {
+        switch (e.code) {
           case 'invalid-email':
             emit(ErrorAccountState('E-mail inválido'));
             break;
@@ -84,12 +75,13 @@ class AccountController extends Cubit<AccountState> {
     emit(LoadingAccountState());
     try {
       await FirebaseAuth.instance.currentUser?.updatePassword(password);
-      emit(SuccessAccountState(FirebaseAuth.instance.currentUser!));
+      emit(SuccessAccountState('Senha atualizada com sucesso!'));
     } catch (e) {
       if (e is FirebaseAuthException) {
-        switch (e.message) {
+        switch (e.code) {
           case 'weak-password':
-            emit(ErrorAccountState('Sua senha precisa ter pelo menos 6 caracteres'));
+            emit(ErrorAccountState(
+                'Sua senha precisa ter pelo menos 6 caracteres'));
             break;
           case 'requires-recent-login':
             emit(ErrorAccountState(
@@ -101,7 +93,6 @@ class AccountController extends Cubit<AccountState> {
       } else {
         emit(ErrorAccountState('Erro de conexão'));
       }
-      
     }
   }
 
