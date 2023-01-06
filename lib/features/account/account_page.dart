@@ -39,56 +39,85 @@ class _AccountPageState extends State<AccountPage> {
             );
           }
         },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: Sizes.largeSpace),
-            InkWell(
-              onTap: controller.updateImage,
-              child: ValueListenableBuilder(
-                  valueListenable: controller.photo,
-                  builder: (_, photo, __) {
-                    return photo == null
-                        ? Icon(
-                            Icons.account_circle_rounded,
-                            size: 120,
-                            color: Theme.of(context).colorScheme.onSecondary,
-                          )
-                        : CircleAvatar(
-                            radius: 60,
-                            foregroundImage: NetworkImage(photo),
-                          );
-                  }),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(Sizes.mediumSpace),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: Sizes.largeSpace),
+                InkWell(
+                  onTap: controller.updateImage,
+                  child: ValueListenableBuilder(
+                      valueListenable: controller.photo,
+                      builder: (_, photo, __) {
+                        return photo == null
+                            ? Icon(
+                                Icons.account_circle_rounded,
+                                size: 120,
+                                color:
+                                    Theme.of(context).colorScheme.onSecondary,
+                              )
+                            : CircleAvatar(
+                                radius: 60,
+                                foregroundImage: NetworkImage(photo),
+                              );
+                      }),
+                ),
+                const SizedBox(height: Sizes.largeSpace),
+                EditableInfo(
+                  action: (value) => controller.updateName(value),
+                  child: Text(widget.user.displayName ?? "Usuário",
+                      style: Theme.of(context).textTheme.headlineMedium),
+                ),
+                const SizedBox(
+                  height: Sizes.largeSpace,
+                  width: double.infinity,
+                ),
+                EditableInfo(
+                  action: (value) => controller.updateEmail(value),
+                  child: Text(widget.user.email ?? "E-mail",
+                      style: Theme.of(context).textTheme.headlineSmall),
+                ),
+                widget.user.emailVerified
+                    ? const SizedBox.shrink()
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text('E-mail não verificado.'),
+                          TextButton(
+                            onPressed: controller.verifyEmail,
+                            child: Text(
+                              'Verificar agora',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                      color: Theme.of(context).primaryColor),
+                            ),
+                          ),
+                        ],
+                      ),
+                const SizedBox(height: Sizes.largeSpace),
+                EditablePassword(
+                  action: (value) => controller.updatePassword(value),
+                  child: Text("Altere sua Senha",
+                      style: Theme.of(context).textTheme.headlineSmall),
+                ),
+                const SizedBox(height: Sizes.extraLargeSpace),
+                EditableInfo(
+                  action: (value) {},
+                  child: Text(
+                    widget.user.phoneNumber ?? "Adicionar telefone",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                TextButton(
+                    onPressed: () {},
+                    child: const Text('Adicionar login com Google')),
+              ],
             ),
-            const SizedBox(height: Sizes.largeSpace),
-            EditableInfo(
-              action: (value) => controller.updateName(value),
-              child: Text(widget.user.displayName ?? "Usuário",
-                  style: Theme.of(context).textTheme.headlineMedium),
-            ),
-            const SizedBox(
-              height: Sizes.largeSpace,
-              width: double.infinity,
-            ),
-            EditableInfo(
-              action: (value) => controller.updateEmail(value),
-              child: Text(widget.user.email ?? "E-mail",
-                  style: Theme.of(context).textTheme.headlineSmall),
-            ),
-            const SizedBox(height: Sizes.largeSpace),
-            EditablePassword(
-              action: (value) => controller.updatePassword(value),
-              child: Text("Altere sua Senha",
-                  style: Theme.of(context).textTheme.headlineSmall),
-            ),
-            // const SizedBox(height: Sizes.largeSpace),
-            // EditableInfo(
-            //   action: (value) {},
-            //   child: Text(
-            //           state.user.phoneNumber ?? "Telefone"
-            //       style: Theme.of(context).textTheme.headlineSmall),
-            // ),
-          ],
+          ),
         ),
       ),
     );

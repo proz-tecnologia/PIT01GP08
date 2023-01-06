@@ -48,7 +48,9 @@ class AccountController extends Cubit<AccountState> {
     emit(LoadingAccountState());
     try {
       await FirebaseAuth.instance.currentUser?.updateEmail(email);
-      emit(SuccessAccountState('Email atualizado com sucesso!'));
+      FirebaseAuth.instance.currentUser?.sendEmailVerification();
+      emit(SuccessAccountState(
+          'Email atualizado com sucesso!\nVerifique seu email (e a caixa de spam).'));
     } catch (e) {
       if (e is FirebaseAuthException) {
         switch (e.code) {
@@ -93,6 +95,16 @@ class AccountController extends Cubit<AccountState> {
       } else {
         emit(ErrorAccountState('Erro de conexão'));
       }
+    }
+  }
+
+  void verifyEmail() async {
+    try {
+      FirebaseAuth.instance.currentUser?.sendEmailVerification();
+      emit(SuccessAccountState(
+          'O link de verificação foi enviado para ${FirebaseAuth.instance.currentUser?.email}'));
+    } catch (e) {
+      emit(ErrorAccountState('Erro de conexão'));
     }
   }
 
