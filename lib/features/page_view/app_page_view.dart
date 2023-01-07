@@ -6,7 +6,6 @@ import '../../services/transaction_repository.dart';
 import '../../shared/views/error_view.dart';
 import '../../shared/views/loading_view.dart';
 import 'home/home_content_page.dart';
-import 'profile/profile_controller.dart';
 import 'profile/profile_page.dart';
 import 'statement/statement_page.dart';
 import 'statistics/statistics_page.dart';
@@ -44,14 +43,11 @@ class _AppPageViewState extends State<AppPageView> {
               return PageView(
                 physics: const NeverScrollableScrollPhysics(),
                 controller: controller,
-                children: [
-                  const HomeContentPage(),
-                  const StatementPage(),
-                  const StatisticsPage(),
-                  BlocProvider(
-                    create: (context) => ProfileController(),
-                    child: const ProfilePage(),
-                  ),
+                children: const [
+                  HomeContentPage(),
+                  StatementPage(),
+                  StatisticsPage(),
+                  ProfilePage(),
                 ],
               );
             }
