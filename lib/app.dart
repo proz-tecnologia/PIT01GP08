@@ -1,11 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'design_sys/themes.dart';
 import 'features/account/account_page.dart';
 import 'features/my_categories/category_edit_page.dart';
-import 'features/my_categories/my_categories_page.dart';
 import 'features/page_view/data_controller.dart';
 import 'features/page_view/app_page_view.dart';
 import 'features/login/login_controller.dart';
@@ -39,10 +37,7 @@ class App extends StatelessWidget {
               child: const AppPageView(),
             ),
 
-        '/account-settings': (context) {
-          final user = (ModalRoute.of(context)?.settings.arguments) as User;
-          return AccountPage(user);
-        },
+        '/account-settings': (context) => const AccountPage(),
         '/category-edit': (context) {
           final category =
               (ModalRoute.of(context)?.settings.arguments) as Category?;

@@ -12,6 +12,8 @@ class AccountController extends Cubit<AccountState> {
   AccountController() : super(LoadingAccountState());
 
   final photo = ValueNotifier(FirebaseAuth.instance.currentUser?.photoURL);
+  final emailVerified =
+      ValueNotifier(FirebaseAuth.instance.currentUser?.emailVerified ?? false);
 
   void updateImage() async {
     try {
@@ -49,6 +51,8 @@ class AccountController extends Cubit<AccountState> {
     try {
       await FirebaseAuth.instance.currentUser?.updateEmail(email);
       FirebaseAuth.instance.currentUser?.sendEmailVerification();
+      emailVerified.value =
+          FirebaseAuth.instance.currentUser?.emailVerified ?? false;
       emit(SuccessAccountState(
           'Email atualizado com sucesso!\nVerifique seu email (e a caixa de spam).'));
     } catch (e) {

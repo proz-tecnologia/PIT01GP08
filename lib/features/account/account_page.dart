@@ -8,13 +8,17 @@ import 'account_states.dart';
 import 'widget/editable_info.dart';
 import 'widget/editable_password.dart';
 
-class AccountPage extends StatelessWidget {
-  const AccountPage(this.user, {super.key});
-
-  final User user;
+class AccountPage extends StatefulWidget {
+  const AccountPage({super.key});
 
   @override
+  State<AccountPage> createState() => _AccountPageState();
+}
+
+class _AccountPageState extends State<AccountPage> {
+  @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
     final controller = AccountController();
     return Scaffold(
       appBar: AppBar(
@@ -27,6 +31,7 @@ class AccountPage extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.error)),
             );
+            setState(() {});
           }
           if (state is SuccessAccountState) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -74,25 +79,30 @@ class AccountPage extends StatelessWidget {
                   child: Text(user.email ?? "E-mail",
                       style: Theme.of(context).textTheme.headlineSmall),
                 ),
-                user.emailVerified
-                    ? const SizedBox.shrink()
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('E-mail não verificado.'),
-                          TextButton(
-                            onPressed: controller.verifyEmail,
-                            child: Text(
-                              'Verificar agora',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                      color: Theme.of(context).primaryColor),
-                            ),
-                          ),
-                        ],
-                      ),
+                ValueListenableBuilder(
+                    valueListenable: controller.emailVerified,
+                    builder: (_, value, __) {
+                      return value
+                          ? const SizedBox.shrink()
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text('E-mail não verificado.'),
+                                TextButton(
+                                  onPressed: controller.verifyEmail,
+                                  child: Text(
+                                    'Verificar agora',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                  ),
+                                ),
+                              ],
+                            );
+                    }),
                 const SizedBox(height: Sizes.largeSpace),
                 EditablePassword(
                   action: (value) => controller.updatePassword(value),
