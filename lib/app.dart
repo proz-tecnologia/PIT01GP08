@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'design_sys/themes.dart';
-import 'features/account/account_page.dart';
-import 'features/my_categories/category_edit_page.dart';
-import 'features/my_categories/my_categories_page.dart';
-import 'features/new_entry/new_entry_page.dart';
-import 'features/page_view/app_page_view.dart';
-import 'features/login/login_page.dart';
-import 'features/register/register_page.dart';
-import 'features/splash/splash.dart';
+import 'features/pages.dart';
 import 'shared/models/category.dart';
 
 class App extends StatelessWidget {
