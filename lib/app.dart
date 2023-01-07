@@ -5,14 +5,11 @@ import 'design_sys/themes.dart';
 import 'features/account/account_page.dart';
 import 'features/my_categories/category_edit_page.dart';
 import 'features/new_entry/new_entry_page.dart';
-import 'features/page_view/data_controller.dart';
 import 'features/page_view/app_page_view.dart';
 import 'features/login/login_controller.dart';
 import 'features/login/login_page.dart';
 import 'features/register/register_page.dart';
 import 'features/splash/splash.dart';
-import 'services/category_repository.dart';
-import 'services/transaction_repository.dart';
 import 'shared/models/category.dart';
 
 class App extends StatelessWidget {
@@ -30,13 +27,7 @@ class App extends StatelessWidget {
             ),
         '/splash': (context) => const SplashScreen(),
         '/register': (context) => const RegisterPage(),
-        '/home': (context) => BlocProvider(
-              create: (context) => DataController(
-                transactionRepo: TransactionFirebaseRepository(),
-                categoryRepo: CategoryFirebaseRepository(),
-              ),
-              child: const AppPageView(),
-            ),
+        '/home': (context) => const AppPageView(),
         '/new-entry': (context) {
           final categoryList = (ModalRoute.of(context)?.settings.arguments ??
               []) as List<Category>;
