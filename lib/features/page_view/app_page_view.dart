@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../shared/views/error_view.dart';
 import '../../shared/views/loading_view.dart';
 import 'home/home_content_page.dart';
-import '../new_entry/new_entry_page.dart';
 import 'profile/profile_controller.dart';
 import 'profile/profile_page.dart';
 import 'statement/statement_page.dart';
@@ -56,15 +55,10 @@ class _AppPageViewState extends State<AppPageView> {
       floatingActionButton: BlocBuilder<DataController, DataState>(
         builder: (context, state) => data.state is SuccessDataState
             ? FloatingActionButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => NewEntryPage(
-                        (state as SuccessDataState).categoryList,
-                      ),
-                    ),
-                  );
-                },
+                onPressed: () => Navigator.of(context).pushNamed(
+                  'new-entry',
+                  arguments: (state as SuccessDataState).categoryList,
+                ),
                 tooltip: 'Nova transação',
                 child: const Icon(Icons.add),
               )

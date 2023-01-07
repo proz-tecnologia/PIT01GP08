@@ -19,7 +19,7 @@ class NewEntryPage extends StatelessWidget {
             NewEntryController(TransactionFirebaseRepository()),
         child: Scaffold(
           appBar: AppBar(title: const Text('Nova transação')),
-          body: BlocConsumer<NewEntryController, NewEntryState>(
+          body: BlocListener<NewEntryController, NewEntryState>(
             listener: (context, currentState) {
               if (currentState is ErrorNewEntryState) {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -38,9 +38,7 @@ class NewEntryPage extends StatelessWidget {
                     .pushNamedAndRemoveUntil('/home', (route) => false);
               }
             },
-            builder: (context, currentState) {
-              return NewEntryContent(categoryList);
-            },
+            child: NewEntryContent(categoryList),
           ),
         ),
       ),

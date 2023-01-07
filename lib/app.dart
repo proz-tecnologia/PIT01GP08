@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'design_sys/themes.dart';
 import 'features/account/account_page.dart';
 import 'features/my_categories/category_edit_page.dart';
+import 'features/new_entry/new_entry_page.dart';
 import 'features/page_view/data_controller.dart';
 import 'features/page_view/app_page_view.dart';
 import 'features/login/login_controller.dart';
@@ -36,7 +37,11 @@ class App extends StatelessWidget {
               ),
               child: const AppPageView(),
             ),
-
+        '/new-entry': (context) {
+          final categoryList = (ModalRoute.of(context)?.settings.arguments ??
+              []) as List<Category>;
+          return NewEntryPage(categoryList);
+        },
         '/account-settings': (context) => const AccountPage(),
         '/category-edit': (context) {
           final category =
