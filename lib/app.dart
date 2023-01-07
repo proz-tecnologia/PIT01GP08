@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'design_sys/themes.dart';
 import 'features/account/account_page.dart';
 import 'features/my_categories/category_edit_page.dart';
 import 'features/new_entry/new_entry_page.dart';
 import 'features/page_view/app_page_view.dart';
-import 'features/login/login_controller.dart';
 import 'features/login/login_page.dart';
 import 'features/register/register_page.dart';
 import 'features/splash/splash.dart';
@@ -21,10 +19,7 @@ class App extends StatelessWidget {
       darkTheme: AppTheme.darkTheme,
       initialRoute: '/splash',
       routes: {
-        '/login': (context) => BlocProvider(
-              create: (_) => LoginController(),
-              child: const LoginPage(),
-            ),
+        '/login': (context) => const LoginPage(),
         '/splash': (context) => const SplashScreen(),
         '/register': (context) => const RegisterPage(),
         '/home': (context) => const AppPageView(),

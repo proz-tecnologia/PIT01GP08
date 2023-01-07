@@ -1,8 +1,8 @@
-import 'package:financial_app/shared/widgets/logo_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../design_sys/sizes.dart';
+import '../../shared/widgets/logo_app.dart';
 import 'login_controller.dart';
 import 'login_states.dart';
 
@@ -18,13 +18,10 @@ class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
-  final ValueNotifier<bool> isVisible = ValueNotifier(false);
+  final isVisible = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
-    LoginController controller = context.read<LoginController>();
-    final navigator = Navigator.of(context);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(Sizes.largeSpace),
@@ -75,7 +72,6 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         obscureText: value ? false : true,
-                        obscuringCharacter: '•',
                       );
                     },
                     valueListenable: isVisible,
@@ -93,8 +89,8 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     width: double.infinity,
                     child: BlocListener<LoginController, LoginState>(
+                      bloc: controller,
                       listener: (context, state) {
-                        final navigator = Navigator.of(context);
                         if (state is LoginStateError) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -103,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                           );
                         }
                         if (state is LoginStateSuccess) {
-                          navigator.pushReplacementNamed('/home');
+                          Navigator.of(context).pushReplacementNamed('/home');
                         }
                       },
                       child: ElevatedButton(
@@ -124,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.all(Sizes.mediumSpace),
                     child: TextButton(
                       onPressed: () {
-                        navigator.pushNamed('/register');
+                        Navigator.of(context).pushNamed('/register');
                       },
                       child: const Text('CADASTRAR?'),
                     ),
