@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'design_sys/themes.dart';
 import 'features/account/account_page.dart';
 import 'features/my_categories/category_edit_page.dart';
+import 'features/my_categories/my_categories_page.dart';
 import 'features/new_entry/new_entry_page.dart';
 import 'features/page_view/app_page_view.dart';
 import 'features/login/login_page.dart';
@@ -29,6 +30,7 @@ class App extends StatelessWidget {
           return NewEntryPage(categoryList);
         },
         '/account-settings': (context) => const AccountPage(),
+        '/my-categories':(context) => const MyCategoriesPage(),
         '/category-edit': (context) {
           final category =
               (ModalRoute.of(context)?.settings.arguments) as Category?;
