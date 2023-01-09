@@ -13,35 +13,31 @@ class NewEntryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = NewEntryController(TransactionFirebaseRepository());
     return SafeArea(
-      child: BlocProvider(
-        create: (context) =>
-            NewEntryController(TransactionFirebaseRepository()),
-        child: Scaffold(
-          appBar: AppBar(title: const Text('Nova transação')),
-          body: BlocConsumer<NewEntryController, NewEntryState>(
-            listener: (context, currentState) {
-              if (currentState is ErrorNewEntryState) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Ocorreu um erro. Tente novamente.'),
-                  ),
-                );
-              }
-              if (currentState is SuccessNewEntryState) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Transação salva com sucesso.'),
-                  ),
-                );
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil('/home', (route) => false);
-              }
-            },
-            builder: (context, currentState) {
-              return NewEntryContent(categoryList);
-            },
-          ),
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Nova transação')),
+        body: BlocListener<NewEntryController, NewEntryState>(
+          bloc: controller,
+          listener: (context, currentState) {
+            if (currentState is ErrorNewEntryState) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Ocorreu um erro. Tente novamente.'),
+                ),
+              );
+            }
+            if (currentState is SuccessNewEntryState) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Transação salva com sucesso.'),
+                ),
+              );
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/home', (route) => false);
+            }
+          },
+          child: NewEntryContent(categoryList),
         ),
       ),
     );
