@@ -11,15 +11,13 @@ import 'widgets/color_picker.dart';
 import 'widgets/icon_picker.dart';
 
 class CategoryEditPage extends StatefulWidget {
-  const CategoryEditPage({super.key, this.category});
-
-  final Category? category;
+  const CategoryEditPage({super.key});
 
   @override
-  State<CategoryEditPage> createState() => _NewEntryContentState();
+  State<CategoryEditPage> createState() => _CategoryEditPageState();
 }
 
-class _NewEntryContentState extends State<CategoryEditPage> {
+class _CategoryEditPageState extends State<CategoryEditPage> {
   final formKey = GlobalKey<FormState>();
 
   final name = TextEditingController(text: 'Nova categoria');
@@ -31,18 +29,15 @@ class _NewEntryContentState extends State<CategoryEditPage> {
       MyCategoriesController.instance(CategoryFirebaseRepository());
 
   @override
-  void initState() {
-    super.initState();
-    if (widget.category != null) {
-      name.text = widget.category!.name;
-      icon.value = widget.category!.icon;
-      color.value = widget.category!.color;
-      type.value = widget.category!.type;
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final category = ModalRoute.of(context)?.settings.arguments as Category?;
+    if (category != null) {
+      name.text = category.name;
+      icon.value = category.icon;
+      color.value = category.color;
+      type.value = category.type;
+    }
+    
     return Scaffold(
       body: Center(
         child: Form(
@@ -140,7 +135,7 @@ class _NewEntryContentState extends State<CategoryEditPage> {
                             child: ElevatedButton(
                               onPressed: () {
                                 if (formKey.currentState?.validate() ?? false) {
-                                  controller.saveCategory(widget.category?.id,
+                                  controller.saveCategory(category?.id,
                                       color: color.value,
                                       name: name.text,
                                       type: type.value,
