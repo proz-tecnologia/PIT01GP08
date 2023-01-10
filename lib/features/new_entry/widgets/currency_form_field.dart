@@ -10,9 +10,11 @@ class CurrencyFormField extends StatelessWidget {
   const CurrencyFormField(
     this.textController, {
     super.key,
+    required this.totalValueNotifier,
   });
 
   final TextEditingController textController;
+  final ValueNotifier<double> totalValueNotifier;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,16 @@ class CurrencyFormField extends StatelessWidget {
           showCursor: false,
           textInputAction: TextInputAction.next,
           initialValue: textController.text,
+          onChanged: (value) {
+            totalValueNotifier.value = value.isEmpty
+                ? 0.0
+                : double.parse(
+                    value
+                        .replaceAll(RegExp('[R\$]'), '')
+                        .replaceAll('.', '')
+                        .replaceAll(',', '.'),
+                  );
+          },
           decoration: InputDecoration(
             floatingLabelStyle: TextStyle(color: state.color),
             labelStyle: TextStyle(color: state.color.withOpacity(0.6)),

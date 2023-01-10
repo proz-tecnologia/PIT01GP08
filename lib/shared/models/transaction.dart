@@ -14,6 +14,7 @@ class Transaction {
   final String? id;
   final Payment payment;
   final DateTime? endDate;
+  final int? parts;
 
   Transaction({
     this.id,
@@ -25,8 +26,10 @@ class Transaction {
     required bool fulfilled,
     required this.payment,
     this.endDate,
+    this.parts,
   })  : _fulfilled = fulfilled,
-        assert(payment != Payment.fixa || endDate != null);
+        assert(payment != Payment.fixa || endDate != null),
+        assert(payment != Payment.parcelada || parts != null);
 
   factory Transaction.fromCategory({
     required DateTime date,
@@ -36,6 +39,7 @@ class Transaction {
     required bool fulfilled,
     required Payment payment,
     DateTime? endDate,
+    int? parts,
   }) {
     return Transaction(
       date: date,
@@ -46,6 +50,7 @@ class Transaction {
       fulfilled: fulfilled,
       payment: payment,
       endDate: endDate,
+      parts: parts,
     );
   }
 
@@ -67,6 +72,9 @@ class Transaction {
     result.addAll({'payment': payment.name});
     if (endDate != null) {
       result.addAll({'endDate': Timestamp.fromDate(endDate!)});
+    }
+    if (parts != null) {
+      result.addAll({'parts': parts});
     }
 
     return result;
@@ -97,6 +105,7 @@ class Transaction {
       fulfilled: map['fulfilled'] ?? false,
       payment: payment,
       endDate: endDate,
+      parts: map['parts'],
     );
   }
 
@@ -109,6 +118,7 @@ class Transaction {
     bool? fulfilled,
     Payment? payment,
     DateTime? endDate,
+    int? parts,
   }) {
     return Transaction(
       id: id,
@@ -120,6 +130,7 @@ class Transaction {
       fulfilled: fulfilled ?? _fulfilled,
       payment: payment ?? this.payment,
       endDate: endDate ?? this.endDate,
+      parts: parts ?? this.parts,
     );
   }
 }

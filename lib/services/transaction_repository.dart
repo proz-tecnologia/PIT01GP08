@@ -42,9 +42,13 @@ class TransactionFirebaseRepository implements TransactionRepository {
         map.update('fulfilled', (value) => fulfilledList);
         firestorePath.collection('fixed-transactions').add(map);
       } else if (transaction.payment == Payment.parcelada) {
-        firestorePath
-            .collection('parcelled-transactions')
-            .add(transaction.toMap());
+        final map = transaction.toMap();
+        final List<bool> fulfilledList = [transaction.fulfilled];
+        for (var i = 1; i < (transaction.parts ?? 0); i++) {
+          fulfilledList.add(false);
+        }
+        map.update('fulfilled', (value) => fulfilledList);
+        firestorePath.collection('parcelled-transactions').add(map);
       } else {
         firestorePath.collection('transactions').add(transaction.toMap());
       }
@@ -97,7 +101,7 @@ class TransactionFirebaseRepository implements TransactionRepository {
           .compareTo(a.date.millisecondsSinceEpoch));
       return list;
     } catch (e) {
-      return [];
+      rethrow;
     }
   }
 

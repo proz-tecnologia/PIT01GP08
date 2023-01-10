@@ -7,6 +7,7 @@ import '../../shared/models/transaction.dart';
 import '../page_view/widgets/top_bar_toggle_button.dart';
 import 'new_entry_controller.dart';
 import 'new_entry_states.dart';
+import 'widgets/parts_form_field.dart';
 import 'widgets/widgets.dart';
 
 class NewEntryContent extends StatefulWidget {
@@ -24,10 +25,12 @@ class _NewEntryContentState extends State<NewEntryContent> {
   final paymentOption = ValueNotifier(0);
 
   final value = TextEditingController();
+  final totalValueNotifier = ValueNotifier(0.0);
   final description = TextEditingController();
   final category = ValueNotifier<Category?>(null);
   final date = TextEditingController();
   final endDate = TextEditingController();
+  final parts = TextEditingController(text: '2');
 
   late final NewEntryTypeController controller;
 
@@ -68,7 +71,10 @@ class _NewEntryContentState extends State<NewEntryContent> {
                 padding: const EdgeInsets.all(Sizes.largeSpace),
                 child: Column(
                   children: <Widget>[
-                    CurrencyFormField(value),
+                    CurrencyFormField(
+                      value,
+                      totalValueNotifier: totalValueNotifier,
+                    ),
                     const SizedBox(height: Sizes.smallSpace),
                     DescriptionFormField(description),
                     const SizedBox(height: Sizes.smallSpace),
@@ -83,8 +89,8 @@ class _NewEntryContentState extends State<NewEntryContent> {
                     const SizedBox(height: Sizes.smallSpace),
                     ValueListenableBuilder(
                         valueListenable: paymentOption,
-                        builder: (_, value, __) {
-                          if (Payment.values[value] == Payment.fixa) {
+                        builder: (_, option, __) {
+                          if (Payment.values[option] == Payment.fixa) {
                             return Padding(
                               padding: const EdgeInsets.only(
                                   bottom: Sizes.smallSpace),
@@ -92,6 +98,12 @@ class _NewEntryContentState extends State<NewEntryContent> {
                                 endDate,
                                 label: 'Repetir até',
                               ),
+                            );
+                          }
+                          if (Payment.values[option] == Payment.parcelada) {
+                            return PartsFormField(
+                              parts,
+                              totalValueNotifier: totalValueNotifier,
                             );
                           }
                           return const SizedBox.shrink();
@@ -118,6 +130,7 @@ class _NewEntryContentState extends State<NewEntryContent> {
                                         fulfilled: fulfilled.value,
                                         paymentOption: paymentOption.value,
                                         endDateString: endDate.text,
+                                        partsString: parts.text,
                                       );
                                     }
                                   },
