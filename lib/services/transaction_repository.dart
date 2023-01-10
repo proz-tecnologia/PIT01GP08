@@ -5,10 +5,10 @@ import '../shared/models/transaction.dart' as model;
 import '../shared/models/transaction.dart';
 
 abstract class TransactionRepository {
-  Future<bool> createTransaction(model.Transaction transaction);
+  Future<void> createTransaction(model.Transaction transaction);
   Future<model.Transaction?> getTransactionData(String id);
-  Future<bool> editTransactionData(model.Transaction transaction);
-  Future<bool> deleteTransaction(String id);
+  Future<void> editTransactionData(model.Transaction transaction);
+  Future<void> deleteTransaction(String id);
   Future<List<model.Transaction>> getAllTransactions();
   Future<List<model.Transaction>> getFixedTransactions();
   Future<void> fulfillTransaction(model.Transaction transaction);
@@ -20,7 +20,7 @@ class TransactionFirebaseRepository implements TransactionRepository {
       .doc(FirebaseAuth.instance.currentUser!.uid);
 
   @override
-  Future<bool> createTransaction(model.Transaction transaction) async {
+  Future<void> createTransaction(model.Transaction transaction) async {
     try {
       if (transaction.payment == Payment.fixa) {
         final map = transaction.toMap();
@@ -52,32 +52,29 @@ class TransactionFirebaseRepository implements TransactionRepository {
       } else {
         firestorePath.collection('transactions').add(transaction.toMap());
       }
-      return true;
     } catch (e) {
-      return false;
+      rethrow;
     }
   }
 
   @override
-  Future<bool> deleteTransaction(String id) async {
+  Future<void> deleteTransaction(String id) async {
     try {
       firestorePath.collection('transactions').doc(id).delete();
-      return true;
     } catch (e) {
-      return false;
+      rethrow;
     }
   }
 
   @override
-  Future<bool> editTransactionData(model.Transaction transaction) async {
+  Future<void> editTransactionData(model.Transaction transaction) async {
     try {
       firestorePath
           .collection('transactions')
           .doc(transaction.id)
           .set(transaction.toMap());
-      return true;
     } catch (e) {
-      return false;
+      rethrow;
     }
   }
 
@@ -113,7 +110,7 @@ class TransactionFirebaseRepository implements TransactionRepository {
       final data = snapshot.data()!;
       return model.Transaction.fromMap(id, data);
     } catch (e) {
-      return null;
+      rethrow;
     }
   }
 
@@ -145,7 +142,7 @@ class TransactionFirebaseRepository implements TransactionRepository {
       }
       return list;
     } catch (e) {
-      return [];
+      rethrow;
     }
   }
 

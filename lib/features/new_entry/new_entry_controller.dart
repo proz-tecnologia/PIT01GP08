@@ -55,14 +55,8 @@ class NewEntryController extends Cubit<NewEntryState> {
         parts: int.tryParse(partsString) ?? 2,
       );
 
-      final success =
-          await transactionRepository.createTransaction(newTransaction);
-
-      if (success) {
-        emit(SuccessNewEntryState());
-      } else {
-        throw Exception();
-      }
+      await transactionRepository.createTransaction(newTransaction);
+      emit(SuccessNewEntryState());
     } catch (e) {
       emit(ErrorNewEntryState());
       emit(lastTypeState);
