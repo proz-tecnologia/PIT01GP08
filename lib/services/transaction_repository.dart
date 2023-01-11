@@ -5,12 +5,12 @@ import '../shared/models/transaction.dart' as model;
 import '../shared/models/transaction.dart';
 
 abstract class TransactionRepository {
-  Future<bool> createTransaction(model.Transaction transaction);
-  Future<model.Transaction?> getTransactionData(String id);
-  Future<bool> editTransactionData(model.Transaction transaction);
-  Future<bool> deleteTransaction(String id);
+  Future<void> createTransaction(model.Transaction transaction);
+  Future<void> editTransactionData(model.Transaction transaction);
+  Future<void> deleteTransaction(String id);
   Future<List<model.Transaction>> getAllTransactions();
   Future<List<model.Transaction>> getFixedTransactions();
+  Future<List<model.Transaction>> getParcelledTransactions();
   Future<void> fulfillTransaction(model.Transaction transaction);
 }
 
@@ -20,7 +20,7 @@ class TransactionFirebaseRepository implements TransactionRepository {
       .doc(FirebaseAuth.instance.currentUser!.uid);
 
   @override
-  Future<bool> createTransaction(model.Transaction transaction) async {
+  Future<void> createTransaction(model.Transaction transaction) async {
     try {
       if (transaction.payment == Payment.fixa) {
         final map = transaction.toMap();
@@ -42,38 +42,39 @@ class TransactionFirebaseRepository implements TransactionRepository {
         map.update('fulfilled', (value) => fulfilledList);
         firestorePath.collection('fixed-transactions').add(map);
       } else if (transaction.payment == Payment.parcelada) {
-        firestorePath
-            .collection('parcelled-transactions')
-            .add(transaction.toMap());
+        final map = transaction.toMap();
+        final List<bool> fulfilledList = [transaction.fulfilled];
+        for (var i = 1; i < (transaction.parts ?? 0); i++) {
+          fulfilledList.add(false);
+        }
+        map.update('fulfilled', (value) => fulfilledList);
+        firestorePath.collection('parcelled-transactions').add(map);
       } else {
         firestorePath.collection('transactions').add(transaction.toMap());
       }
-      return true;
     } catch (e) {
-      return false;
+      rethrow;
     }
   }
 
   @override
-  Future<bool> deleteTransaction(String id) async {
+  Future<void> deleteTransaction(String id) async {
     try {
       firestorePath.collection('transactions').doc(id).delete();
-      return true;
     } catch (e) {
-      return false;
+      rethrow;
     }
   }
 
   @override
-  Future<bool> editTransactionData(model.Transaction transaction) async {
+  Future<void> editTransactionData(model.Transaction transaction) async {
     try {
       firestorePath
           .collection('transactions')
           .doc(transaction.id)
           .set(transaction.toMap());
-      return true;
     } catch (e) {
-      return false;
+      rethrow;
     }
   }
 
@@ -93,23 +94,13 @@ class TransactionFirebaseRepository implements TransactionRepository {
       }
       final fixed = await getFixedTransactions();
       list.addAll(fixed);
+      final parcelled = await getParcelledTransactions();
+      list.addAll(parcelled);
       list.sort((a, b) => b.date.millisecondsSinceEpoch
           .compareTo(a.date.millisecondsSinceEpoch));
       return list;
     } catch (e) {
-      return [];
-    }
-  }
-
-  @override
-  Future<model.Transaction?> getTransactionData(String id) async {
-    try {
-      final snapshot =
-          await firestorePath.collection('transactions').doc(id).get();
-      final data = snapshot.data()!;
-      return model.Transaction.fromMap(id, data);
-    } catch (e) {
-      return null;
+      rethrow;
     }
   }
 
@@ -141,7 +132,38 @@ class TransactionFirebaseRepository implements TransactionRepository {
       }
       return list;
     } catch (e) {
-      return [];
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<model.Transaction>> getParcelledTransactions() async {
+    final list = <model.Transaction>[];
+    try {
+      final snapshot =
+          await firestorePath.collection('parcelled-transactions').get();
+      final docs = snapshot.docs;
+      for (var doc in docs) {
+        Map<String, dynamic> data = doc.data();
+        DateTime newDate = (data['date'] as Timestamp).toDate();
+        data.update('value', (value) => value / data['parts']);
+        for (var i = 0; i < data['parts']; i++) {
+          data.update(
+              'fulfilled', (value) => doc.data()['fulfilled'][i] ?? false);
+          list.add(
+            model.Transaction.fromMap(doc.id, data),
+          );
+          try {
+            newDate = DateTime(newDate.year, newDate.month + 1, newDate.day);
+          } catch (e) {
+            newDate = DateTime(newDate.year + 1, 1, newDate.day);
+          }
+          data.update('date', (_) => Timestamp.fromDate(newDate));
+        }
+      }
+      return list;
+    } catch (e) {
+      rethrow;
     }
   }
 
@@ -157,10 +179,11 @@ class TransactionFirebaseRepository implements TransactionRepository {
             .doc(transaction.id)
             .update({'fulfilled': fulfill});
       } else {
-        final doc = await firestorePath
-            .collection('fixed-transactions')
-            .doc(transaction.id)
-            .get();
+        final path = transaction.payment == Payment.fixa
+            ? 'fixed-transactions'
+            : 'parcelled-transactions';
+        final doc =
+            await firestorePath.collection(path).doc(transaction.id).get();
 
         DateTime newDate = ((doc.data() ?? {})['date'] as Timestamp).toDate();
         int part = 0;
@@ -177,7 +200,7 @@ class TransactionFirebaseRepository implements TransactionRepository {
         list[part] = fulfill;
 
         await firestorePath
-            .collection('fixed-transactions')
+            .collection(path)
             .doc(transaction.id)
             .update({'fulfilled': list});
       }
