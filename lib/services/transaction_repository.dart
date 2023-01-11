@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../shared/models/transaction.dart' as model;
 import '../shared/models/transaction.dart';
+import '../shared/utils/end_of_month.dart';
 
 abstract class TransactionRepository {
   Future<void> createTransaction(model.Transaction transaction);
@@ -114,7 +115,8 @@ class TransactionFirebaseRepository implements TransactionRepository {
       for (var doc in docs) {
         Map<String, dynamic> data = doc.data();
         DateTime endDate = (data['endDate'] as Timestamp).toDate();
-        DateTime newDate = (data['date'] as Timestamp).toDate();
+        DateTime initialDate = (data['date'] as Timestamp).toDate();
+        DateTime newDate = initialDate;
         int i = 0;
         do {
           data.update(
@@ -122,10 +124,10 @@ class TransactionFirebaseRepository implements TransactionRepository {
           list.add(
             model.Transaction.fromMap(doc.id, data),
           );
-          try {
-            newDate = DateTime(newDate.year, newDate.month + 1, newDate.day);
-          } catch (e) {
-            newDate = DateTime(newDate.year + 1, 1, newDate.day);
+          final targetMonth = newDate.month + 1;
+          newDate = DateTime(newDate.year, newDate.month + 1, initialDate.day);
+          if (newDate.month != targetMonth && newDate.month != 1) {
+            newDate = DateTime(newDate.year, targetMonth).endOfMonth();
           }
           data.update('date', (_) => Timestamp.fromDate(newDate));
         } while (!newDate.isAfter(endDate));
@@ -145,18 +147,20 @@ class TransactionFirebaseRepository implements TransactionRepository {
       final docs = snapshot.docs;
       for (var doc in docs) {
         Map<String, dynamic> data = doc.data();
-        DateTime newDate = (data['date'] as Timestamp).toDate();
+        DateTime initialDate = (data['date'] as Timestamp).toDate();
+        DateTime newDate = initialDate;
         data.update('value', (value) => value / data['parts']);
+
         for (var i = 0; i < data['parts']; i++) {
           data.update(
               'fulfilled', (value) => doc.data()['fulfilled'][i] ?? false);
           list.add(
             model.Transaction.fromMap(doc.id, data),
           );
-          try {
-            newDate = DateTime(newDate.year, newDate.month + 1, newDate.day);
-          } catch (e) {
-            newDate = DateTime(newDate.year + 1, 1, newDate.day);
+          final targetMonth = newDate.month + 1;
+          newDate = DateTime(newDate.year, newDate.month + 1, initialDate.day);
+          if (newDate.month != targetMonth && newDate.month != 1) {
+            newDate = DateTime(newDate.year, targetMonth).endOfMonth();
           }
           data.update('date', (_) => Timestamp.fromDate(newDate));
         }
