@@ -6,7 +6,6 @@ import '../shared/models/transaction.dart';
 
 abstract class TransactionRepository {
   Future<void> createTransaction(model.Transaction transaction);
-  Future<model.Transaction?> getTransactionData(String id);
   Future<void> editTransactionData(model.Transaction transaction);
   Future<void> deleteTransaction(String id);
   Future<List<model.Transaction>> getAllTransactions();
@@ -100,18 +99,6 @@ class TransactionFirebaseRepository implements TransactionRepository {
       list.sort((a, b) => b.date.millisecondsSinceEpoch
           .compareTo(a.date.millisecondsSinceEpoch));
       return list;
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  @override
-  Future<model.Transaction?> getTransactionData(String id) async {
-    try {
-      final snapshot =
-          await firestorePath.collection('transactions').doc(id).get();
-      final data = snapshot.data()!;
-      return model.Transaction.fromMap(id, data);
     } catch (e) {
       rethrow;
     }
