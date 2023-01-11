@@ -148,12 +148,8 @@ class _LoginPageState extends State<LoginPage> {
                           padding:
                               const EdgeInsets.only(top: Sizes.extraLargeSpace),
                           child: GoogleAuthButton(
-                            style: AuthButtonStyle(
-                              textStyle:
-                                  Theme.of(context).appBarTheme.titleTextStyle,
-                            ),
                             onPressed: () async {
-                              await controller.googleSignIn();
+                              await controller.googleSignIn(context);
                             },
                           ),
                         )),
