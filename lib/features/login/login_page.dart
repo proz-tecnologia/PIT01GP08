@@ -80,9 +80,22 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(Sizes.largeSpace),
-                        child: Text('Recuperar senha',
-                            style: Theme.of(context).textTheme.titleMedium),
+                        padding:
+                            const EdgeInsets.only(bottom: Sizes.largeSpace),
+                        child: TextButton(
+                            onPressed: () async {
+                              final message = await controller
+                                  .sendPasswordResetEmail(emailController.text);
+                              if (message != null) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    content: Text(message),
+                                  ),
+                                );
+                              }
+                            },
+                            child: const Text('Esqueci minha senha')),
                       ),
                     ],
                   ),
