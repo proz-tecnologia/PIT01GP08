@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:auth_buttons/auth_buttons.dart';
 import '../../design_sys/sizes.dart';
 import '../../shared/widgets/logo_app.dart';
 import 'login_controller.dart';
@@ -80,41 +80,83 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(Sizes.mediumSpace),
-                        child: Text('Recuperar senha',
-                            style: Theme.of(context).textTheme.titleMedium),
+                        padding:
+                            const EdgeInsets.only(bottom: Sizes.largeSpace),
+                        child: TextButton(
+                            onPressed: () async {
+                              final message = await controller
+                                  .sendPasswordResetEmail(emailController.text);
+                              if (message != null) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    content: Text(message),
+                                  ),
+                                );
+                              }
+                            },
+                            child: const Text('Esqueci minha senha')),
                       ),
                     ],
                   ),
                   SizedBox(
                     width: double.infinity,
                     child: BlocListener<LoginController, LoginState>(
-                      bloc: controller,
-                      listener: (context, state) {
-                        if (state is LoginStateError) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(state.error),
-                            ),
-                          );
-                        }
-                        if (state is LoginStateSuccess) {
-                          Navigator.of(context).pushReplacementNamed('/home');
-                        }
-                      },
-                      child: ElevatedButton(
-                        style: Theme.of(context).elevatedButtonTheme.style,
-                        onPressed: () async {
-                          if (formKey.currentState?.validate() ?? false) {
-                            await controller.login(
-                              emailController.text,
-                              passwordController.text,
+                        bloc: controller,
+                        listener: (context, state) {
+                          if (state is LoginStateError) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(state.error),
+                              ),
                             );
                           }
+                          if (state is LoginStateSuccess) {
+                            Navigator.of(context).pushReplacementNamed('/home');
+                          }
                         },
-                        child: const Text('Entrar'),
-                      ),
-                    ),
+                        child: ElevatedButton(
+                          style: Theme.of(context).elevatedButtonTheme.style,
+                          onPressed: () async {
+                            if (formKey.currentState?.validate() ?? false) {
+                              await controller.login(
+                                emailController.text,
+                                passwordController.text,
+                              );
+                            }
+                          },
+                          child: const Text('Entrar'),
+                        )),
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: BlocListener<LoginController, LoginState>(
+                        bloc: controller,
+                        listener: (context, state) {
+                          if (state is LoginStateError) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(state.error),
+                              ),
+                            );
+                          }
+                          if (state is LoginStateSuccess) {
+                            Navigator.of(context).pushReplacementNamed('/home');
+                          }
+                        },
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(top: Sizes.extraLargeSpace),
+                          child: GoogleAuthButton(
+                            style: AuthButtonStyle(
+                              textStyle:
+                                  Theme.of(context).appBarTheme.titleTextStyle,
+                            ),
+                            onPressed: () async {
+                              await controller.googleSignIn();
+                            },
+                          ),
+                        )),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(Sizes.mediumSpace),

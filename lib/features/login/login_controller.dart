@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'login_states.dart';
 
 class LoginController extends Cubit<LoginState> {
@@ -17,7 +18,59 @@ class LoginController extends Cubit<LoginState> {
       if (e is FirebaseAuthException) {
         log(e.message ?? 'FirebaseAuthException');
         emit(LoginStateError(e.message ?? 'Error on loginController'));
+      } else {
+        emit(LoginStateError('Erro de conexão'));
       }
+    }
+  }
+
+  Future<void> googleSignIn() async {
+    final googleSignIn = GoogleSignIn();
+    final googleAccount = await googleSignIn.signIn();
+    if (googleAccount != null) {
+      final googleAuth = await googleAccount.authentication;
+      if (googleAuth.accessToken != null && googleAuth.idToken != null) {
+        try {
+          await FirebaseAuth.instance.signInWithCredential(
+            GoogleAuthProvider.credential(
+                idToken: googleAuth.idToken,
+                accessToken: googleAuth.accessToken),
+          );
+          emit(LoginStateSuccess());
+        } catch (e) {
+          if (e is FirebaseAuthException) {
+            emit(LoginStateError(e.message ?? 'Error on loginController'));
+          }
+        }
+      }
+    }
+  }
+
+  Future<String?> sendPasswordResetEmail(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      return 'Email enviado para $email.\nPor favor, verifique sua caixa de entrada (e a pasta spam).';
+    } catch (e) {
+      if (e is FirebaseAuthException) {
+        switch (e.code) {
+          case 'missing-email':
+            emit(LoginStateError('Por favor, digite seu email.'));
+            break;
+          case 'invalid-email':
+            emit(LoginStateError('Email inválido: $email'));
+            break;
+          case 'user-not-found':
+            emit(LoginStateError(
+                'Não foi encontrado nenhum usuário com o email $email'));
+            break;
+          default:
+            emit(LoginStateError(
+                'Algo deu errado.\nDigite novamente seu email e tente novamente.'));
+        }
+      } else {
+        emit(LoginStateError('Erro de conexão'));
+      }
+      return null;
     }
   }
 }
