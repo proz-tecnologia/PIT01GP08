@@ -25,17 +25,17 @@ class LoginController extends Cubit<LoginState> {
   }
 
   Future<void> googleSignIn() async {
-    final googleSignIn = GoogleSignIn();
-    final googleAccount = await googleSignIn.signIn();
+    final GoogleSignInAccount? googleAccount = await GoogleSignIn().signIn();
     if (googleAccount != null) {
-      final googleAuth = await googleAccount.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleAccount.authentication;
       if (googleAuth.accessToken != null && googleAuth.idToken != null) {
         try {
-          await FirebaseAuth.instance.signInWithCredential(
-            GoogleAuthProvider.credential(
-                idToken: googleAuth.idToken,
-                accessToken: googleAuth.accessToken),
+          final credential = GoogleAuthProvider.credential(
+            accessToken: googleAuth.accessToken,
+            idToken: googleAuth.idToken,
           );
+          await FirebaseAuth.instance.signInWithCredential(credential);
           emit(LoginStateSuccess());
         } catch (e) {
           if (e is FirebaseAuthException) {
