@@ -3,11 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-<<<<<<< HEAD
-  desktop_webview_auth
   local_auth_windows
-=======
->>>>>>> 5805f31b3501116079a6550369fd67b52c21b625
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

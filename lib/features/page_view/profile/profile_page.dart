@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../design_sys/sizes.dart';
 import 'profile_controller.dart';
 import 'profile_states.dart';
+import 'package:financial_app/design_sys/colors.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -15,7 +16,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final ValueNotifier<bool> testValue = ValueNotifier(true);
-  final controller = ProfileController();
+  //final controller = ProfileController();
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileController, ProfileState>(
@@ -46,6 +47,15 @@ class _ProfilePageState extends State<ProfilePage> {
           const ListTile(
             leading: Icon(Icons.account_balance_wallet_rounded),
             title: Text("Carteira"),
+          ),
+          InkWell(
+            splashColor: AppColors.lightGrey,
+            onTap: () {},
+            child: ListTile(
+              onTap: () => Navigator.of(context).pushNamed("/settings"),
+              leading: const Icon(Icons.settings_rounded),
+              title: const Text("Configuções"),
+            ),
           ),
           ListTile(
             onTap: () {

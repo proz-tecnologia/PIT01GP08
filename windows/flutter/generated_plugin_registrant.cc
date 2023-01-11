@@ -6,17 +6,9 @@
 
 #include "generated_plugin_registrant.h"
 
-<<<<<<< HEAD
-#include <desktop_webview_auth/desktop_webview_auth_plugin.h>
 #include <local_auth_windows/local_auth_plugin.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
-  DesktopWebviewAuthPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("DesktopWebviewAuthPlugin"));
   LocalAuthPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("LocalAuthPlugin"));
-=======
-
-void RegisterPlugins(flutter::PluginRegistry* registry) {
->>>>>>> 5805f31b3501116079a6550369fd67b52c21b625
 }

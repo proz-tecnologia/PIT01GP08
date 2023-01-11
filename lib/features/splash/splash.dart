@@ -17,7 +17,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final Image _logo = Image.asset('assets/logo_white.png');
-  final controller = SplashController(authBio: LocalAuthentication());
+  final controller = SplashController();
   ValueNotifier<bool> isLoadAuthFailed = ValueNotifier(false);
 
   @override
@@ -44,8 +44,10 @@ class _SplashScreenState extends State<SplashScreen> {
                 final cnxt = Navigator.of(context);
                 if (state == SplashState.unlogged) {
                   cnxt.pushReplacementNamed('/register-page');
-                } else {
-                  final isLocalAuthAvailable =
+                } else if (state == SplashState.logged) {
+                  cnxt.pushReplacementNamed('/home-page');
+
+                  /* final isLocalAuthAvailable =
                       await controller.isBiometricAvailable();
                   isLoadAuthFailed.value = false;
                   if (isLocalAuthAvailable) {
@@ -58,7 +60,9 @@ class _SplashScreenState extends State<SplashScreen> {
                     }
                   } else {
                     cnxt.pushNamedAndRemoveUntil('/login', (route) => false);
-                  }
+                  } */
+                } else if (state == SplashState.manualLog) {
+                  cnxt.pushNamedAndRemoveUntil('/login', (route) => false);
                 }
               },
               child: const AppProgress(),
