@@ -23,8 +23,10 @@ class _DatePickerFormFieldState extends State<DatePickerFormField> {
   @override
   void initState() {
     super.initState();
-    widget.textController.text =
-        DateFormat('dd/MM/yyyy').format(DateTime.now());
+    if (widget.textController.text == '') {
+      widget.textController.text =
+          DateFormat('dd/MM/yyyy').format(DateTime.now());
+    }
   }
 
   @override
