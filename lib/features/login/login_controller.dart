@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -24,24 +25,23 @@ class LoginController extends Cubit<LoginState> {
     }
   }
 
-  Future<void> googleSignIn() async {
-    final GoogleSignInAccount? googleAccount = await GoogleSignIn().signIn();
-    if (googleAccount != null) {
-      final GoogleSignInAuthentication googleAuth =
-          await googleAccount.authentication;
-      if (googleAuth.accessToken != null && googleAuth.idToken != null) {
-        try {
-          final credential = GoogleAuthProvider.credential(
-            accessToken: googleAuth.accessToken,
-            idToken: googleAuth.idToken,
-          );
-          await FirebaseAuth.instance.signInWithCredential(credential);
-          emit(LoginStateSuccess());
-        } catch (e) {
-          if (e is FirebaseAuthException) {
-            emit(LoginStateError(e.message ?? 'Error on loginController'));
-          }
-        }
+  Future<void> googleSignIn(context) async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      emit(LoginStateSuccess());
+    } catch (e) {
+      if (e is FirebaseAuthException) {
+        log(e.message ?? 'FirebaseAuthException');
+        emit(LoginStateError(e.message ?? 'Error on loginController'));
+      } else {
+        emit(LoginStateError('Erro de conexão'));
       }
     }
   }

@@ -149,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                               const EdgeInsets.only(top: Sizes.extraLargeSpace),
                           child: GoogleAuthButton(
                             onPressed: () async {
-                              await controller.googleSignIn();
+                              await controller.googleSignIn(context);
                             },
                           ),
                         )),
