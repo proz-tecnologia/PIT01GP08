@@ -59,7 +59,7 @@ class _AppPageViewState extends State<AppPageView> {
               ? FloatingActionButton(
                   onPressed: () => Navigator.of(context).pushNamed(
                     '/new-entry',
-                    arguments: state.categoryList,
+                    arguments: [state.categoryList,null],
                   ),
                   tooltip: 'Nova transação',
                   child: const Icon(Icons.add),

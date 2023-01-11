@@ -1,3 +1,4 @@
+import 'package:financial_app/features/page_view/data_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,8 +14,8 @@ class NewEntryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = NewEntryController(TransactionFirebaseRepository());
-    final categoryList =
-        ModalRoute.of(context)?.settings.arguments as List<Category>;
+    final categoryList = 
+        (ModalRoute.of(context)?.settings.arguments as List)[0] as List<Category>;
 
     return SafeArea(
       child: Scaffold(
