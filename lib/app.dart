@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'design_sys/themes.dart';
 import 'features/page_view/settings/settings_page.dart';
 import 'features/pages.dart';
-import 'shared/models/category.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -18,19 +17,11 @@ class App extends StatelessWidget {
         '/splash': (context) => const SplashScreen(),
         '/register': (context) => const RegisterPage(),
         '/home': (context) => const AppPageView(),
-        '/new-entry': (context) {
-          final categoryList = (ModalRoute.of(context)?.settings.arguments ??
-              []) as List<Category>;
-          return NewEntryPage(categoryList);
-        },
+        '/new-entry': (context) => const NewEntryPage(),
         '/account-settings': (context) => const AccountPage(),
         '/settings': (context) => const SettingsPage(),
         '/my-categories': (context) => const MyCategoriesPage(),
-        '/category-edit': (context) {
-          final category =
-              (ModalRoute.of(context)?.settings.arguments) as Category?;
-          return CategoryEditPage(category: category);
-        },
+        '/category-edit': (context) => const CategoryEditPage(),
       },
     );
   }

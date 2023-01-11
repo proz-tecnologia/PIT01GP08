@@ -8,12 +8,14 @@ import 'new_entry_controller.dart';
 import 'new_entry_states.dart';
 
 class NewEntryPage extends StatelessWidget {
-  const NewEntryPage(this.categoryList, {super.key});
-  final List<Category> categoryList;
+  const NewEntryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final controller = NewEntryController(TransactionFirebaseRepository());
+    final categoryList =
+        ModalRoute.of(context)?.settings.arguments as List<Category>;
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(title: const Text('Nova transação')),
@@ -37,7 +39,10 @@ class NewEntryPage extends StatelessWidget {
                   .pushNamedAndRemoveUntil('/home', (route) => false);
             }
           },
-          child: NewEntryContent(categoryList),
+          child: BlocProvider(
+            create: (context) => controller,
+            child: NewEntryContent(categoryList),
+          ),
         ),
       ),
     );
