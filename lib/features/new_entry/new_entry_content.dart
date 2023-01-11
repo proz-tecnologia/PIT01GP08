@@ -50,8 +50,11 @@ class _NewEntryContentState extends State<NewEntryContent> {
       paymentOption.value = Payment.values.indexOf(transaction.payment);
       category.value =
           widget.categoryList.firstWhere((e) => e.id == transaction.categoryId);
-      totalValueNotifier.value = transaction.value;
-      value.text = transaction.valueString;
+      totalValueNotifier.value = transaction.payment == Payment.parcelada
+          ? transaction.value * (transaction.parts ?? 0)
+          : transaction.value;
+      value.text =
+          'R\$ ${totalValueNotifier.value.toStringAsFixed(2).replaceAll('.', ',')}';
       description.text = transaction.description;
       date.text = DateFormat('dd/MM/yyyy').format(transaction.date);
       if (transaction.endDate != null) {
@@ -146,6 +149,7 @@ class _NewEntryContentState extends State<NewEntryContent> {
                                     if (formKey.currentState?.validate() ??
                                         false) {
                                       saveController.saveTransaction(
+                                        id: transaction?.id,
                                         dateString: date.text,
                                         description: description.text,
                                         value: value.text,
