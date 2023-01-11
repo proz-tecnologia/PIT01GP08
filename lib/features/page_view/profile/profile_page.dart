@@ -50,6 +50,11 @@ class _ProfilePageState extends State<ProfilePage> {
               title: Text("Carteira"),
             ),
             ListTile(
+              onTap: () => Navigator.of(context).pushNamed("/settings"),
+              leading: const Icon(Icons.settings_rounded),
+              title: const Text("Configuções"),
+            ),
+            ListTile(
               onTap: () {
                 FirebaseAuth.instance.signOut();
                 Navigator.of(context)
