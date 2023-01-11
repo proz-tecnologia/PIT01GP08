@@ -52,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ListTile(
               onTap: () => Navigator.of(context).pushNamed("/settings"),
               leading: const Icon(Icons.settings_rounded),
-              title: const Text("Configuções"),
+              title: const Text("Configurações"),
             ),
             ListTile(
               onTap: () {
