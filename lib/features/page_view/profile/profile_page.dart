@@ -38,16 +38,8 @@ class _ProfilePageState extends State<ProfilePage> {
               title: const Text("Categorias"),
             ),
             const ListTile(
-              leading: Icon(Icons.credit_card_rounded),
-              title: Text(" Meus Cartões"),
-            ),
-            const ListTile(
-              leading: Icon(Icons.account_balance_rounded),
-              title: Text("Meus Bancos"),
-            ),
-            const ListTile(
-              leading: Icon(Icons.account_balance_wallet_rounded),
-              title: Text("Carteira"),
+              leading: Icon(Icons.pix_rounded),
+              title: Text("Meus PIX"),
             ),
             ListTile(
               onTap: () => Navigator.of(context).pushNamed("/settings"),
