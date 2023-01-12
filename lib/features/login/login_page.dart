@@ -29,92 +29,94 @@ class _LoginPageState extends State<LoginPage> {
           key: formKey,
           child: Center(
             child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Padding(
-                      padding: EdgeInsets.all(Sizes.mediumSpace),
-                      child: LogoApp()),
-                  TextFormField(
-                    style: const TextStyle(fontSize: Sizes.mediumSpace),
-                    validator: (value) {
-                      if (value?.isEmpty ?? true) {
-                        return 'Email obrigatório';
-                      } else {
-                        return null;
-                      }
-                    },
-                    controller: emailController,
-                    decoration: const InputDecoration(
-                      hintText: 'Email',
-                    ),
-                  ),
-                  const SizedBox(height: Sizes.mediumSpace),
-                  ValueListenableBuilder(
-                    builder: (context, value, _) {
-                      return TextFormField(
-                        style: const TextStyle(fontSize: Sizes.mediumSpace),
-                        validator: (value) {
-                          if (value?.isEmpty ?? true) {
-                            return 'Senha obrigatória';
-                          } else {
-                            return null;
-                          }
-                        },
-                        controller: passwordController,
-                        decoration: InputDecoration(
-                          hintText: 'Senha',
-                          suffixIcon: IconButton(
-                            onPressed: () => isVisible.value = !isVisible.value,
-                            icon: Icon(value
-                                ? Icons.visibility
-                                : Icons.visibility_off),
-                          ),
-                        ),
-                        obscureText: value ? false : true,
-                      );
-                    },
-                    valueListenable: isVisible,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(bottom: Sizes.largeSpace),
-                        child: TextButton(
-                            onPressed: () async {
-                              final message = await controller
-                                  .sendPasswordResetEmail(emailController.text);
-                              if (message != null) {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    content: Text(message),
-                                  ),
-                                );
-                              }
-                            },
-                            child: const Text('Esqueci minha senha')),
+              child: BlocListener<LoginController, LoginState>(
+                bloc: controller,
+                listener: (context, state) {
+                  if (state is LoginStateError) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(state.error),
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: BlocListener<LoginController, LoginState>(
-                        bloc: controller,
-                        listener: (context, state) {
-                          if (state is LoginStateError) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(state.error),
-                              ),
-                            );
-                          }
-                          if (state is LoginStateSuccess) {
-                            Navigator.of(context).pushReplacementNamed('/home');
-                          }
-                        },
+                    );
+                  }
+                  if (state is LoginStateSuccess) {
+                    Navigator.of(context).pushReplacementNamed('/home');
+                  }
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Padding(
+                        padding: EdgeInsets.all(Sizes.mediumSpace),
+                        child: LogoApp()),
+                    TextFormField(
+                      style: const TextStyle(fontSize: Sizes.mediumSpace),
+                      validator: (value) {
+                        if (value?.isEmpty ?? true) {
+                          return 'Email obrigatório';
+                        } else {
+                          return null;
+                        }
+                      },
+                      controller: emailController,
+                      decoration: const InputDecoration(
+                        hintText: 'Email',
+                      ),
+                    ),
+                    const SizedBox(height: Sizes.mediumSpace),
+                    ValueListenableBuilder(
+                      builder: (context, value, _) {
+                        return TextFormField(
+                          style: const TextStyle(fontSize: Sizes.mediumSpace),
+                          validator: (value) {
+                            if (value?.isEmpty ?? true) {
+                              return 'Senha obrigatória';
+                            } else {
+                              return null;
+                            }
+                          },
+                          controller: passwordController,
+                          decoration: InputDecoration(
+                            hintText: 'Senha',
+                            suffixIcon: IconButton(
+                              onPressed: () =>
+                                  isVisible.value = !isVisible.value,
+                              icon: Icon(value
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                            ),
+                          ),
+                          obscureText: value ? false : true,
+                        );
+                      },
+                      valueListenable: isVisible,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(bottom: Sizes.largeSpace),
+                          child: TextButton(
+                              onPressed: () async {
+                                final message =
+                                    await controller.sendPasswordResetEmail(
+                                        emailController.text);
+                                if (message != null) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      content: Text(message),
+                                    ),
+                                  );
+                                }
+                              },
+                              child: const Text('Esqueci minha senha')),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                        width: double.infinity,
                         child: ElevatedButton(
                           style: Theme.of(context).elevatedButtonTheme.style,
                           onPressed: () async {
@@ -127,43 +129,29 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           child: const Text('Entrar'),
                         )),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: BlocListener<LoginController, LoginState>(
-                        bloc: controller,
-                        listener: (context, state) {
-                          if (state is LoginStateError) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(state.error),
-                              ),
-                            );
-                          }
-                          if (state is LoginStateSuccess) {
-                            Navigator.of(context).pushReplacementNamed('/home');
-                          }
-                        },
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.only(top: Sizes.extraLargeSpace),
-                          child: GoogleAuthButton(
-                            onPressed: () async {
-                              await controller.googleSignIn();
-                            },
-                          ),
-                        )),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(Sizes.mediumSpace),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/register');
-                      },
-                      child: const Text('CADASTRAR?'),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(top: Sizes.extraLargeSpace),
+                        child: GoogleAuthButton(
+                          onPressed: () async {
+                            await controller.googleSignIn();
+                          },
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(Sizes.mediumSpace),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/register');
+                        },
+                        child: const Text('CADASTRAR?'),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

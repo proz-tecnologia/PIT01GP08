@@ -32,14 +32,17 @@ class LoginController extends Cubit<LoginState> {
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
-      await FirebaseAuth.instance.signInWithCredential(credential);
-      emit(LoginStateSuccess());
+      final verify =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      if (verify.user != null) {
+        emit(LoginStateSuccess());
+      }
     } catch (e) {
       if (e is FirebaseAuthException) {
         log(e.message ?? 'FirebaseAuthException');
         emit(LoginStateError(e.message ?? 'Error on loginController'));
       } else {
-        emit(LoginStateError('Erro de conexão'));
+        emit(LoginStateError("Erro no Google login"));
       }
     }
   }
