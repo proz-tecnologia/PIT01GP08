@@ -39,4 +39,11 @@ class StatementController extends Cubit<StatementState> {
     transaction.fulfill();
     emit(stateCopy);
   }
+
+  void deleteFromScreen(Transaction transaction) {
+    final stateCopy = state;
+    toggleState(false);
+    stateCopy.list.removeWhere((e) => e.id == transaction.id);
+    emit(stateCopy);
+  }
 }

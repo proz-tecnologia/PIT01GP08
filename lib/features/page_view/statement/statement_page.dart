@@ -110,6 +110,30 @@ class StatementPage extends StatelessWidget {
                                         ],
                                       ),
                                     ),
+                                    PopupMenuItem(
+                                      onTap: () {
+                                        context
+                                            .read<DataController>()
+                                            .deleteTransaction(
+                                                state.list[index]);
+                                        controller.deleteFromScreen(
+                                            state.list[index]);
+                                      },
+                                      child: Row(
+                                        children: const [
+                                          Icon(
+                                            Icons.delete_outline_rounded,
+                                            color: AppColors.expense,
+                                          ),
+                                          SizedBox(width: Sizes.mediumSpace),
+                                          Text(
+                                            'Deletar',
+                                            style: TextStyle(
+                                                color: AppColors.expense),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                   child:
                                       TransactionTile.check(state.list[index]),
