@@ -153,7 +153,7 @@ class _NewEntryContentState extends State<NewEntryContent> {
                                         dateString: date.text,
                                         description: description.text,
                                         value: value.text,
-                                        category: category.value,
+                                        category: category.value!,
                                         fulfilled: fulfilled.value,
                                         paymentOption: paymentOption.value,
                                         endDateString: endDate.text,

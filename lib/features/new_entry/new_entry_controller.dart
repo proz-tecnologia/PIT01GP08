@@ -15,7 +15,7 @@ class NewEntryController extends Cubit<NewEntryState> {
     required String dateString,
     required String description,
     required String value,
-    required Category? category,
+    required Category category,
     required bool fulfilled,
     required int paymentOption,
     String endDateString = '',
@@ -50,7 +50,7 @@ class NewEntryController extends Cubit<NewEntryState> {
               .replaceAll('.', '')
               .replaceAll(',', '.'),
         ),
-        category: category!,
+        category: category,
         fulfilled: fulfilled,
         payment: payment,
         endDate: endDate,
