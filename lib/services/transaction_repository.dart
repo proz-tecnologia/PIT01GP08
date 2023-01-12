@@ -8,7 +8,7 @@ import '../shared/utils/end_of_month.dart';
 abstract class TransactionRepository {
   Future<void> createTransaction(model.Transaction transaction);
   Future<void> editTransactionData(model.Transaction transaction);
-  Future<void> deleteTransaction(String id);
+  Future<void> deleteTransaction(model.Transaction transaction);
   Future<List<model.Transaction>> getAllTransactions();
   Future<List<model.Transaction>> getFixedTransactions();
   Future<List<model.Transaction>> getParcelledTransactions();
@@ -59,9 +59,20 @@ class TransactionFirebaseRepository implements TransactionRepository {
   }
 
   @override
-  Future<void> deleteTransaction(String id) async {
+  Future<void> deleteTransaction(model.Transaction transaction) async {
     try {
-      firestorePath.collection('transactions').doc(id).delete();
+      final String path;
+      switch (transaction.payment) {
+        case Payment.fixa:
+          path = 'fixed-transactions';
+          break;
+        case Payment.parcelada:
+          path = 'parcelled-transactions';
+          break;
+        default:
+          path = 'transactions';
+      }
+      firestorePath.collection(path).doc(transaction.id).delete();
     } catch (e) {
       rethrow;
     }
@@ -70,10 +81,26 @@ class TransactionFirebaseRepository implements TransactionRepository {
   @override
   Future<void> editTransactionData(model.Transaction transaction) async {
     try {
-      firestorePath
-          .collection('transactions')
-          .doc(transaction.id)
-          .set(transaction.toMap());
+      final map = transaction.toMap();
+      if (transaction.payment != Payment.normal) {
+        map.remove('date');
+        map.remove('fulfilled');
+      }
+      final String path;
+      switch (transaction.payment) {
+        case Payment.fixa:
+          path = 'fixed-transactions';
+          break;
+        case Payment.parcelada:
+          path = 'parcelled-transactions';
+          break;
+        default:
+          path = 'transactions';
+      }
+      await firestorePath.collection(path).doc(transaction.id).update(map);
+      if (transaction.payment != Payment.normal) {
+        await fulfillTransaction(transaction, fulfill: transaction.fulfilled);
+      }
     } catch (e) {
       rethrow;
     }
@@ -85,7 +112,7 @@ class TransactionFirebaseRepository implements TransactionRepository {
     try {
       final snapshot = await firestorePath
           .collection('transactions')
-          .orderBy("date", descending: true)
+          .orderBy('date', descending: true)
           .get();
       final docs = snapshot.docs;
       for (var doc in docs) {
@@ -174,7 +201,7 @@ class TransactionFirebaseRepository implements TransactionRepository {
   @override
   Future<void> fulfillTransaction(
     model.Transaction transaction, {
-    fulfill = true,
+    bool fulfill = true,
   }) async {
     try {
       if (transaction.payment == Payment.normal) {

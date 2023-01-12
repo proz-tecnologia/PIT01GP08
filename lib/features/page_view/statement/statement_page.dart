@@ -64,35 +64,80 @@ class StatementPage extends StatelessWidget {
                               itemCount: state.list.length,
                               itemBuilder: (context, index) => Card(
                                 child: PopupMenuButton(
-                                    itemBuilder: (context) => [
-                                          PopupMenuItem(
-                                            onTap: () {
-                                              context
-                                                  .read<DataController>()
-                                                  .fulfillTransaction(
-                                                      state.list[index]);
-                                              controller.fulfillOnScreen(
-                                                  state.list[index]);
-                                            },
-                                            child: Row(
-                                              children: const [
-                                                Icon(
-                                                  Icons.attach_money,
-                                                  color: AppColors.income,
-                                                ),
-                                                SizedBox(
-                                                    width: Sizes.mediumSpace),
-                                                Text(
-                                                  'Efetuar pagamento',
-                                                  style: TextStyle(
-                                                      color: AppColors.income),
-                                                ),
-                                              ],
-                                            ),
-                                          )
+                                  itemBuilder: (context) => [
+                                    PopupMenuItem(
+                                      onTap: () {
+                                        context
+                                            .read<DataController>()
+                                            .fulfillTransaction(
+                                                state.list[index]);
+                                        controller
+                                            .fulfillOnScreen(state.list[index]);
+                                      },
+                                      child: Row(
+                                        children: const [
+                                          Icon(
+                                            Icons.attach_money,
+                                            color: AppColors.income,
+                                          ),
+                                          SizedBox(width: Sizes.mediumSpace),
+                                          Text(
+                                            'Efetuar pagamento',
+                                            style: TextStyle(
+                                                color: AppColors.income),
+                                          ),
                                         ],
-                                    child: TransactionTile.check(
-                                        state.list[index])),
+                                      ),
+                                    ),
+                                    PopupMenuItem(
+                                      onTap: () => Future(
+                                        () => Navigator.of(context).pushNamed(
+                                          '/new-entry',
+                                          arguments: [
+                                            (context
+                                                    .read<DataController>()
+                                                    .state as SuccessDataState)
+                                                .categoryList,
+                                            state.list[index],
+                                          ],
+                                        ),
+                                      ),
+                                      child: Row(
+                                        children: const [
+                                          Icon(Icons.edit_rounded),
+                                          SizedBox(width: Sizes.mediumSpace),
+                                          Text('Editar'),
+                                        ],
+                                      ),
+                                    ),
+                                    PopupMenuItem(
+                                      onTap: () {
+                                        context
+                                            .read<DataController>()
+                                            .deleteTransaction(
+                                                state.list[index]);
+                                        controller.deleteFromScreen(
+                                            state.list[index]);
+                                      },
+                                      child: Row(
+                                        children: const [
+                                          Icon(
+                                            Icons.delete_outline_rounded,
+                                            color: AppColors.expense,
+                                          ),
+                                          SizedBox(width: Sizes.mediumSpace),
+                                          Text(
+                                            'Deletar',
+                                            style: TextStyle(
+                                                color: AppColors.expense),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                  child:
+                                      TransactionTile.check(state.list[index]),
+                                ),
                               ),
                             ),
                     ),

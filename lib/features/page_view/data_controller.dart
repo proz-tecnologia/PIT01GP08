@@ -41,4 +41,18 @@ class DataController extends Cubit<DataState> {
           message: 'Não foi possível salvar os dados.\nTente novamente.'));
     }
   }
+
+  void deleteTransaction(Transaction transaction) async {
+    final categories = (state as SuccessDataState).categoryList;
+    List<Transaction> transactions =
+        (state as SuccessDataState).transactionList;
+    try {
+      await transactionRepo.deleteTransaction(transaction);
+      transactions.removeWhere((e) => e.id == transaction.id);
+      emit(SuccessDataState(transactions, categories));
+    } catch (e) {
+      emit(SuccessDataState(transactions, categories,
+          message: 'Não foi possível excluir.\nTente novamente.'));
+    }
+  }
 }

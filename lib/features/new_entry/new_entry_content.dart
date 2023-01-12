@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../../design_sys/sizes.dart';
 import '../../shared/models/category.dart';
@@ -42,6 +43,31 @@ class _NewEntryContentState extends State<NewEntryContent> {
 
   @override
   Widget build(BuildContext context) {
+    final transaction =
+        (ModalRoute.of(context)?.settings.arguments as List)[1] as Transaction?;
+    if (transaction != null) {
+      fulfilled.value = transaction.fulfilled;
+      paymentOption.value = Payment.values.indexOf(transaction.payment);
+      category.value =
+          widget.categoryList.firstWhere((e) => e.id == transaction.categoryId);
+      totalValueNotifier.value = transaction.payment == Payment.parcelada
+          ? transaction.value * (transaction.parts ?? 0)
+          : transaction.value;
+      value.text =
+          'R\$ ${totalValueNotifier.value.toStringAsFixed(2).replaceAll('.', ',')}';
+      description.text = transaction.description;
+      date.text = DateFormat('dd/MM/yyyy').format(transaction.date);
+      if (transaction.endDate != null) {
+        endDate.text = DateFormat('dd/MM/yyyy').format(transaction.endDate!);
+      }
+      if (transaction.parts != null) {
+        parts.text = transaction.parts.toString();
+      }
+      if (transaction.type == Type.income) {
+        controller.changeType(isIncome: true);
+      }
+    }
+
     return BlocProvider(
       create: (context) => controller,
       child: Column(
@@ -123,10 +149,11 @@ class _NewEntryContentState extends State<NewEntryContent> {
                                     if (formKey.currentState?.validate() ??
                                         false) {
                                       saveController.saveTransaction(
+                                        id: transaction?.id,
                                         dateString: date.text,
                                         description: description.text,
                                         value: value.text,
-                                        category: category.value,
+                                        category: category.value!,
                                         fulfilled: fulfilled.value,
                                         paymentOption: paymentOption.value,
                                         endDateString: endDate.text,
