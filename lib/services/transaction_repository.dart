@@ -70,10 +70,26 @@ class TransactionFirebaseRepository implements TransactionRepository {
   @override
   Future<void> editTransactionData(model.Transaction transaction) async {
     try {
-      firestorePath
-          .collection('transactions')
-          .doc(transaction.id)
-          .set(transaction.toMap());
+      final map = transaction.toMap();
+      if (transaction.payment != Payment.normal) {
+        map.remove('date');
+        map.remove('fulfilled');
+      }
+      final String path;
+      switch (transaction.payment) {
+        case Payment.fixa:
+          path = 'fixed-transactions';
+          break;
+        case Payment.parcelada:
+          path = 'parcelled-transactions';
+          break;
+        default:
+          path = 'transactions';
+      }
+      await firestorePath.collection(path).doc(transaction.id).update(map);
+      if (transaction.payment != Payment.normal) {
+        await fulfillTransaction(transaction, fulfill: transaction.fulfilled);
+      }
     } catch (e) {
       rethrow;
     }
@@ -174,7 +190,7 @@ class TransactionFirebaseRepository implements TransactionRepository {
   @override
   Future<void> fulfillTransaction(
     model.Transaction transaction, {
-    fulfill = true,
+    bool fulfill = true,
   }) async {
     try {
       if (transaction.payment == Payment.normal) {

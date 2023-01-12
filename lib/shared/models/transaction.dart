@@ -40,8 +40,10 @@ class Transaction {
     required Payment payment,
     DateTime? endDate,
     int? parts,
+    String? id,
   }) {
     return Transaction(
+      id: id,
       date: date,
       description: description,
       value: value,
