@@ -8,6 +8,7 @@ class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       fontFamily: 'MavenPro',
+      visualDensity: VisualDensity.comfortable,
       dialogBackgroundColor: AppColors.white,
       disabledColor: AppColors.lightGrey,
       dividerColor: AppColors.lightGrey,

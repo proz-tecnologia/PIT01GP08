@@ -9,6 +9,21 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      builder: (context, child) {
+        final data = MediaQuery.of(context);
+        final window = WidgetsBinding.instance.window;
+        double factor =
+            window.physicalSize.shortestSide / window.devicePixelRatio / 320;
+        factor = factor < 1
+            ? 1
+            : window.devicePixelRatio > 2 && factor > 2
+                ? 1.2
+                : factor;
+        return MediaQuery(
+          data: data.copyWith(textScaleFactor: factor),
+          child: child ?? const SplashScreen(),
+        );
+      },
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       initialRoute: '/splash',
@@ -23,6 +38,7 @@ class App extends StatelessWidget {
         '/my-categories': (context) => const MyCategoriesPage(),
         '/category-edit': (context) => const CategoryEditPage(),
       },
+      themeMode: ThemeMode.light,
     );
   }
 }
