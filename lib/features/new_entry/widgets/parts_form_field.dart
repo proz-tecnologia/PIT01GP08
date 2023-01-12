@@ -36,6 +36,7 @@ class PartsFormField extends StatelessWidget {
                       borderSide: BorderSide(color: state.color),
                     ),
                   ),
+                  keyboardType: TextInputType.number,
                   onChanged: (_) {
                     final value = totalValueNotifier.value;
                     totalValueNotifier.value = 0;
