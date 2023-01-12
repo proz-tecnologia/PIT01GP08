@@ -14,9 +14,9 @@ class App extends StatelessWidget {
         final window = WidgetsBinding.instance.window;
         double factor =
             window.physicalSize.shortestSide / window.devicePixelRatio / 320;
-        factor = factor < 1
+        factor = factor < 1 // works for very small screens (ex: Galaxy Pocket)
             ? 1
-            : window.devicePixelRatio > 2 && factor > 2
+            : window.devicePixelRatio > 2 && factor > 2 // works for large screens (ex: iPad Air)
                 ? 1.2
                 : factor;
         return MediaQuery(
