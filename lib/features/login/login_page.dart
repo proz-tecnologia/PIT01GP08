@@ -22,6 +22,12 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    void showMessage(String message) => showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: Text(message),
+          ),
+        );
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(Sizes.largeSpace),
@@ -103,12 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                                     await controller.sendPasswordResetEmail(
                                         emailController.text);
                                 if (message != null) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => AlertDialog(
-                                      content: Text(message),
-                                    ),
-                                  );
+                                  showMessage(message);
                                 }
                               },
                               child: const Text('Esqueci minha senha')),
