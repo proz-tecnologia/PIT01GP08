@@ -37,6 +37,7 @@ class LoginController extends Cubit<LoginState> {
   }
 
   Future<void> googleSignIn() async {
+    emit(LoginStateLoading());
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       final GoogleSignInAuthentication? googleAuth =
