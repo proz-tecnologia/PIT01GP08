@@ -18,6 +18,7 @@ class MyCategoriesPage extends StatelessWidget {
         MyCategoriesController.instance(CategoryFirebaseRepository());
     return Scaffold(
       appBar: AppBar(
+        title: const Text("Minhas Categorias"),
         actions: [
           IconButton(
             onPressed: () => Navigator.of(context).pushNamed('/category-edit'),
