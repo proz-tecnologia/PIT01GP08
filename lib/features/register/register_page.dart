@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../design_sys/colors.dart';
 import '../../services/category_repository.dart';
 import '../../shared/widgets/logo_app.dart';
 import 'register_controller.dart';
@@ -46,10 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     padding: const EdgeInsets.all(Sizes.mediumSpace),
                     child: Text(
                       'Cadastre-se',
-                      style:
-                          Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                color: AppColors.white,
-                              ),
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ),
                   TextFormField(
@@ -57,7 +53,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: nameController,
                     validator: (value) {
                       if (value?.isEmpty ?? true) {
-                        return 'Nome é obrigatório';
+                        return 'Campo obrigatório';
                       }
                       return null;
                     },
@@ -66,8 +62,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     decoration: const InputDecoration(labelText: 'Email'),
                     controller: emailController,
                     validator: (value) {
-                      if ((value?.isEmpty ?? true)) {
-                        return 'Email é obrigatório';
+                      if (value?.isEmpty ?? true) {
+                        return 'Campo obrigatório';
                       } else if (!value!.contains('@')) {
                         return 'Email inválido';
                       }
@@ -79,7 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       return TextFormField(
                         validator: (value) {
                           if (value?.isEmpty ?? true) {
-                            return 'Senha é obrigatório';
+                            return 'Campo obrigatório';
                           } else if (value!.length < 6) {
                             return 'Senha inválida, mínimo 6 caracteres';
                           }
@@ -87,7 +83,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         },
                         controller: passwordController,
                         decoration: InputDecoration(
-                          labelText: 'Senha',
+                          labelText: 'Crie sua senha',
                           suffixIcon: IconButton(
                             onPressed: () => isVisible.value = !isVisible.value,
                             icon: Icon(value
@@ -100,42 +96,55 @@ class _RegisterPageState extends State<RegisterPage> {
                     },
                     valueListenable: isVisible,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: Sizes.mediumSpace),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: BlocListener<RegisterController, RegisterState>(
-                        bloc: controller,
-                        listener: (context, state) {
-                          if (state is LoadingRegisterState) {
-                            showDialog(
-                              context: context,
-                              builder: (context) => const Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                            );
-                          }
-                          if (state is ErrorRegisterState) {
-                            Navigator.of(context).pop();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(state.error),
-                              ),
-                            );
-                          }
-                          if (state is SuccessRegisterState) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content:
-                                    Text('Bem vindo, ${nameController.text}'),
-                              ),
-                            );
-                            Navigator.of(context)
-                                .pushReplacementNamed('/home');
-                          }
-                        },
+                  TextFormField(
+                    validator: (value) {
+                      if (value?.isEmpty ?? true) {
+                        return 'Por favor, confirme sua senha';
+                      } else if (value != passwordController.text) {
+                        return 'As senhas estão diferentes';
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Confirme sua senha',
+                    ),
+                    obscureText: true,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: BlocListener<RegisterController, RegisterState>(
+                      bloc: controller,
+                      listener: (context, state) {
+                        if (state is LoadingRegisterState) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        }
+                        if (state is ErrorRegisterState) {
+                          Navigator.of(context).pop();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(state.error),
+                            ),
+                          );
+                        }
+                        if (state is SuccessRegisterState) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content:
+                                  Text('Bem vindo, ${nameController.text}'),
+                            ),
+                          );
+                          Navigator.of(context).pushReplacementNamed('/home');
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: Sizes.mediumSpace),
                         child: ElevatedButton(
-                          style: Theme.of(context).elevatedButtonTheme.style,
                           onPressed: () async {
                             if (formKey.currentState?.validate() ?? false) {
                               await controller.registerUser(

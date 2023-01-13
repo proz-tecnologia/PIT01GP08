@@ -16,7 +16,20 @@ class LoginController extends Cubit<LoginState> {
     } catch (e) {
       if (e is FirebaseAuthException) {
         log(e.message ?? 'FirebaseAuthException');
-        emit(LoginStateError(e.message ?? 'Error on loginController'));
+        switch (e.code) {
+          case 'invalid-email':
+          case 'wrong-password':
+            emit(LoginStateError('Email e/ou senha inválidos'));
+            break;
+          case 'user-disabled':
+            emit(LoginStateError('Este usuário foi desabilitado'));
+            break;
+          case 'user-not-found':
+            emit(LoginStateError('Usuário não encontrado'));
+            break;
+          default:
+            emit(LoginStateError('Erro de conexão'));
+        }
       } else {
         emit(LoginStateError('Erro de conexão'));
       }
@@ -38,12 +51,7 @@ class LoginController extends Cubit<LoginState> {
         emit(LoginStateSuccess());
       }
     } catch (e) {
-      if (e is FirebaseAuthException) {
-        log(e.message ?? 'FirebaseAuthException');
-        emit(LoginStateError(e.message ?? 'Error on loginController'));
-      } else {
-        emit(LoginStateError("Erro no Google login"));
-      }
+      emit(LoginStateError("Erro no login com Google"));
     }
   }
 
