@@ -1,4 +1,3 @@
-import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,6 +5,7 @@ import '../../design_sys/sizes.dart';
 import '../../shared/widgets/logo_app.dart';
 import 'login_controller.dart';
 import 'login_states.dart';
+import 'widgets/social_auth_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -130,11 +130,12 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     SizedBox(
                       width: double.infinity,
-                      child: GoogleAuthButton(
-                        onPressed: () async {
-                          await controller.googleSignIn();
-                        },
-                      ),
+                      child: SocialAuthButton(
+                          onPressed: () async {
+                            await controller.googleSignIn();
+                          },
+                          asset: 'assets/google_logo.png',
+                          text: 'Entrar com Google'),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(Sizes.mediumSpace),
