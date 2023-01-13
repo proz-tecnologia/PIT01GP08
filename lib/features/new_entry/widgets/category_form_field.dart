@@ -17,12 +17,10 @@ class CategoryFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<NewEntryTypeController, NewEntryTypeState>(
       builder: (context, state) {
-        // if (!state.categories.contains(controller.value)) {
-        //   controller.value = null;
-        // }
         final value = state.categories.contains(controller.value)
             ? controller.value
             : state.categories[0];
+        controller.value = value;
         return DropdownButtonFormField(
           decoration: InputDecoration(
             floatingLabelStyle: TextStyle(color: state.color),
@@ -32,11 +30,11 @@ class CategoryFormField extends StatelessWidget {
           ),
           value: value,
           items: state.categories
-            .map((category) => DropdownMenuItem(
-                  value: category,
-                  child: Text(category.name),
-                ))
-            .toList(),
+              .map((category) => DropdownMenuItem(
+                    value: category,
+                    child: Text(category.name),
+                  ))
+              .toList(),
           onChanged: (value) {
             controller.value = value!;
           },
