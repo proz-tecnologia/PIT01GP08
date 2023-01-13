@@ -55,6 +55,10 @@ class _ProfilePageState extends State<ProfilePage> {
               leading: const Icon(Icons.logout_rounded),
               title: const Text("Sair do app"),
             ),
+            const ListTile(
+              leading: Icon(Icons.info_outline_rounded),
+              title: Text("Sobre o app"),
+            ),
           ];
           return Column(
             children: [
