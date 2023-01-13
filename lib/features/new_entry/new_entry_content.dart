@@ -33,16 +33,9 @@ class _NewEntryContentState extends State<NewEntryContent> {
   final endDate = TextEditingController();
   final parts = TextEditingController(text: '2');
 
-  late final NewEntryTypeController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = NewEntryTypeController(widget.categoryList);
-  }
-
   @override
   Widget build(BuildContext context) {
+    final controller = NewEntryTypeController(widget.categoryList);
     final transaction =
         (ModalRoute.of(context)?.settings.arguments as List)[1] as Transaction?;
     if (transaction != null) {
