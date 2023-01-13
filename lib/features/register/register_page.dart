@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../services/category_repository.dart';
 import '../../shared/widgets/logo_app.dart';
+import '../../shared/widgets/social_auth_button.dart';
 import 'register_controller.dart';
 import 'register_states.dart';
 import '../../design_sys/sizes.dart';
@@ -159,6 +160,16 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: SocialAuthButton(
+                        onPressed: () async {
+                          await controller.googleSignUp();
+                        },
+                        asset: 'assets/google_logo.png',
+                        text: 'Entrar com Google'),
+                  ),
+                  const SizedBox(height: Sizes.mediumSpace),
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pushNamed('/login');

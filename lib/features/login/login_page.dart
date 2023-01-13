@@ -5,7 +5,7 @@ import '../../design_sys/sizes.dart';
 import '../../shared/widgets/logo_app.dart';
 import 'login_controller.dart';
 import 'login_states.dart';
-import 'widgets/social_auth_button.dart';
+import '../../shared/widgets/social_auth_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
