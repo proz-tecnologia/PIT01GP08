@@ -15,6 +15,7 @@ class Transaction {
   final Payment payment;
   final DateTime? endDate;
   final int? parts;
+  final bool? isCopy;
 
   Transaction({
     this.id,
@@ -27,6 +28,7 @@ class Transaction {
     required this.payment,
     this.endDate,
     this.parts,
+    this.isCopy,
   })  : _fulfilled = fulfilled,
         assert(payment != Payment.fixa || endDate != null),
         assert(payment != Payment.parcelada || parts != null);
@@ -82,7 +84,7 @@ class Transaction {
     return result;
   }
 
-  factory Transaction.fromMap(String id, Map<String, dynamic> map) {
+  factory Transaction.fromMap(String id, Map<String, dynamic> map,{bool isCopy = false}) {
     final type = map['type'] == 'expense' ? Type.expense : Type.income;
     final payment = map['payment'] == 'normal'
         ? Payment.normal
@@ -108,6 +110,7 @@ class Transaction {
       payment: payment,
       endDate: endDate,
       parts: map['parts'],
+      isCopy: isCopy,
     );
   }
 

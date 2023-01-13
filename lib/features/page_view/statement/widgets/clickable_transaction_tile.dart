@@ -10,78 +10,77 @@ import '../../widgets/transaction_tile.dart';
 import '../statement_controller.dart';
 
 class ClickableTransactionTile extends StatelessWidget {
-  const ClickableTransactionTile(
-    this.transaction, {
-    super.key,
-    this.isEditable = true,
-  });
+  const ClickableTransactionTile(this.transaction, {super.key});
 
   final Transaction transaction;
-  final bool isEditable;
 
   @override
   Widget build(BuildContext context) {
+    final items = [
+      PopupMenuItem(
+        onTap: () {
+          context.read<DataController>().fulfillTransaction(transaction);
+          context.read<StatementController>().fulfillOnScreen(transaction);
+        },
+        child: Row(
+          children: const [
+            Icon(
+              Icons.attach_money,
+              color: AppColors.income,
+            ),
+            SizedBox(width: Sizes.mediumSpace),
+            Text(
+              'Efetuar pagamento',
+              style: TextStyle(color: AppColors.income),
+            ),
+          ],
+        ),
+      ),
+      PopupMenuItem(
+        onTap: () => Future(
+          () => Navigator.of(context).pushNamed(
+            '/new-entry',
+            arguments: [
+              (context.read<DataController>().state as SuccessDataState)
+                  .categoryList,
+              transaction,
+            ],
+          ),
+        ),
+        child: Row(
+          children: const [
+            Icon(Icons.edit_rounded),
+            SizedBox(width: Sizes.mediumSpace),
+            Text('Editar'),
+          ],
+        ),
+      ),
+      PopupMenuItem(
+        onTap: () {
+          context.read<DataController>().deleteTransaction(transaction);
+          context.read<StatementController>().deleteFromScreen(transaction);
+        },
+        child: Row(
+          children: const [
+            Icon(
+              Icons.delete_outline_rounded,
+              color: AppColors.expense,
+            ),
+            SizedBox(width: Sizes.mediumSpace),
+            Text(
+              'Deletar',
+              style: TextStyle(color: AppColors.expense),
+            ),
+          ],
+        ),
+      ),
+    ];
+    if (transaction.isCopy ?? false) {
+      items.removeAt(1);
+    }
     return Card(
       child: PopupMenuButton(
-        itemBuilder: (context) => [
-          PopupMenuItem(
-            onTap: () {
-              context.read<DataController>().fulfillTransaction(transaction);
-              context.read<StatementController>().fulfillOnScreen(transaction);
-            },
-            child: Row(
-              children: const [
-                Icon(
-                  Icons.attach_money,
-                  color: AppColors.income,
-                ),
-                SizedBox(width: Sizes.mediumSpace),
-                Text(
-                  'Efetuar pagamento',
-                  style: TextStyle(color: AppColors.income),
-                ),
-              ],
-            ),
-          ),
-          PopupMenuItem(
-            onTap: () => Future(
-              () => Navigator.of(context).pushNamed(
-                '/new-entry',
-                arguments: [
-                  (context.read<DataController>().state as SuccessDataState)
-                      .categoryList,
-                  transaction,
-                ],
-              ),
-            ),
-            child: Row(
-              children: const [
-                Icon(Icons.edit_rounded),
-                SizedBox(width: Sizes.mediumSpace),
-                Text('Editar'),
-              ],
-            ),
-          ),
-          PopupMenuItem(
-            onTap: () {
-              context.read<DataController>().deleteTransaction(transaction);
-              context.read<StatementController>().deleteFromScreen(transaction);
-            },
-            child: Row(
-              children: const [
-                Icon(
-                  Icons.delete_outline_rounded,
-                  color: AppColors.expense,
-                ),
-                SizedBox(width: Sizes.mediumSpace),
-                Text(
-                  'Deletar',
-                  style: TextStyle(color: AppColors.expense),
-                ),
-              ],
-            ),
-          ),
-        ],
+        itemBuilder: (context) => items,
         child: TransactionTile.check(transaction),
       ),
     );

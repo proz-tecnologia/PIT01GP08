@@ -67,7 +67,6 @@ class TransactionFirebaseRepository implements TransactionRepository {
     try {
       final map = transaction.toMap();
       if (transaction.payment != Payment.normal) {
-        map.remove('date');
         map.remove('fulfilled');
       }
       await firestorePath.doc(transaction.id).update(map);
@@ -159,14 +158,16 @@ class TransactionFirebaseRepository implements TransactionRepository {
             DateTime initialDate = (data['date'] as Timestamp).toDate();
             DateTime newDate = initialDate;
             int i = 0;
+            bool isCopy = false;
             do {
               final isFulfilled = i < doc.data()['fulfilled'].length
                   ? doc.data()['fulfilled'][i++] ?? false
                   : false;
               data.update('fulfilled', (value) => isFulfilled);
               list.add(
-                model.Transaction.fromMap(doc.id, data),
+                model.Transaction.fromMap(doc.id, data, isCopy: isCopy),
               );
+              isCopy = true;
               final targetMonth = newDate.month + 1;
               newDate =
                   DateTime(newDate.year, newDate.month + 1, initialDate.day);
@@ -181,6 +182,7 @@ class TransactionFirebaseRepository implements TransactionRepository {
             DateTime initialDate = (data['date'] as Timestamp).toDate();
             DateTime newDate = initialDate;
             data.update('value', (value) => value / data['parts']);
+            bool isCopy = false;
 
             for (var i = 0; i < data['parts']; i++) {
               final isFulfilled = i < doc.data()['fulfilled'].length
@@ -188,8 +190,9 @@ class TransactionFirebaseRepository implements TransactionRepository {
                   : false;
               data.update('fulfilled', (value) => isFulfilled);
               list.add(
-                model.Transaction.fromMap(doc.id, data),
+                model.Transaction.fromMap(doc.id, data, isCopy: isCopy),
               );
+              isCopy = true;
               final targetMonth = newDate.month + 1;
               newDate =
                   DateTime(newDate.year, newDate.month + 1, initialDate.day);
