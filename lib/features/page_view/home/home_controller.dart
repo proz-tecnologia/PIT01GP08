@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../shared/models/category.dart';
 import '../../../shared/models/transaction.dart';
-import '../../../shared/utils/select_by_date.dart';
 import 'home_states.dart';
 
 class HomeController extends Cubit<HomeState> {
@@ -31,33 +30,37 @@ class HomeController extends Cubit<HomeState> {
   }
 
   void displayBalance() {
+    double balance = 0;
     double income = 0;
     double expense = 0;
     double pendingIncome = 0;
     double pendingExpense = 0;
 
     final today = DateTime.now();
-    final untilCurrentMonth = transactionList.getUntilMonth(today);
+    final nextMonth = DateTime(today.year, today.month + 1);
 
-    for (var transaction in untilCurrentMonth) {
-      if (transaction.type == Type.income) {
-        if (!transaction.date.isAfter(today)) {
-          income += transaction.value;
+    for (var transaction in transactionList) {
+      if (transaction.fulfilled) {
+        if (transaction.type == Type.income) {
+          balance += transaction.value;
+        } else {
+          balance -= transaction.value;
         }
-        if (!transaction.fulfilled) {
+      } else if (transaction.date.isBefore(nextMonth)) {
+        if (transaction.type == Type.income) {
           pendingIncome += transaction.value;
-        }
-      } else {
-        if (!transaction.date.isAfter(today)) {
-          expense += transaction.value;
-        }
-        if (!transaction.fulfilled) {
+        } else {
           pendingExpense += transaction.value;
         }
       }
+      if (transaction.date.month == today.month) {
+        if (transaction.type == Type.income) {
+          income += transaction.value;
+        } else {
+          expense += transaction.value;
+        }
+      }
     }
-
-    final balance = income - expense;
 
     emit(
       SuccessHomeState(
