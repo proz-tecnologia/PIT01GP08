@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -133,10 +134,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           );
                         }
                         if (state is SuccessRegisterState) {
+                          final user = FirebaseAuth.instance.currentUser!;
+
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content:
-                                  Text('Bem vindo, ${nameController.text}'),
+                              content: Text('Bem vindo, ${user.displayName}'),
                             ),
                           );
                           Navigator.of(context).pushReplacementNamed('/home');
