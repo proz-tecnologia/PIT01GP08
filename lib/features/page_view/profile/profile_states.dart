@@ -15,3 +15,5 @@ class ErrorProfileState implements ProfileState {
 
   ErrorProfileState(this.error);
 }
+
+class LoggedOutProfileState implements ProfileState {}
