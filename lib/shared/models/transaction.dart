@@ -10,9 +10,12 @@ class Transaction {
   final double value;
   final Type type;
   final String categoryId;
-  final bool fulfilled;
+  bool _fulfilled;
   final String? id;
   final Payment payment;
+  final DateTime? endDate;
+  final int? parts;
+  final bool? isCopy;
 
   Transaction({
     this.id,
@@ -21,9 +24,14 @@ class Transaction {
     required this.value,
     required this.type,
     required this.categoryId,
-    required this.fulfilled,
+    required bool fulfilled,
     required this.payment,
-  });
+    this.endDate,
+    this.parts,
+    this.isCopy,
+  })  : _fulfilled = fulfilled,
+        assert(payment != Payment.fixa || endDate != null),
+        assert(payment != Payment.parcelada || parts != null);
 
   factory Transaction.fromCategory({
     required DateTime date,
@@ -32,8 +40,12 @@ class Transaction {
     required Category category,
     required bool fulfilled,
     required Payment payment,
+    DateTime? endDate,
+    int? parts,
+    String? id,
   }) {
     return Transaction(
+      id: id,
       date: date,
       description: description,
       value: value,
@@ -41,11 +53,16 @@ class Transaction {
       categoryId: category.id!,
       fulfilled: fulfilled,
       payment: payment,
+      endDate: endDate,
+      parts: parts,
     );
   }
 
   String get valueString =>
       'R\$ ${value.toStringAsFixed(2).replaceFirst('.', ',')}';
+
+  bool get fulfilled => _fulfilled;
+  void fulfill() => _fulfilled = true;
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
@@ -55,29 +72,45 @@ class Transaction {
     result.addAll({'value': value});
     result.addAll({'type': type.name});
     result.addAll({'categoryId': categoryId});
-    result.addAll({'fulfilled': fulfilled});
+    result.addAll({'fulfilled': _fulfilled});
     result.addAll({'payment': payment.name});
+    if (endDate != null) {
+      result.addAll({'endDate': Timestamp.fromDate(endDate!)});
+    }
+    if (parts != null) {
+      result.addAll({'parts': parts});
+    }
 
     return result;
   }
 
-  factory Transaction.fromMap(String id, Map<String, dynamic> map) {
-    final type_ = map['type'] == 'expense' ? Type.expense : Type.income;
-    final payment_ = map['payment'] == 'normal'
+  factory Transaction.fromMap(String id, Map<String, dynamic> map,{bool isCopy = false}) {
+    final type = map['type'] == 'expense' ? Type.expense : Type.income;
+    final payment = map['payment'] == 'normal'
         ? Payment.normal
-        : map['payment'] == 'fixed'
+        : map['payment'] == 'fixa'
             ? Payment.fixa
             : Payment.parcelada;
+
+    DateTime? endDate;
+    try {
+      endDate = (map['endDate'] as Timestamp).toDate();
+    } catch (e) {
+      endDate = null;
+    }
 
     return Transaction(
       id: id,
       date: (map['date'] as Timestamp).toDate(),
       description: map['description'] ?? '',
       value: (map['value'] ?? 0).toDouble(),
-      type: type_,
+      type: type,
       categoryId: map['categoryId'] ?? '',
       fulfilled: map['fulfilled'] ?? false,
-      payment: payment_,
+      payment: payment,
+      endDate: endDate,
+      parts: map['parts'],
+      isCopy: isCopy,
     );
   }
 
@@ -89,6 +122,8 @@ class Transaction {
     String? categoryId,
     bool? fulfilled,
     Payment? payment,
+    DateTime? endDate,
+    int? parts,
   }) {
     return Transaction(
       id: id,
@@ -97,8 +132,10 @@ class Transaction {
       value: value ?? this.value * 100,
       type: type ?? this.type,
       categoryId: categoryId ?? this.categoryId,
-      fulfilled: fulfilled ?? this.fulfilled,
+      fulfilled: fulfilled ?? _fulfilled,
       payment: payment ?? this.payment,
+      endDate: endDate ?? this.endDate,
+      parts: parts ?? this.parts,
     );
   }
 }

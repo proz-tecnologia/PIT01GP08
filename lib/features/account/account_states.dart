@@ -1,13 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
-
 abstract class AccountState {}
 
 class LoadingAccountState implements AccountState {}
 
 class SuccessAccountState implements AccountState {
-  final User user;
+  final String? message;
 
-  SuccessAccountState(this.user);
+  SuccessAccountState([this.message]);
 }
 
 class ErrorAccountState implements AccountState {

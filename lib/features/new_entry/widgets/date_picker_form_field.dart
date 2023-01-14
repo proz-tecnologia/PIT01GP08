@@ -9,9 +9,11 @@ class DatePickerFormField extends StatefulWidget {
   const DatePickerFormField(
     this.textController, {
     super.key,
+    required this.label,
   });
 
   final TextEditingController textController;
+  final String label;
 
   @override
   State<DatePickerFormField> createState() => _DatePickerFormFieldState();
@@ -21,8 +23,10 @@ class _DatePickerFormFieldState extends State<DatePickerFormField> {
   @override
   void initState() {
     super.initState();
-    widget.textController.text =
-        DateFormat('dd/MM/yyyy').format(DateTime.now());
+    if (widget.textController.text == '') {
+      widget.textController.text =
+          DateFormat('dd/MM/yyyy').format(DateTime.now());
+    }
   }
 
   @override
@@ -39,7 +43,7 @@ class _DatePickerFormFieldState extends State<DatePickerFormField> {
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: state.color)),
             labelStyle: TextStyle(color: state.color),
-            labelText: 'Vencimento',
+            labelText: widget.label,
           ),
           readOnly: true,
           onTap: () async {

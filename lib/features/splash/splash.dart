@@ -38,11 +38,13 @@ class _SplashScreenState extends State<SplashScreen> {
             BlocListener<SplashController, SplashState>(
               bloc: controller,
               listener: (context, state) {
-                if (state == SplashState.logged) {
-                  Navigator.of(context).pushReplacementNamed('/home-page');
-                }
+                final cnxt = Navigator.of(context);
                 if (state == SplashState.unlogged) {
-                  Navigator.of(context).pushReplacementNamed('/register-page');
+                  cnxt.pushReplacementNamed('/register');
+                } else if (state == SplashState.logged) {
+                  cnxt.pushReplacementNamed('/home');
+                } else if (state == SplashState.manualLog) {
+                  cnxt.pushNamedAndRemoveUntil('/login', (route) => false);
                 }
               },
               child: const AppProgress(),

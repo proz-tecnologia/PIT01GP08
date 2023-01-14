@@ -1,10 +1,11 @@
-import 'package:financial_app/shared/widgets/logo_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../design_sys/sizes.dart';
+import '../../shared/widgets/logo_app.dart';
 import 'login_controller.dart';
 import 'login_states.dart';
+import '../../shared/widgets/social_auth_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -18,13 +19,16 @@ class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
-  final ValueNotifier<bool> isVisible = ValueNotifier(false);
+  final isVisible = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
-    LoginController controller = context.read<LoginController>();
-    final navigator = Navigator.of(context);
+    void showMessage(String message) => showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: Text(message),
+          ),
+        );
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(Sizes.largeSpace),
@@ -32,104 +36,118 @@ class _LoginPageState extends State<LoginPage> {
           key: formKey,
           child: Center(
             child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Padding(
-                      padding: EdgeInsets.all(Sizes.mediumSpace),
-                      child: LogoApp()),
-                  TextFormField(
-                    style: const TextStyle(fontSize: Sizes.mediumSpace),
-                    validator: (value) {
-                      if (value?.isEmpty ?? true) {
-                        return 'Email obrigatório';
-                      } else {
-                        return null;
-                      }
-                    },
-                    controller: emailController,
-                    decoration: const InputDecoration(
-                      hintText: 'Email',
-                    ),
-                  ),
-                  const SizedBox(height: Sizes.mediumSpace),
-                  ValueListenableBuilder(
-                    builder: (context, value, _) {
-                      return TextFormField(
-                        style: const TextStyle(fontSize: Sizes.mediumSpace),
-                        validator: (value) {
-                          if (value?.isEmpty ?? true) {
-                            return 'Senha obrigatória';
-                          } else {
-                            return null;
-                          }
-                        },
-                        controller: passwordController,
-                        decoration: InputDecoration(
-                          hintText: 'Senha',
-                          suffixIcon: IconButton(
-                            onPressed: () => isVisible.value = !isVisible.value,
-                            icon: Icon(value
-                                ? Icons.visibility
-                                : Icons.visibility_off),
-                          ),
-                        ),
-                        obscureText: value ? false : true,
-                        obscuringCharacter: '•',
-                      );
-                    },
-                    valueListenable: isVisible,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(Sizes.mediumSpace),
-                        child: Text('Recuperar senha',
-                            style: Theme.of(context).textTheme.titleMedium),
+              child: BlocListener<LoginController, LoginState>(
+                bloc: controller,
+                listener: (context, state) {
+                  if (state is LoginStateError) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(state.error),
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: BlocListener<LoginController, LoginState>(
-                      listener: (context, state) {
-                        final navigator = Navigator.of(context);
-                        if (state is LoginStateError) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(state.error),
+                    );
+                  }
+                  if (state is LoginStateSuccess) {
+                    Navigator.of(context).pushReplacementNamed('/home');
+                  }
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Padding(
+                        padding: EdgeInsets.only(bottom: Sizes.extraLargeSpace),
+                        child: LogoApp()),
+                    TextFormField(
+                      validator: (value) {
+                        if (value?.isEmpty ?? true) {
+                          return 'Campo obrigatório';
+                        } else {
+                          return null;
+                        }
+                      },
+                      controller: emailController,
+                      decoration: const InputDecoration(
+                        hintText: 'Email',
+                      ),
+                    ),
+                    const SizedBox(height: Sizes.mediumSpace),
+                    ValueListenableBuilder(
+                      builder: (context, value, _) {
+                        return TextFormField(
+                          validator: (value) {
+                            if (value?.isEmpty ?? true) {
+                              return 'Campo obrigatório';
+                            } else {
+                              return null;
+                            }
+                          },
+                          controller: passwordController,
+                          decoration: InputDecoration(
+                            hintText: 'Senha',
+                            suffixIcon: IconButton(
+                              onPressed: () =>
+                                  isVisible.value = !isVisible.value,
+                              icon: Icon(value
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
                             ),
-                          );
-                        }
-                        if (state is LoginStateSuccess) {
-                          navigator.pushReplacementNamed('/home-page');
-                        }
+                          ),
+                          obscureText: value ? false : true,
+                        );
                       },
-                      child: ElevatedButton(
-                        style: Theme.of(context).elevatedButtonTheme.style,
-                        onPressed: () async {
-                          if (formKey.currentState?.validate() ?? false) {
-                            await controller.login(
-                              emailController.text,
-                              passwordController.text,
-                            );
-                          }
-                        },
-                        child: const Text('Entrar'),
+                      valueListenable: isVisible,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                            onPressed: () async {
+                              final message = await controller
+                                  .sendPasswordResetEmail(emailController.text);
+                              if (message != null) {
+                                showMessage(message);
+                              }
+                            },
+                            child: const Text('Esqueci minha senha')),
+                      ],
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: Sizes.largeSpace),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            if (formKey.currentState?.validate() ?? false) {
+                              await controller.login(
+                                emailController.text,
+                                passwordController.text,
+                              );
+                            }
+                          },
+                          child: const Text('ENTRAR'),
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(Sizes.mediumSpace),
-                    child: TextButton(
-                      onPressed: () {
-                        navigator.pushNamed('/register-page');
-                      },
-                      child: const Text('CADASTRAR?'),
+                    SizedBox(
+                      width: double.infinity,
+                      child: SocialAuthButton(
+                          onPressed: () async {
+                            await controller.googleSignIn();
+                          },
+                          asset: 'assets/google_logo.png',
+                          text: 'Entrar com Google'),
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(Sizes.mediumSpace),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/register');
+                        },
+                        child: const Text('CRIAR CONTA'),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

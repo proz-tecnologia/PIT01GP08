@@ -1,15 +1,15 @@
-import 'package:financial_app/shared/views/empty_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../design_sys/sizes.dart';
-import '../widgets/top_bar_toggle_button.dart';
-import '../widgets/month_changer.dart';
+import '../../../shared/views/empty_view.dart';
 import '../data_controller.dart';
 import '../data_states.dart';
+import '../widgets/month_changer.dart';
+import '../widgets/top_bar_toggle_button.dart';
 import 'statement_controller.dart';
 import 'statement_states.dart';
-import '../widgets/transaction_tile.dart';
+import 'widgets/clickable_transaction_tile.dart';
 
 class StatementPage extends StatelessWidget {
   const StatementPage({super.key});
@@ -59,10 +59,14 @@ class StatementPage extends StatelessWidget {
                           horizontal: Sizes.smallSpace),
                       child: state.list.isEmpty
                           ? const EmptyView('Ainda não há transações nesse mês')
-                          : ListView.builder(
-                              itemCount: state.list.length,
-                              itemBuilder: (context, index) => Card(
-                                child: TransactionTile.check(state.list[index]),
+                          : BlocProvider(
+                              create: (context) => controller,
+                              child: ListView.builder(
+                                itemCount: state.list.length,
+                                itemBuilder: (context, index) {
+                                  return ClickableTransactionTile(
+                                      state.list[index]);
+                                },
                               ),
                             ),
                     ),
@@ -76,3 +80,4 @@ class StatementPage extends StatelessWidget {
     );
   }
 }
+

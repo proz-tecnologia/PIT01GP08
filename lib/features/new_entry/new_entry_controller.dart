@@ -15,9 +15,12 @@ class NewEntryController extends Cubit<NewEntryState> {
     required String dateString,
     required String description,
     required String value,
-    required Category? category,
+    required Category category,
     required bool fulfilled,
     required int paymentOption,
+    String endDateString = '',
+    String partsString = '',
+    String? id,
   }) async {
     final lastTypeState = state;
     emit(SavingNewEntryState());
@@ -28,9 +31,17 @@ class NewEntryController extends Cubit<NewEntryState> {
         int.parse(dateString.substring(3, 5)),
         int.parse(dateString.substring(0, 2)),
       );
+      final endDate = endDateString == ''
+          ? null
+          : DateTime(
+              int.parse(endDateString.substring(6)),
+              int.parse(endDateString.substring(3, 5)),
+              int.parse(endDateString.substring(0, 2)),
+            );
       final payment = Payment.values[paymentOption];
 
       final newTransaction = Transaction.fromCategory(
+        id: id,
         date: date,
         description: description,
         value: double.parse(
@@ -39,19 +50,19 @@ class NewEntryController extends Cubit<NewEntryState> {
               .replaceAll('.', '')
               .replaceAll(',', '.'),
         ),
-        category: category!,
+        category: category,
         fulfilled: fulfilled,
         payment: payment,
+        endDate: endDate,
+        parts: int.tryParse(partsString) ?? 2,
       );
 
-      final success =
-          await transactionRepository.createTransaction(newTransaction);
-
-      if (success) {
-        emit(SuccessNewEntryState());
+      if (id == null) {
+        await transactionRepository.createTransaction(newTransaction);
       } else {
-        throw Exception();
+        await transactionRepository.editTransactionData(newTransaction);
       }
+      emit(SuccessNewEntryState());
     } catch (e) {
       emit(ErrorNewEntryState());
       emit(lastTypeState);

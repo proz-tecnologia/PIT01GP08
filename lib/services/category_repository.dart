@@ -4,10 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../shared/models/category.dart';
 
 abstract class CategoryRepository {
-  Future<bool> createCategory(Category category);
-  Future<Category?> getCategoryData(String id);
-  Future<bool> editCategoryData(Category category);
-  Future<bool> deleteCategory(String id);
+  Future<void> createCategory(Category category);
+  Future<void> editCategoryData(Category category);
+  Future<void> deleteCategory(String id);
   Future<List<Category>> getAllCategories();
   Future<void> setInitialCategories(String uid);
 }
@@ -19,32 +18,29 @@ class CategoryFirebaseRepository implements CategoryRepository {
       .collection('categories');
 
   @override
-  Future<bool> createCategory(Category category) async {
+  Future<void> createCategory(Category category) async {
     try {
-      firestorePath.add(category.toMap());
-      return true;
+      await firestorePath.add(category.toMap());
     } catch (e) {
-      return false;
+      rethrow;
     }
   }
 
   @override
-  Future<bool> deleteCategory(String id) async {
+  Future<void> deleteCategory(String id) async {
     try {
-      firestorePath.doc(id).delete();
-      return true;
+      await firestorePath.doc(id).delete();
     } catch (e) {
-      return false;
+      rethrow;
     }
   }
 
   @override
-  Future<bool> editCategoryData(Category category) async {
+  Future<void> editCategoryData(Category category) async {
     try {
-      firestorePath.doc(category.id).set(category.toMap());
-      return true;
+      await firestorePath.doc(category.id).set(category.toMap());
     } catch (e) {
-      return false;
+      rethrow;
     }
   }
 
@@ -62,17 +58,6 @@ class CategoryFirebaseRepository implements CategoryRepository {
       return list;
     } catch (e) {
       return [];
-    }
-  }
-
-  @override
-  Future<Category?> getCategoryData(String id) async {
-    try {
-      final snapshot = await firestorePath.doc(id).get();
-      final data = snapshot.data()!;
-      return Category.fromMap(id, data);
-    } catch (e) {
-      return null;
     }
   }
 

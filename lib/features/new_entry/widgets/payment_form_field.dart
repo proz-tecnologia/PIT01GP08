@@ -25,7 +25,7 @@ class _PaymentFormFieldState extends State<PaymentFormField> {
   @override
   void initState() {
     super.initState();
-    _select.first = true;
+    _select[widget.controller.value] = true;
   }
 
   @override

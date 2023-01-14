@@ -1,7 +1,7 @@
-import 'package:financial_app/shared/utils/select_by_date.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../shared/models/transaction.dart';
+import '../../../shared/utils/select_by_date.dart';
 import 'statement_states.dart';
 
 class StatementController extends Cubit<StatementState> {
@@ -31,5 +31,19 @@ class StatementController extends Cubit<StatementState> {
     final monthTransactionList = transactionList.getMonthRange(displayMonth);
 
     emit(state.copyWith(monthTransactionList));
+  }
+
+  void fulfillOnScreen(Transaction transaction) {
+    final stateCopy = state;
+    toggleState(false);
+    transaction.fulfill();
+    emit(stateCopy);
+  }
+
+  void deleteFromScreen(Transaction transaction) {
+    final stateCopy = state;
+    toggleState(false);
+    stateCopy.list.removeWhere((e) => e.id == transaction.id);
+    emit(stateCopy);
   }
 }
