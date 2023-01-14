@@ -55,6 +55,11 @@ class RegisterController extends Cubit<RegisterState> {
       );
       final verify =
           await FirebaseAuth.instance.signInWithCredential(credential);
+      final firstLog =
+          await categoryRepo.checkFirstAccess(verify.user?.uid ?? 'no user');
+      if (firstLog) {
+        await categoryRepo.setInitialCategories(verify.user!.uid);
+      }
       if (verify.user != null) {
         emit(SuccessRegisterState());
       }

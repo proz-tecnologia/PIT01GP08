@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import '../../services/category_repository.dart';
 import 'login_states.dart';
 
 class LoginController extends Cubit<LoginState> {
@@ -48,6 +49,11 @@ class LoginController extends Cubit<LoginState> {
       );
       final verify =
           await FirebaseAuth.instance.signInWithCredential(credential);
+      final firstLog = await CategoryFirebaseRepository()
+          .checkFirstAccess(verify.user?.uid ?? 'no user');
+      if (firstLog) {
+        throw Exception();
+      }
       if (verify.user != null) {
         emit(LoginStateSuccess());
       }

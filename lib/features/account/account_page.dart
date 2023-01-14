@@ -109,14 +109,6 @@ class _AccountPageState extends State<AccountPage> {
                   child: Text("Alterar senha",
                       style: Theme.of(context).textTheme.titleSmall),
                 ),
-                const SizedBox(height: Sizes.extraLargeSpace),
-                EditableInfo(
-                  action: (value) {},
-                  child: Text(
-                    user.phoneNumber ?? "Adicionar telefone",
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
               ],
             ),
           ),
