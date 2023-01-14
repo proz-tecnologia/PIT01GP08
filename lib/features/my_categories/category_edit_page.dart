@@ -103,8 +103,7 @@ class _CategoryEditPageState extends State<CategoryEditPage> {
                           content: Text('${name.text} salvo com sucesso!'),
                         ),
                       );
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/my-categories', (route) => false);
+                      Navigator.of(context).pop();
                     }
                   },
                   builder: (context, state) {
