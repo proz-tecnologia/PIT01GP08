@@ -36,13 +36,17 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                   padding: const EdgeInsets.all(Sizes.mediumSpace),
                   child: Row(
                     children: [
-                      Text("Olá, ${user.displayName}",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary)),
+                      Text(
+                        "Olá, ${user.displayName}",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(
+                                color: Theme.of(context).colorScheme.onPrimary),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        softWrap: false,
+                      ),
                       const Expanded(child: SizedBox.shrink()),
                       Text(
                         DateFormat('dd/MM').format(DateTime.now()),
