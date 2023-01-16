@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,7 +30,10 @@ class _AppPageViewState extends State<AppPageView> {
     return BlocProvider(
       create: (context) => DataController(
         transactionRepo: TransactionFirebaseRepository(),
-        categoryRepo: CategoryFirebaseRepository(),
+        categoryRepo: CategoryFirebaseRepository(
+          FirebaseFirestore.instance,
+          FirebaseAuth.instance,
+        ),
       ),
       child: Scaffold(
         body: BlocBuilder<DataController, DataState>(
@@ -59,7 +64,7 @@ class _AppPageViewState extends State<AppPageView> {
               ? FloatingActionButton(
                   onPressed: () => Navigator.of(context).pushNamed(
                     '/new-entry',
-                    arguments: [state.categoryList,null],
+                    arguments: [state.categoryList, null],
                   ),
                   tooltip: 'Nova transação',
                   child: const Icon(Icons.add),

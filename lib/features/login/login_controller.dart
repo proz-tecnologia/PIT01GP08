@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -49,8 +50,10 @@ class LoginController extends Cubit<LoginState> {
       );
       final verify =
           await FirebaseAuth.instance.signInWithCredential(credential);
-      final firstLog = await CategoryFirebaseRepository()
-          .checkFirstAccess(verify.user?.uid ?? 'no user');
+      final firstLog = await CategoryFirebaseRepository(
+        FirebaseFirestore.instance,
+        FirebaseAuth.instance,
+      ).checkFirstAccess(verify.user?.uid ?? 'no user');
       if (firstLog) {
         throw Exception();
       }

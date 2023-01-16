@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,8 +27,12 @@ class _CategoryEditPageState extends State<CategoryEditPage> {
   final color = ValueNotifier<Color>(Colors.blue);
   final type = ValueNotifier<Type>(Type.income);
 
-  final controller =
-      MyCategoriesController.instance(CategoryFirebaseRepository());
+  final controller = MyCategoriesController.instance(
+    CategoryFirebaseRepository(
+      FirebaseFirestore.instance,
+      FirebaseAuth.instance,
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
