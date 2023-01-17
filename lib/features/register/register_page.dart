@@ -169,7 +169,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           await controller.googleSignUp();
                         },
                         asset: 'assets/google_logo.png',
-                        text: 'Entrar com Google'),
+                        text: 'Cadastrar com Google'),
                   ),
                   const SizedBox(height: Sizes.mediumSpace),
                   TextButton(
