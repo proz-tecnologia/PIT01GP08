@@ -1,0 +1,10 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Report",
+            "command": "genhtml coverage/lcov.info --output=./coverage && google-chrome coverage/index.html",
+            "type": "shell"
+        }
+    ]
+}
