@@ -5,19 +5,26 @@ import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
-// class MockFirebaseUser extends Mock implements FirebaseUser{}
-// class MockAuthResult extends Mock implements AuthResult {}
 
 void main() {
-  // late MockFirebaseAuth firestorePath;
-  // late CategoryFirebaseRepository categoryFirebaseRepository;
-  // late FakeFirebaseFirestore firestoreMock;
-  setUp(() {
-    // firestorePath = MockFirebaseAuth();
-    // firestoreMock = FakeFirebaseFirestore(firestorePath);
-    // categoryFirebaseRepository = CategoryFirebaseRepository();
+  late UserCredential currentUser;
+  late MockFirebaseAuth firebaseAuth;
+  late CategoryFirebaseRepository categoryFirebaseRepository;
+  late FakeFirebaseFirestore firestoreMock;
+  setUp(() async {
+    firebaseAuth = MockFirebaseAuth();
+    firebaseAuth.createUserWithEmailAndPassword(
+        email: "ruda@gmail.com", password: "12345678");
+
+    currentUser = await firebaseAuth.signInWithEmailAndPassword(
+        email: "ruda@gmail.com", password: "12345678");
+    firestoreMock = FakeFirebaseFirestore();
+    categoryFirebaseRepository = CategoryFirebaseRepository(
+      firestoreMock,
+      firebaseAuth,
+    );
   });
-  tearDown(() => null);
+
   group("test all category methods", () {
     test("Should create category", () {
       const result = null;
