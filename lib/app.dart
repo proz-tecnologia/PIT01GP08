@@ -22,6 +22,8 @@ class App extends StatelessWidget {
         '/my-categories': (context) => const MyCategoriesPage(),
         '/category-edit': (context) => const CategoryEditPage(),
       },
+      themeMode: ThemeMode.light,
+      debugShowCheckedModeBanner: false,
     );
   }
 }

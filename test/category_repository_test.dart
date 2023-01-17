@@ -1,27 +1,23 @@
-import 'package:financial_app/services/category_repository.dart';
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:mocktail/mocktail.dart';
+
+import 'package:financial_app/services/category_repository.dart';
 
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
 
 void main() {
-  late UserCredential currentUser;
-  late MockFirebaseAuth firebaseAuth;
+  late String uid;
   late CategoryFirebaseRepository categoryFirebaseRepository;
   late FakeFirebaseFirestore firestoreMock;
-  setUp(() async {
-    firebaseAuth = MockFirebaseAuth();
-    firebaseAuth.createUserWithEmailAndPassword(
-        email: "ruda@gmail.com", password: "12345678");
 
-    currentUser = await firebaseAuth.signInWithEmailAndPassword(
-        email: "ruda@gmail.com", password: "12345678");
+  setUp(() async {
+    uid = '';
     firestoreMock = FakeFirebaseFirestore();
     categoryFirebaseRepository = CategoryFirebaseRepository(
       firestoreMock,
-      firebaseAuth,
+      uid,
     );
   });
 

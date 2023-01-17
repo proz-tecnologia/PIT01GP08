@@ -52,7 +52,7 @@ class LoginController extends Cubit<LoginState> {
           await FirebaseAuth.instance.signInWithCredential(credential);
       final firstLog = await CategoryFirebaseRepository(
         FirebaseFirestore.instance,
-        FirebaseAuth.instance,
+        FirebaseAuth.instance.currentUser?.uid ?? '',
       ).checkFirstAccess(verify.user?.uid ?? 'no user');
       if (firstLog) {
         throw Exception();

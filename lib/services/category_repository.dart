@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import '../shared/models/category.dart';
 
@@ -14,13 +13,13 @@ abstract class CategoryRepository {
 
 class CategoryFirebaseRepository implements CategoryRepository {
   final FirebaseFirestore firestoreInstance;
-  final FirebaseAuth firebaseAuthInstance;
+  final String userId;
   late final CollectionReference<Map<String, dynamic>> firestorePath;
 
-  CategoryFirebaseRepository(this.firestoreInstance, this.firebaseAuthInstance) {
+  CategoryFirebaseRepository(this.firestoreInstance, this.userId) {
     firestorePath = firestoreInstance
         .collection('users')
-      .doc(firebaseAuthInstance.currentUser?.uid)
+      .doc(userId)
       .collection('categories');
   }
 

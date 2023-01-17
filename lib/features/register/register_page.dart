@@ -29,7 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
   RegisterController controller = RegisterController(
     CategoryFirebaseRepository(
       FirebaseFirestore.instance,
-      FirebaseAuth.instance,
+      FirebaseAuth.instance.currentUser?.uid ?? '',
     ),
   );
 

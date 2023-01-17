@@ -32,7 +32,7 @@ class _AppPageViewState extends State<AppPageView> {
         transactionRepo: TransactionFirebaseRepository(),
         categoryRepo: CategoryFirebaseRepository(
           FirebaseFirestore.instance,
-          FirebaseAuth.instance,
+          FirebaseAuth.instance.currentUser?.uid ?? '',
         ),
       ),
       child: Scaffold(
