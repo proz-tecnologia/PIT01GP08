@@ -5,9 +5,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   final list = <Transaction>[];
-  final controller = StatementController(list);
+  StatementController controller = StatementController(list);
   group('toggleState()', () {
-    
+    setUp(() {
+      controller = StatementController(list);
+    });
+
     test('from both, click on expense', () {
       controller.toggleState(false);
       expect(controller.state, isA<IncomeStatementState>());

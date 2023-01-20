@@ -4,7 +4,7 @@ import 'package:financial_app/shared/utils/select_by_date.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final list = <Transaction>[];
+  List<Transaction> list = [];
   final january = DateTime(2023, 1, 15);
   final exampleTransaction = Transaction(
       date: january,
@@ -14,6 +14,10 @@ void main() {
       categoryId: 'categoryId',
       fulfilled: true,
       payment: Payment.normal);
+
+  setUp(() {
+    list = <Transaction>[];
+  });
 
   group('getMonthRange()', () {
     test('empty list', () {
@@ -96,7 +100,7 @@ void main() {
     });
   });
 
-group('getUntilMonth()', () {
+  group('getUntilMonth()', () {
     test('empty list', () {
       final result = list.getUntilMonth(january);
       expect(result.isEmpty, true);
@@ -125,5 +129,5 @@ group('getUntilMonth()', () {
       final result = list.getUntilMonth(january);
       expect(result.length, 4);
     });
-  });  
+  });
 }
