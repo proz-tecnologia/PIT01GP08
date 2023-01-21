@@ -129,7 +129,7 @@ class Transaction {
       id: id,
       date: date ?? this.date,
       description: description ?? this.description,
-      value: value ?? this.value * 100,
+      value: value ?? this.value,
       type: type ?? this.type,
       categoryId: categoryId ?? this.categoryId,
       fulfilled: fulfilled ?? _fulfilled,
