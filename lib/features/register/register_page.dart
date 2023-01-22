@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,8 +26,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final ValueNotifier<bool> isVisible = ValueNotifier(false);
 
-  RegisterController controller =
-      RegisterController(CategoryFirebaseRepository());
+  RegisterController controller = RegisterController(
+    CategoryFirebaseRepository(
+      FirebaseFirestore.instance,
+      FirebaseAuth.instance.currentUser?.uid ?? '',
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {

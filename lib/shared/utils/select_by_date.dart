@@ -29,7 +29,7 @@ extension SelectByDate on List<Transaction> {
       return [];
     }
 
-    return getRange(startIndex, length - 1).toList();
+    return getRange(startIndex, length).toList();
   }
 
   List<Transaction> getUntilMonth(DateTime displayMonth) {
@@ -43,6 +43,6 @@ extension SelectByDate on List<Transaction> {
       return [];
     }
 
-    return getRange(startIndex, length - 1).toList();
+    return getRange(startIndex, length).toList();
   }
 }
