@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import '../../services/category_repository.dart';
 import 'login_states.dart';
 
 class LoginController extends Cubit<LoginState> {
@@ -16,7 +17,20 @@ class LoginController extends Cubit<LoginState> {
     } catch (e) {
       if (e is FirebaseAuthException) {
         log(e.message ?? 'FirebaseAuthException');
-        emit(LoginStateError(e.message ?? 'Error on loginController'));
+        switch (e.code) {
+          case 'invalid-email':
+          case 'wrong-password':
+            emit(LoginStateError('Email e/ou senha inválidos'));
+            break;
+          case 'user-disabled':
+            emit(LoginStateError('Este usuário foi desabilitado'));
+            break;
+          case 'user-not-found':
+            emit(LoginStateError('Usuário não encontrado'));
+            break;
+          default:
+            emit(LoginStateError('Erro de conexão'));
+        }
       } else {
         emit(LoginStateError('Erro de conexão'));
       }
@@ -24,6 +38,7 @@ class LoginController extends Cubit<LoginState> {
   }
 
   Future<void> googleSignIn() async {
+    emit(LoginStateLoading());
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       final GoogleSignInAuthentication? googleAuth =
@@ -34,16 +49,16 @@ class LoginController extends Cubit<LoginState> {
       );
       final verify =
           await FirebaseAuth.instance.signInWithCredential(credential);
+      final firstLog = await CategoryFirebaseRepository()
+          .checkFirstAccess(verify.user?.uid ?? 'no user');
+      if (firstLog) {
+        throw Exception();
+      }
       if (verify.user != null) {
         emit(LoginStateSuccess());
       }
     } catch (e) {
-      if (e is FirebaseAuthException) {
-        log(e.message ?? 'FirebaseAuthException');
-        emit(LoginStateError(e.message ?? 'Error on loginController'));
-      } else {
-        emit(LoginStateError("Erro no Google login"));
-      }
+      emit(LoginStateError("Erro no login com Google"));
     }
   }
 

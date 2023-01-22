@@ -77,7 +77,7 @@ class _AccountPageState extends State<AccountPage> {
                 EditableInfo(
                   action: (value) => controller.updateEmail(value),
                   child: Text(user.email ?? "E-mail",
-                      style: Theme.of(context).textTheme.headlineSmall),
+                      style: Theme.of(context).textTheme.titleSmall),
                 ),
                 ValueListenableBuilder(
                     valueListenable: controller.emailVerified,
@@ -107,19 +107,8 @@ class _AccountPageState extends State<AccountPage> {
                 EditablePassword(
                   action: (value) => controller.updatePassword(value),
                   child: Text("Alterar senha",
-                      style: Theme.of(context).textTheme.headlineSmall),
+                      style: Theme.of(context).textTheme.titleSmall),
                 ),
-                const SizedBox(height: Sizes.extraLargeSpace),
-                EditableInfo(
-                  action: (value) {},
-                  child: Text(
-                    user.phoneNumber ?? "Adicionar telefone",
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-                TextButton(
-                    onPressed: () {},
-                    child: const Text('Adicionar login com Google')),
               ],
             ),
           ),

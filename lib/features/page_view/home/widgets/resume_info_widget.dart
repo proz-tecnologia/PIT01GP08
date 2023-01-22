@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -19,6 +20,7 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final spaceBetween = height * Sizes.threePercent;
+    final user = FirebaseAuth.instance.currentUser!;
 
     return Container(
       margin: EdgeInsets.only(bottom: spaceBetween),
@@ -30,20 +32,80 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height: spaceBetween),
-                Text(
-                  DateFormat('dd/MM/yyyy').format(DateTime.now()),
-                  style:
-                      TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                Padding(
+                  padding: const EdgeInsets.all(Sizes.mediumSpace),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Olá, ${user.displayName}",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(
+                                color: Theme.of(context).colorScheme.onPrimary),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        softWrap: false,
+                      ),
+                      const Expanded(child: SizedBox.shrink()),
+                      Text(
+                        DateFormat('dd/MM').format(DateTime.now()),
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary),
+                      ),
+                    ],
+                  ),
                 ),
-                SizedBox(height: spaceBetween),
                 Row(
                   children: [
                     Expanded(flex: 1, child: Container()),
-                    TotalTile(
-                      label: 'Saldo',
-                      value:
-                          state is SuccessHomeState ? state.balanceStr : null,
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          'Saldo',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge
+                              ?.copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary),
+                        ),
+                        state is SuccessHomeState
+                            ? ValueListenableBuilder(
+                                valueListenable:
+                                    context.read<HomeController>().isVisible,
+                                builder: (_, isVisible, __) {
+                                  return Text(
+                                    isVisible
+                                        ? state.balanceStr
+                                        : 'R\$ -------',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall
+                                        ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimary,
+                                            fontWeight: FontWeight.w600),
+                                  );
+                                })
+                            : Padding(
+                                padding: const EdgeInsets.only(top: 4.0),
+                                child: SizedBox(
+                                  width: Sizes.extraLargeIconSize,
+                                  child: LinearProgressIndicator(
+                                    minHeight: Sizes.smallSpace,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary
+                                        .withOpacity(0.2),
+                                    backgroundColor:
+                                        Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                              ),
+                      ],
                     ),
                     Expanded(
                       flex: 1,

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,8 +17,14 @@ class _ProfilePageState extends State<ProfilePage> {
   final controller = ProfileController();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileController, ProfileState>(
+    return BlocConsumer<ProfileController, ProfileState>(
       bloc: controller,
+      listener: (context, state) {
+        if (state is LoggedOutProfileState) {
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('/login', (route) => false);
+        }
+      },
       builder: (context, state) {
         if (state is ErrorProfileState) {
           return const Center(child: Text('Erro ao carregar os dados'));
@@ -38,16 +43,8 @@ class _ProfilePageState extends State<ProfilePage> {
               title: const Text("Categorias"),
             ),
             const ListTile(
-              leading: Icon(Icons.credit_card_rounded),
-              title: Text(" Meus Cartões"),
-            ),
-            const ListTile(
-              leading: Icon(Icons.account_balance_rounded),
-              title: Text("Meus Bancos"),
-            ),
-            const ListTile(
-              leading: Icon(Icons.account_balance_wallet_rounded),
-              title: Text("Carteira"),
+              leading: Icon(Icons.pix_rounded),
+              title: Text("Meus PIX"),
             ),
             ListTile(
               onTap: () => Navigator.of(context).pushNamed("/settings"),
@@ -55,13 +52,13 @@ class _ProfilePageState extends State<ProfilePage> {
               title: const Text("Configurações"),
             ),
             ListTile(
-              onTap: () {
-                FirebaseAuth.instance.signOut();
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil('/login', (route) => false);
-              },
+              onTap: () => controller.signOut(),
               leading: const Icon(Icons.logout_rounded),
               title: const Text("Sair do app"),
+            ),
+            const ListTile(
+              leading: Icon(Icons.info_outline_rounded),
+              title: Text("Sobre o app"),
             ),
           ];
           return Column(

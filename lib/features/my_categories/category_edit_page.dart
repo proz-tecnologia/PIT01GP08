@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../design_sys/colors.dart';
 import '../../design_sys/sizes.dart';
 import '../../services/category_repository.dart';
 import '../../shared/models/category.dart';
 import 'my_categories_controller.dart';
 import 'my_categories_states.dart';
+import 'widgets/category_toggle_button.dart';
 import 'widgets/color_picker.dart';
 import 'widgets/icon_picker.dart';
 
@@ -37,7 +37,7 @@ class _CategoryEditPageState extends State<CategoryEditPage> {
       color.value = category.color;
       type.value = category.type;
     }
-    
+
     return Scaffold(
       body: Center(
         child: Form(
@@ -85,27 +85,7 @@ class _CategoryEditPageState extends State<CategoryEditPage> {
                   cursorColor: Theme.of(context).dividerColor,
                 ),
                 const SizedBox(height: Sizes.mediumSpace),
-                ValueListenableBuilder(
-                  valueListenable: type,
-                  builder: (_, value, __) {
-                    // TODO: substituir por toggle
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text('Despesas'),
-                        Switch(
-                            inactiveTrackColor: AppColors.expense,
-                            activeTrackColor: AppColors.income,
-                            activeColor: AppColors.white,
-                            inactiveThumbColor: AppColors.white,
-                            value: value == Type.income,
-                            onChanged: (value) => type.value =
-                                value ? Type.income : Type.expense),
-                        const Text('Receitas'),
-                      ],
-                    );
-                  },
-                ),
+                CategoryToogleButton(type: type),
                 const SizedBox(height: Sizes.mediumSpace),
                 BlocConsumer<MyCategoriesController, MyCategoriesState>(
                   bloc: controller,
@@ -123,8 +103,7 @@ class _CategoryEditPageState extends State<CategoryEditPage> {
                           content: Text('${name.text} salvo com sucesso!'),
                         ),
                       );
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/my-categories', (route) => false);
+                      Navigator.of(context).pop();
                     }
                   },
                   builder: (context, state) {

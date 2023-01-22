@@ -1,4 +1,3 @@
-import 'package:financial_app/features/splash/widgets/app_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,29 +13,40 @@ class SelecConfBio extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = SettingsController();
 
-    return BlocBuilder<SettingsController, SettingsState>(
+    return BlocConsumer<SettingsController, SettingsState>(
       bloc: controller,
+      listener: (context, state) {
+        if (state is ErrorSettingsState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.error)),
+          );
+        }
+      },
       builder: (context, state) {
         if (state is SuccessSettingsState) {
           return ValueListenableBuilder(
               valueListenable: controller.select,
               builder: (context, value, _) {
                 return SwitchListTile(
-                  selected: false,
                   title: Text(titleSelected),
                   value: value,
                   onChanged: state.bioAvailable
                       ? (value) {
                           controller.select.value = value;
                           controller.setConfBiometria(value);
-                          //state.spref.setBool('biometria', value);
                         }
                       : null,
                 );
               });
-        } else {
-          return const AppProgress();
         }
+        if (state is ErrorSettingsState) {
+          return SwitchListTile(
+            title: Text(titleSelected),
+            value: false,
+            onChanged: null,
+          );
+        }
+        return const CircularProgressIndicator();
       },
     );
   }

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:auth_buttons/auth_buttons.dart';
+
 import '../../design_sys/sizes.dart';
 import '../../shared/widgets/logo_app.dart';
 import 'login_controller.dart';
 import 'login_states.dart';
+import '../../shared/widgets/social_auth_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -22,6 +23,12 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    void showMessage(String message) => showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: Text(message),
+          ),
+        );
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(Sizes.largeSpace),
@@ -47,13 +54,12 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Padding(
-                        padding: EdgeInsets.all(Sizes.mediumSpace),
+                        padding: EdgeInsets.only(bottom: Sizes.extraLargeSpace),
                         child: LogoApp()),
                     TextFormField(
-                      style: const TextStyle(fontSize: Sizes.mediumSpace),
                       validator: (value) {
                         if (value?.isEmpty ?? true) {
-                          return 'Email obrigatório';
+                          return 'Campo obrigatório';
                         } else {
                           return null;
                         }
@@ -67,10 +73,9 @@ class _LoginPageState extends State<LoginPage> {
                     ValueListenableBuilder(
                       builder: (context, value, _) {
                         return TextFormField(
-                          style: const TextStyle(fontSize: Sizes.mediumSpace),
                           validator: (value) {
                             if (value?.isEmpty ?? true) {
-                              return 'Senha obrigatória';
+                              return 'Campo obrigatório';
                             } else {
                               return null;
                             }
@@ -94,31 +99,23 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(bottom: Sizes.largeSpace),
-                          child: TextButton(
-                              onPressed: () async {
-                                final message =
-                                    await controller.sendPasswordResetEmail(
-                                        emailController.text);
-                                if (message != null) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => AlertDialog(
-                                      content: Text(message),
-                                    ),
-                                  );
-                                }
-                              },
-                              child: const Text('Esqueci minha senha')),
-                        ),
+                        TextButton(
+                            onPressed: () async {
+                              final message = await controller
+                                  .sendPasswordResetEmail(emailController.text);
+                              if (message != null) {
+                                showMessage(message);
+                              }
+                            },
+                            child: const Text('Esqueci minha senha')),
                       ],
                     ),
                     SizedBox(
-                        width: double.infinity,
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: Sizes.largeSpace),
                         child: ElevatedButton(
-                          style: Theme.of(context).elevatedButtonTheme.style,
                           onPressed: () async {
                             if (formKey.currentState?.validate() ?? false) {
                               await controller.login(
@@ -127,19 +124,18 @@ class _LoginPageState extends State<LoginPage> {
                               );
                             }
                           },
-                          child: const Text('Entrar'),
-                        )),
+                          child: const Text('ENTRAR'),
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       width: double.infinity,
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.only(top: Sizes.extraLargeSpace),
-                        child: GoogleAuthButton(
+                      child: SocialAuthButton(
                           onPressed: () async {
                             await controller.googleSignIn();
                           },
-                        ),
-                      ),
+                          asset: 'assets/google_logo.png',
+                          text: 'Entrar com Google'),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(Sizes.mediumSpace),
@@ -147,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () {
                           Navigator.of(context).pushNamed('/register');
                         },
-                        child: const Text('CADASTRAR?'),
+                        child: const Text('CRIAR CONTA'),
                       ),
                     ),
                   ],

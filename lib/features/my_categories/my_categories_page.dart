@@ -9,18 +9,27 @@ import '../../shared/views/loading_view.dart';
 import 'my_categories_controller.dart';
 import 'my_categories_states.dart';
 
-class MyCategoriesPage extends StatelessWidget {
+class MyCategoriesPage extends StatefulWidget {
   const MyCategoriesPage({super.key});
 
+  @override
+  State<MyCategoriesPage> createState() => _MyCategoriesPageState();
+}
+
+class _MyCategoriesPageState extends State<MyCategoriesPage> {
   @override
   Widget build(BuildContext context) {
     final controller =
         MyCategoriesController.instance(CategoryFirebaseRepository());
     return Scaffold(
       appBar: AppBar(
+        title: const Text("Minhas Categorias"),
         actions: [
           IconButton(
-            onPressed: () => Navigator.of(context).pushNamed('/category-edit'),
+            onPressed: () =>
+                Navigator.of(context).pushNamed('/category-edit').then((_) {
+              setState(() {});
+            }),
             icon: const Icon(Icons.add),
           ),
         ],
@@ -43,10 +52,14 @@ class MyCategoriesPage extends StatelessWidget {
                   PopupMenuItem(
                     // Future() fixes the navigation problem (stackoverflow)
                     onTap: () => Future(
-                      () => Navigator.of(context).pushNamed(
+                      () => Navigator.of(context)
+                          .pushNamed(
                         '/category-edit',
                         arguments: state.list[index],
-                      ),
+                      )
+                          .then((_) {
+                        setState(() {});
+                      }),
                     ),
                     child: Row(
                       children: const [
