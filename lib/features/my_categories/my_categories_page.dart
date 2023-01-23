@@ -24,7 +24,7 @@ class _MyCategoriesPageState extends State<MyCategoriesPage> {
     final controller = MyCategoriesController.instance(
       CategoryFirebaseRepository(
         FirebaseFirestore.instance,
-        FirebaseAuth.instance.currentUser?.uid ?? '',
+        FirebaseAuth.instance.currentUser?.uid ?? 'no user',
       ),
     );
     return Scaffold(

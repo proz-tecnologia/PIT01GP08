@@ -30,7 +30,7 @@ class _CategoryEditPageState extends State<CategoryEditPage> {
   final controller = MyCategoriesController.instance(
     CategoryFirebaseRepository(
       FirebaseFirestore.instance,
-      FirebaseAuth.instance.currentUser?.uid ?? '',
+      FirebaseAuth.instance.currentUser?.uid ?? 'no user',
     ),
   );
 
