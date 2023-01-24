@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../design_sys/colors.dart';
 import '../../design_sys/sizes.dart';
 import 'account_controller.dart';
 import 'account_states.dart';
@@ -37,6 +38,10 @@ class _AccountPageState extends State<AccountPage> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.message ?? "Sucesso!")),
             );
+          }
+          if (state is LoggedOutAccountState) {
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil('/register', (route) => false);
           }
         },
         child: SingleChildScrollView(
@@ -109,6 +114,47 @@ class _AccountPageState extends State<AccountPage> {
                   child: Text("Alterar senha",
                       style: Theme.of(context).textTheme.titleSmall),
                 ),
+                const SizedBox(height: Sizes.largeSpace),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    OutlinedButton(
+                      onPressed: () => showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text(
+                              'Tem certeza que deseja excluir a sua conta?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text('CANCELAR'),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                controller.deleteUser();
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('EXCLUIR CONTA'),
+                            )
+                          ],
+                        ),
+                      ),
+                      child: Row(
+                        children: const [
+                          Icon(
+                            Icons.delete_outline_rounded,
+                            color: AppColors.expense,
+                          ),
+                          SizedBox(width: Sizes.smallSpace),
+                          Text(
+                            'Excluir conta',
+                            style: TextStyle(color: AppColors.expense),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                )
               ],
             ),
           ),
