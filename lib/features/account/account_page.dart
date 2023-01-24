@@ -54,20 +54,33 @@ class _AccountPageState extends State<AccountPage> {
                 InkWell(
                   onTap: controller.updateImage,
                   child: ValueListenableBuilder(
-                      valueListenable: controller.photo,
-                      builder: (_, photo, __) {
-                        return photo == null
-                            ? Icon(
-                                Icons.account_circle_rounded,
-                                size: 120,
-                                color:
-                                    Theme.of(context).colorScheme.onSecondary,
-                              )
-                            : CircleAvatar(
-                                radius: 60,
-                                foregroundImage: NetworkImage(photo),
-                              );
-                      }),
+                    valueListenable: controller.photo,
+                    builder: (_, photo, __) {
+                      return Stack(
+                        alignment: AlignmentDirectional.bottomEnd,
+                        children: [
+                          photo == null
+                              ? Icon(
+                                  Icons.account_circle_rounded,
+                                  size: 120,
+                                  color:
+                                      Theme.of(context).colorScheme.onSecondary,
+                                )
+                              : CircleAvatar(
+                                  radius: 60,
+                                  foregroundImage: NetworkImage(photo),
+                                ),
+                          CircleAvatar(
+                            backgroundColor: Theme.of(context).primaryColor,
+                            child: Icon(
+                              Icons.edit_rounded,
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ),
                 const SizedBox(height: Sizes.largeSpace),
                 EditableInfo(
