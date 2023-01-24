@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,8 +21,12 @@ class MyCategoriesPage extends StatefulWidget {
 class _MyCategoriesPageState extends State<MyCategoriesPage> {
   @override
   Widget build(BuildContext context) {
-    final controller =
-        MyCategoriesController.instance(CategoryFirebaseRepository());
+    final controller = MyCategoriesController.instance(
+      CategoryFirebaseRepository(
+        FirebaseFirestore.instance,
+        FirebaseAuth.instance.currentUser?.uid ?? 'no user',
+      ),
+    );
     return Scaffold(
       appBar: AppBar(
         title: const Text("Minhas Categorias"),

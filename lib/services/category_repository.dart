@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import '../shared/models/category.dart';
 
@@ -13,10 +12,16 @@ abstract class CategoryRepository {
 }
 
 class CategoryFirebaseRepository implements CategoryRepository {
-  final firestorePath = FirebaseFirestore.instance
-      .collection('users')
-      .doc(FirebaseAuth.instance.currentUser?.uid)
+  final FirebaseFirestore firestoreInstance;
+  final String userId;
+  late final CollectionReference<Map<String, dynamic>> firestorePath;
+
+  CategoryFirebaseRepository(this.firestoreInstance, this.userId) {
+    firestorePath = firestoreInstance
+        .collection('users')
+      .doc(userId)
       .collection('categories');
+  }
 
   @override
   Future<void> createCategory(Category category) async {
@@ -65,11 +70,11 @@ class CategoryFirebaseRepository implements CategoryRepository {
   @override
   Future<void> setInitialCategories(String uid) async {
     try {
-      final newPath = FirebaseFirestore.instance
+      final newPath = firestoreInstance
           .collection('users')
           .doc(uid)
           .collection('categories');
-      final snapshot = await FirebaseFirestore.instance
+      final snapshot = await firestoreInstance
           .collection('initialCategories')
           .get();
       final docs = snapshot.docs;
@@ -84,7 +89,7 @@ class CategoryFirebaseRepository implements CategoryRepository {
   @override
   Future<bool> checkFirstAccess(String uid) async {
     try {
-      final categories = await FirebaseFirestore.instance
+      final categories = await firestoreInstance
           .collection('users')
           .doc(uid)
           .collection('categories')

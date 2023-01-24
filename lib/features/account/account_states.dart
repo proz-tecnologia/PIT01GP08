@@ -13,3 +13,5 @@ class ErrorAccountState implements AccountState {
 
   ErrorAccountState(this.error);
 }
+
+class LoggedOutAccountState implements AccountState {}
