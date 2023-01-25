@@ -28,7 +28,62 @@ class StatementPage extends StatelessWidget {
           title: MonthChanger((month) => controller.showTransactions(month)),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Center(
+                      child: Text(
+                        'DEZEMBRO',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Saldo anterior: '),
+                            Text('R\$ 1000,00'),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Receitas:'),
+                            Text('R\$ 4000,00'),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Despesas:'),
+                            Text('- R\$ 4000,00'),
+                          ],
+                        ),
+                        SizedBox(
+                          height: Sizes.mediumSpace,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Saldo parcial:'),
+                            Text('- R\$ 4000,00'),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Saldo total:'),
+                            Text(' - R\$ 4000,00'),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
               icon: const Icon(Icons.text_snippet_rounded),
             ),
           ],
@@ -80,4 +135,3 @@ class StatementPage extends StatelessWidget {
     );
   }
 }
-
