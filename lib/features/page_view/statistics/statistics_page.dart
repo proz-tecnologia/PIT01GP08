@@ -28,12 +28,6 @@ class StatisticsPage extends StatelessWidget {
           centerTitle: true,
           titleTextStyle: Theme.of(context).textTheme.bodyLarge,
           title: MonthChanger((month) => controller.getSections(month)),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.settings_rounded),
-            ),
-          ],
         ),
         Expanded(
           child: BlocBuilder<StatisticsController, StatisticsState>(
