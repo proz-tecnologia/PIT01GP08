@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../design_sys/colors.dart';
 import '../../services/pix_repository.dart';
 import '../../shared/views/error_view.dart';
 import '../../shared/views/loading_view.dart';
@@ -25,10 +26,7 @@ class _MyPixKeysPageState extends State<MyPixKeysPage> {
         title: const Text("Minhas Categorias"),
         actions: [
           IconButton(
-            onPressed: () =>
-                Navigator.of(context).pushNamed('/category-edit').then((_) {
-              setState(() {});
-            }),
+            onPressed: () {},
             icon: const Icon(Icons.add),
           ),
         ],
@@ -47,9 +45,31 @@ class _MyPixKeysPageState extends State<MyPixKeysPage> {
             return ListView.separated(
               itemCount: list.length,
               separatorBuilder: (context, index) => const Divider(),
-              itemBuilder: (_, index) => ListTile(
+              itemBuilder: (_, index) => ExpansionTile(
                 title: Text(list[index].key),
                 trailing: Text(list[index].value),
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.delete_rounded,
+                          color: AppColors.expense,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.edit_rounded),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.copy_rounded),
+                      ),
+                    ],
+                  )
+                ],
               ),
             );
           }
