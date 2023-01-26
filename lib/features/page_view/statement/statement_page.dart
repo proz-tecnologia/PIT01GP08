@@ -10,6 +10,7 @@ import '../widgets/top_bar_toggle_button.dart';
 import 'statement_controller.dart';
 import 'statement_states.dart';
 import 'widgets/clickable_transaction_tile.dart';
+import 'widgets/extract_dialog.dart';
 
 class StatementPage extends StatelessWidget {
   const StatementPage({super.key});
@@ -29,59 +30,10 @@ class StatementPage extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
+                controller.displayBalance();
                 showDialog(
                   context: context,
-                  builder: (context) => AlertDialog(
-                    title: const Center(
-                      child: Text(
-                        'DEZEMBRO',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Saldo anterior: '),
-                            Text('R\$ 1000,00'),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Receitas:'),
-                            Text('R\$ 4000,00'),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Despesas:'),
-                            Text('- R\$ 4000,00'),
-                          ],
-                        ),
-                        SizedBox(
-                          height: Sizes.mediumSpace,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Saldo parcial:'),
-                            Text('- R\$ 4000,00'),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Saldo total:'),
-                            Text(' - R\$ 4000,00'),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                  builder: (context) => ExtractDialog(controller: controller),
                 );
               },
               icon: const Icon(Icons.text_snippet_rounded),
