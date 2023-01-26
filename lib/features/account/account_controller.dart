@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:financial_app/services/category_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -109,6 +111,20 @@ class AccountController extends Cubit<AccountState> {
           'O link de verificação foi enviado para ${FirebaseAuth.instance.currentUser?.email}'));
     } catch (e) {
       emit(ErrorAccountState('Erro de conexão'));
+    }
+  }
+
+  void deleteUser() async {
+    try {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .delete();
+      FirebaseAuth.instance.currentUser?.delete();
+      FirebaseAuth.instance.signOut();
+      emit(LoggedOutAccountState());
+    } catch (e) {
+      emit(ErrorAccountState('Não foi possível excluir a conta'));
     }
   }
 
