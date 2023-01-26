@@ -10,6 +10,7 @@ import '../widgets/top_bar_toggle_button.dart';
 import 'statement_controller.dart';
 import 'statement_states.dart';
 import 'widgets/clickable_transaction_tile.dart';
+import 'widgets/extract_dialog.dart';
 
 class StatementPage extends StatelessWidget {
   const StatementPage({super.key});
@@ -28,7 +29,13 @@ class StatementPage extends StatelessWidget {
           title: MonthChanger((month) => controller.showTransactions(month)),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                controller.displayBalance();
+                showDialog(
+                  context: context,
+                  builder: (context) => ExtractDialog(controller: controller),
+                );
+              },
               icon: const Icon(Icons.text_snippet_rounded),
             ),
           ],
@@ -80,4 +87,3 @@ class StatementPage extends StatelessWidget {
     );
   }
 }
-

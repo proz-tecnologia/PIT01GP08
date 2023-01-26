@@ -44,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const ListTile(
               leading: Icon(Icons.pix_rounded),
-              title: Text("Meus PIX"),
+              title: Text("Minhas chaves PIX"),
             ),
             ListTile(
               onTap: () => Navigator.of(context).pushNamed("/settings"),
