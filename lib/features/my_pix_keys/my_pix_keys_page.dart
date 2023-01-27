@@ -25,7 +25,7 @@ class _MyPixKeysPageState extends State<MyPixKeysPage> {
     );
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Minhas Categorias"),
+        title: const Text("Minhas Chaves PIX"),
         actions: [
           IconButton(
             onPressed: () => showDialog(
