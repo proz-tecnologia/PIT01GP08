@@ -21,6 +21,7 @@ class App extends StatelessWidget {
         '/settings': (context) => const SettingsPage(),
         '/my-categories': (context) => const MyCategoriesPage(),
         '/category-edit': (context) => const CategoryEditPage(),
+        '/my-pix-keys':(context) => const MyPixKeysPage(),
       },
       debugShowCheckedModeBanner: false,
     );

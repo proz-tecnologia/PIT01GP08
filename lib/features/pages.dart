@@ -7,3 +7,4 @@ export 'page_view/app_page_view.dart';
 export 'register/register_page.dart';
 export 'settings/settings_page.dart';
 export 'splash/splash.dart';
+export 'my_pix_keys/my_pix_keys_page.dart';
