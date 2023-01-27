@@ -42,9 +42,10 @@ class _ProfilePageState extends State<ProfilePage> {
               leading: const Icon(Icons.label_rounded),
               title: const Text("Categorias"),
             ),
-            const ListTile(
-              leading: Icon(Icons.pix_rounded),
-              title: Text("Minhas chaves PIX"),
+            ListTile(
+              onTap: () => Navigator.of(context).pushNamed('/my-pix-keys'),
+              leading: const Icon(Icons.pix_rounded),
+              title: const Text("Minhas chaves PIX"),
             ),
             ListTile(
               onTap: () => Navigator.of(context).pushNamed("/settings"),
