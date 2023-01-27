@@ -7,6 +7,7 @@ import '../../shared/views/error_view.dart';
 import '../../shared/views/loading_view.dart';
 import 'my_pix_keys_controller.dart';
 import 'my_pix_keys_states.dart';
+import 'widgets/pix_key_form_dialog.dart';
 
 class MyPixKeysPage extends StatefulWidget {
   const MyPixKeysPage({super.key});
@@ -26,7 +27,16 @@ class _MyPixKeysPageState extends State<MyPixKeysPage> {
         title: const Text("Minhas Categorias"),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => showDialog(
+              context: context,
+              builder: (context) {
+                final formKey = GlobalKey<FormState>();
+                return PixKeyFormDialog(
+                  formKey: formKey,
+                  controller: controller,
+                );
+              },
+            ),
             icon: const Icon(Icons.add),
           ),
         ],
@@ -60,7 +70,20 @@ class _MyPixKeysPageState extends State<MyPixKeysPage> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () => showDialog(
+                          context: context,
+                          builder: (context) {
+                            final formKey = GlobalKey<FormState>();
+                            final description = list[index].key;
+                            final pixKey = list[index].value;
+                            return PixKeyFormDialog(
+                              formKey: formKey,
+                              initialDescription: description,
+                              initialPixKey: pixKey,
+                              controller: controller,
+                            );
+                          },
+                        ),
                         icon: const Icon(Icons.edit_rounded),
                       ),
                       IconButton(

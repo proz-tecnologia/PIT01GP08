@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class PixRepository {
-  Future<void> setPixKey(Map<String, String> pixKey);
+  Future<void> setPixKeys(Map<String, String> updatedPixKeys);
   Future<void> deletePixKey(String pixKeyDescription);
   Future<Map<String, String>> getAllPixKeys();
 }
@@ -13,16 +13,9 @@ class PixFirebaseRepository implements PixRepository {
       .doc(FirebaseAuth.instance.currentUser!.uid);
 
   @override
-  Future<void> setPixKey(Map<String, String> pixKey) async {
+  Future<void> setPixKeys(Map<String, String> updatedPixKeys) async {
     try {
-      final doc = await firestorePath.get();
-      final data = doc.data() ?? {};
-      data.update(
-        pixKey.keys.first,
-        (value) => pixKey.values.first,
-        ifAbsent: () => pixKey.values.first,
-      );
-      firestorePath.set(data);
+      firestorePath.set(updatedPixKeys);
     } catch (e) {
       rethrow;
     }

@@ -26,13 +26,17 @@ class MyPixKeysController extends Cubit<MyPixKeysState> {
   void saveKey(
     String description, {
     required String pixKey,
+    String oldDescription = '',
   }) async {
     Map<String, String> list = (state as SuccessMyPixKeysState).list;
     emit(SavingMyPixKeysState());
     try {
-      final newKey = {description: pixKey};
-      await repository.setPixKey(newKey);
-      list.update(description, (value) => pixKey, ifAbsent: () => pixKey);
+      if (oldDescription != '') {
+        list.removeWhere((key, value) => key == oldDescription);
+      }
+      list.addAll({description: pixKey});
+
+      await repository.setPixKeys(list);
 
       emit(SavedMyPixKeysState());
       emit(SuccessMyPixKeysState(list));
@@ -41,7 +45,7 @@ class MyPixKeysController extends Cubit<MyPixKeysState> {
     }
   }
 
-  void deleteCategory(String description) async {
+  void deleteKey(String description) async {
     Map<String, String> list = (state as SuccessMyPixKeysState).list;
     try {
       await repository.deletePixKey(description);
