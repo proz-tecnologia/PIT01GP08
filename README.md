@@ -1,51 +1,35 @@
-<h1 align="center">
-  Financial_app
-</h1>
-<p align="center">
-  <img  src="https://user-images.githubusercontent.com/22122/198906925-5211f194-034c-4a79-b4aa-7cf1f3c2680d.png" height="120px"/>
-</p>
 
- ## Built With
-  <br/>
-  <img src="https://storage.googleapis.com/cms-storage-bucket/6a07d8a62f4308d2b854.svg" height="30px" align="center"/>
+![TypeScript](/assets/white-logo-text-horizontal.png?style=for-the-badge&logo=typescript&logoColor=white)
 
-  
-<br/>
-
-FlutterSdkVersion: 3.3.9
-
+___
 ## Description
 
 This app was developed on Proz bootCamp, to help you easily manage your financial life, incomes and expenses!
 
-<br/>
+## Built With
 
+<img src="/assets/built-with.png" height="100px" align="center"/>
+
+## Pages
+ 
 Login                      | Home                      | New Transaction              |
 :-------------------------:|:-------------------------:|:-------------------------:
 <img src="https://user-images.githubusercontent.com/22122/205398099-6734d973-6500-451d-8a14-4160e8a4caad.png" alt="show_case"  height="500">   | <img src="https://user-images.githubusercontent.com/22122/205393788-36656752-a3ff-45d2-a242-2b9e7665af18.png" alt="show_case"  height="500"> | <img src="https://user-images.githubusercontent.com/22122/205413126-fe3a2592-d05f-4ed3-ae29-0a5ef17ef2a6.png" alt="show_case"  height="500">    
 
-<br/>
-
-
-
 ## Development
 - Adapting project to an architecture pattern (MVC)
 - Implementing state managment
-
-</br>
 
 ## Organization
 - Using Github board for project management
 - Using Git Flow
 - Using Discord for team communication
 
-</br>
 
 ## At the end of the sprint II
 - Project must be structured according to the defined architecture
 - It must show state changing behavior (empty, loading, success, error) in navigation and uses of funcionalities
 
-</br>
 
 ## Run Locally
 
