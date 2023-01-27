@@ -19,7 +19,7 @@ class PendingCard extends StatelessWidget {
 
   factory PendingCard.expense() {
     return const PendingCard._(
-      icon: Icons.download_rounded,
+      icon: Icons.arrow_circle_down_rounded,
       color: AppColors.expense,
       label: 'A pagar',
     );
@@ -28,7 +28,7 @@ class PendingCard extends StatelessWidget {
   factory PendingCard.income() {
     return const PendingCard._(
       color: AppColors.income,
-      icon: Icons.publish_rounded,
+      icon: Icons.arrow_circle_up_rounded,
       label: 'A receber',
     );
   }
