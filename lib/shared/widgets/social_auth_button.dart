@@ -20,8 +20,11 @@ class SocialAuthButton extends StatelessWidget {
       onPressed: onPressed,
       clipBehavior: Clip.antiAlias,
       style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
-            backgroundColor:
-                const MaterialStatePropertyAll(AppColors.lightGrey),
+            backgroundColor: MaterialStatePropertyAll(
+              AppColors.lightGrey.withOpacity(
+                Theme.of(context).brightness == Brightness.light ? 0.25 : 1,
+              ),
+            ),
             foregroundColor: const MaterialStatePropertyAll(AppColors.black),
             padding: const MaterialStatePropertyAll(
                 EdgeInsets.all(Sizes.smallSpace)),
