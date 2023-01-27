@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
+import '../../../shared/utils/currency_format.dart';
 import '../new_entry_controller.dart';
 import '../new_entry_states.dart';
 
@@ -27,12 +28,7 @@ class CurrencyFormField extends StatelessWidget {
           onChanged: (value) {
             totalValueNotifier.value = value.isEmpty
                 ? 0.0
-                : double.parse(
-                    value
-                        .replaceAll(RegExp('[R\$]'), '')
-                        .replaceAll('.', '')
-                        .replaceAll(',', '.'),
-                  );
+                : value.fromBrReal;
           },
           decoration: InputDecoration(
             floatingLabelStyle: TextStyle(color: state.color),

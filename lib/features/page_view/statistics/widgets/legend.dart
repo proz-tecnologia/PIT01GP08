@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../design_sys/sizes.dart';
+import '../../../../shared/utils/currency_format.dart';
 import '../statistics_states.dart';
 
 class Legend extends StatelessWidget {
@@ -29,8 +30,7 @@ class Legend extends StatelessWidget {
               ),
             ),
             title: Text(state.sections[index].description),
-            trailing: Text(
-                'R\$ ${state.sections[index].value.toStringAsFixed(2).replaceFirst('.', ',')}'),
+            trailing: Text(state.sections[index].value.toBrReal),
           );
         },
       ),

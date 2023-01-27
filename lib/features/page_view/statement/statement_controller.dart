@@ -12,21 +12,12 @@ class StatementController extends Cubit<StatementState> {
   final List<Transaction> transactionList;
   DateTime currentMonth = DateTime.now();
 
-  double _previousBalance = 0;
-  double _income = 0;
-  double _expense = 0;
-  String get previousBalance =>
-      'R\$ ${_previousBalance.toStringAsFixed(2).replaceAll('.', ',')}';
-  String get income => 'R\$ ${_income.toStringAsFixed(2).replaceAll('.', ',')}';
-  String get expense =>
-      'R\$ ${_expense.toStringAsFixed(2).replaceAll('.', ',')}';
+  double previousBalance = 0;
+  double income = 0;
+  double expense = 0;
 
-  double _partialBalance = 0;
-  double _totalBalance = 0;
-  String get partialBalance =>
-      'R\$ ${_partialBalance.toStringAsFixed(2).replaceAll('.', ',')}';
-  String get totalBalance =>
-      'R\$ ${_totalBalance.toStringAsFixed(2).replaceAll('.', ',')}';
+  double partialBalance = 0;
+  double totalBalance = 0;
 
   String get displayMonth =>
       DateFormat('MMMM', 'pt_Br').format(currentMonth).toUpperCase();
@@ -68,12 +59,12 @@ class StatementController extends Cubit<StatementState> {
   }
 
   void displayBalance() {
-    _previousBalance = 0;
-    _income = 0;
-    _expense = 0;
+    previousBalance = 0;
+    income = 0;
+    expense = 0;
 
-    _partialBalance = 0;
-    _totalBalance = 0;
+    partialBalance = 0;
+    totalBalance = 0;
 
     final dayOneOfMonth = DateTime(currentMonth.year, currentMonth.month);
     final nextMonth = DateTime(currentMonth.year, currentMonth.month + 1);
@@ -81,20 +72,20 @@ class StatementController extends Cubit<StatementState> {
     for (var transaction in transactionList) {
       if (transaction.date.isBefore(dayOneOfMonth)) {
         if (transaction.type == Type.income) {
-          _previousBalance += transaction.value;
+          previousBalance += transaction.value;
         } else {
-          _previousBalance -= transaction.value;
+          previousBalance -= transaction.value;
         }
       } else if (transaction.date.isBefore(nextMonth)) {
         if (transaction.type == Type.income) {
-          _income += transaction.value;
+          income += transaction.value;
         } else {
-          _expense -= transaction.value;
+          expense -= transaction.value;
         }
       }
     }
 
-    _partialBalance = _income + _expense;
-    _totalBalance = _previousBalance + _partialBalance;
+    partialBalance = income + expense;
+    totalBalance = previousBalance + partialBalance;
   }
 }

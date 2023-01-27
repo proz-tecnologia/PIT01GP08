@@ -4,6 +4,7 @@ import '../../../design_sys/colors.dart';
 import '../../../design_sys/sizes.dart';
 import '../../../shared/models/category.dart';
 import '../../../shared/models/transaction.dart';
+import '../../../shared/utils/currency_format.dart';
 
 class TransactionTile extends StatelessWidget {
   const TransactionTile(
@@ -56,7 +57,7 @@ class TransactionTile extends StatelessWidget {
     }
     return ListTile(
       title: Text(
-        transaction.valueString,
+        transaction.value.toBrReal,
         style: TextStyle(
           color: transaction.type == Type.expense
               ? AppColors.expense
