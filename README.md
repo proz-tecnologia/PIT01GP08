@@ -1,7 +1,7 @@
 # 
 
 <p align="center">
- <img src="/assets/white-logo-text-horizontal.png" height="150px" />
+ <img src="/assets/logo-cashfy-horizontal.png" height="150px" />
 <p/>
 
 #
