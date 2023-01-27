@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../design_sys/colors.dart';
@@ -63,7 +64,26 @@ class _MyPixKeysPageState extends State<MyPixKeysPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () => showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text(
+                                'Tem certeza que deseja excluir ${list[index].key}?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: const Text('CANCELAR'),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  controller.deleteKey(list[index].key);
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('EXCLUIR'),
+                              )
+                            ],
+                          ),
+                        ),
                         icon: const Icon(
                           Icons.delete_rounded,
                           color: AppColors.expense,
@@ -87,7 +107,18 @@ class _MyPixKeysPageState extends State<MyPixKeysPage> {
                         icon: const Icon(Icons.edit_rounded),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          final scaffoldMessenger =
+                              ScaffoldMessenger.of(context);
+                          await Clipboard.setData(
+                            ClipboardData(text: list[index].value),
+                          );
+                          scaffoldMessenger.showSnackBar(
+                            SnackBar(
+                              content: Text('Copiado: ${list[index].value}'),
+                            ),
+                          );
+                        },
                         icon: const Icon(Icons.copy_rounded),
                       ),
                     ],
