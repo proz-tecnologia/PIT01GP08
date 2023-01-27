@@ -37,17 +37,13 @@ This app was developed on Proz bootCamp, to help you easily manage your financia
 
 ## Screens
  
-Sign-up                      | Sign-in                      | Home              |
-:-------------------------:|:-------------------------:|:-------------------------:
-<img src="/assets/Screenshot_register.jpg" alt="show_case"  height="500">   | <img src="https://user-images.githubusercontent.com/22122/205393788-36656752-a3ff-45d2-a242-2b9e7665af18.png" alt="show_case"  height="500"> | <img src="https://user-images.githubusercontent.com/22122/205413126-fe3a2592-d05f-4ed3-ae29-0a5ef17ef2a6.png" alt="show_case"  height="500">    
+Sign-up                      | Sign-in                      | Home              |Extract      
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+<img src="/assets/Screenshot_register.jpg" alt="show_case"  height="500">   | <img src="/assets/Screenshot_login.jpg" alt="show_case"  height="500"> | <img src="/assets/Screenshot_home.jpg" alt="show_case"  height="500">  | <img src="/assets/Screenshot_extract.jpg" alt="show_case"  height="500">  
 
-Extract                      | Chart                      |       Profile       |
-:-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://user-images.githubusercontent.com/22122/205398099-6734d973-6500-451d-8a14-4160e8a4caad.png" alt="show_case"  height="500">   | <img src="https://user-images.githubusercontent.com/22122/205393788-36656752-a3ff-45d2-a242-2b9e7665af18.png" alt="show_case"  height="500"> | <img src="https://user-images.githubusercontent.com/22122/205413126-fe3a2592-d05f-4ed3-ae29-0a5ef17ef2a6.png" alt="show_case"  height="500">    
-
-Categories                      | New transaction     |              |
-:-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://user-images.githubusercontent.com/22122/205398099-6734d973-6500-451d-8a14-4160e8a4caad.png" alt="show_case"  height="500">   | <img src="https://user-images.githubusercontent.com/22122/205393788-36656752-a3ff-45d2-a242-2b9e7665af18.png" alt="show_case"  height="500"> | <img src="https://user-images.githubusercontent.com/22122/205413126-fe3a2592-d05f-4ed3-ae29-0a5ef17ef2a6.png" alt="show_case"  height="500">    
+ Chart                      |       Profile       | Categories        |       New transaction   
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+<img src="/assets/Screenshot_chart.jpg" alt="show_case"  height="500"> | <img src="/assets/Screenshot_profile.jpg" alt="show_case"  height="500"> | <img src="/assets/Screenshot_categories.jpg" alt="show_case"  height="500"> |<img src="/assets/Screenshot_new_transaction.jpg" alt="show_case"  height="500">
 
 ## Development
 - Design Pattern MVCR
