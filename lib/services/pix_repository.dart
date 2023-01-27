@@ -15,7 +15,14 @@ class PixFirebaseRepository implements PixRepository {
   @override
   Future<void> setPixKey(Map<String, String> pixKey) async {
     try {
-      firestorePath.set(pixKey);
+      final doc = await firestorePath.get();
+      final data = doc.data() ?? {};
+      data.update(
+        pixKey.keys.first,
+        (value) => pixKey.values.first,
+        ifAbsent: () => pixKey.values.first,
+      );
+      firestorePath.set(data);
     } catch (e) {
       rethrow;
     }
