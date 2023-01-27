@@ -25,6 +25,7 @@ This app was developed on Proz bootCamp, to help you easily manage your financia
 - `Sign In` 
 - `Autentication with Google - Firebase`
 - `Autentication with Biometry - When is available `
+- `Dark or ligth mode according System definition`
 - `Hide your info on home screen`
 - `Get extract of all transactions`
 - `Check on chart where is your resource going`
@@ -37,13 +38,17 @@ This app was developed on Proz bootCamp, to help you easily manage your financia
 
 ## Screens
  
-Sign-up                      | Sign-in                      | Home              |Extract      
-:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-<img src="/assets/Screenshot_register.jpg" alt="show_case"  height="500">   | <img src="/assets/Screenshot_login.jpg" alt="show_case"  height="500"> | <img src="/assets/Screenshot_home.jpg" alt="show_case"  height="500">  | <img src="/assets/Screenshot_extract.jpg" alt="show_case"  height="500">  
+Sign-up           | Sign-in           | Home             
+:------------------:|:--------------:|:-------------------------:
+<img src="/assets/Screenshot_register.jpg" alt="show_case"  height="500"> | <img src="/assets/Screenshot_login.jpg" alt="show_case"  height="500"> | <img src="/assets/Screenshot_home.jpg" alt="show_case"  height="500"> 
 
- Chart                      |       Profile       | Categories        |       New transaction   
-:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-<img src="/assets/Screenshot_chart.jpg" alt="show_case"  height="500"> | <img src="/assets/Screenshot_profile.jpg" alt="show_case"  height="500"> | <img src="/assets/Screenshot_categories.jpg" alt="show_case"  height="500"> |<img src="/assets/Screenshot_new_transaction.jpg" alt="show_case"  height="500">
+ Chart          |       Profile       | Categories        
+:--------------:|:------------------:|:-------------------:
+<img src="/assets/Screenshot_chart.jpg" alt="show_case"  height="500"> | <img src="/assets/Screenshot_profile.jpg" alt="show_case"  height="500"> | <img src="/assets/Screenshot_categories.jpg" alt="show_case"  height="500">
+
+ Account        |      Historic      | New transaction   
+:--------------:|:------------------:|:-------------------------:
+<img src="/assets/Screenshot_account.jpg" alt="show_case"  height="500"> | <img src="/assets/Screenshot_extract.jpg" alt="show_case"  height="500"> | <img src="/assets/Screenshot_new_transaction.jpg" alt="show_case"  height="500"> 
 
 ## Development
 - Design Pattern MVCR
