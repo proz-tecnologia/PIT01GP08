@@ -1,35 +1,62 @@
+# 
 
-![TypeScript](/assets/white-logo-text-horizontal.png?style=for-the-badge&logo=typescript&logoColor=white)
+<p align="center">
+ <img src="/assets/white-logo-text-horizontal.png" height="150px" />
+<p/>
 
-___
+#
+
 ## Description
 
 This app was developed on Proz bootCamp, to help you easily manage your financial life, incomes and expenses!
+
+## Status
+
+![status-ongoing](https://img.shields.io/badge/status-ongoing-yellow?style=for-the-badge)
+
 
 ## Built With
 
 <img src="/assets/built-with.png" height="100px" align="center"/>
 
-## Pages
+## Features
+
+- `Sign Up` 
+- `Sign In` 
+- `Autentication with Google - Firebase`
+- `Autentication with Biometry - When is available `
+- `Hide your info on home screen`
+- `Get extract of all transactions`
+- `Check on chart where is your resource going`
+- `Update or delete account`
+- `Create, update or delete categories`
+- `Save your PIX keys`
+- `Register incomes and debits with recurrency or not`
+- `Register expected incomes and debits` 
+- `Visual notification when a debt is  date overdue ` 
+
+## Screens
  
-Login                      | Home                      | New Transaction              |
+Sign-up                      | Sign-in                      | Home              |
+:-------------------------:|:-------------------------:|:-------------------------:
+<img src="/assets/Screenshot_register.jpg" alt="show_case"  height="500">   | <img src="https://user-images.githubusercontent.com/22122/205393788-36656752-a3ff-45d2-a242-2b9e7665af18.png" alt="show_case"  height="500"> | <img src="https://user-images.githubusercontent.com/22122/205413126-fe3a2592-d05f-4ed3-ae29-0a5ef17ef2a6.png" alt="show_case"  height="500">    
+
+Extract                      | Chart                      |       Profile       |
+:-------------------------:|:-------------------------:|:-------------------------:
+<img src="https://user-images.githubusercontent.com/22122/205398099-6734d973-6500-451d-8a14-4160e8a4caad.png" alt="show_case"  height="500">   | <img src="https://user-images.githubusercontent.com/22122/205393788-36656752-a3ff-45d2-a242-2b9e7665af18.png" alt="show_case"  height="500"> | <img src="https://user-images.githubusercontent.com/22122/205413126-fe3a2592-d05f-4ed3-ae29-0a5ef17ef2a6.png" alt="show_case"  height="500">    
+
+Categories                      | New transaction     |              |
 :-------------------------:|:-------------------------:|:-------------------------:
 <img src="https://user-images.githubusercontent.com/22122/205398099-6734d973-6500-451d-8a14-4160e8a4caad.png" alt="show_case"  height="500">   | <img src="https://user-images.githubusercontent.com/22122/205393788-36656752-a3ff-45d2-a242-2b9e7665af18.png" alt="show_case"  height="500"> | <img src="https://user-images.githubusercontent.com/22122/205413126-fe3a2592-d05f-4ed3-ae29-0a5ef17ef2a6.png" alt="show_case"  height="500">    
 
 ## Development
-- Adapting project to an architecture pattern (MVC)
-- Implementing state managment
+- Design Pattern MVCR
+- State management with Cubit
 
-## Organization
-- Using Github board for project management
-- Using Git Flow
-- Using Discord for team communication
-
-
-## At the end of the sprint II
-- Project must be structured according to the defined architecture
-- It must show state changing behavior (empty, loading, success, error) in navigation and uses of funcionalities
-
+## WorkFlow
+- Github board for project management
+- Git Flow
+- Discord for team communication
 
 ## Run Locally
 
