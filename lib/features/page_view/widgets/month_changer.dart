@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
+import '../../../design_sys/sizes.dart';
 import 'month_picker.dart';
 
 class MonthChanger extends StatefulWidget {
@@ -51,6 +52,7 @@ class _MonthChangerState extends State<MonthChanger> {
                       currentMonth.value = previousMonth;
                     },
                     icon: const Icon(Icons.arrow_back_ios)),
+                const SizedBox(width: Sizes.mediumSpace),
                 InkWell(
                   onTap: () => showDialog(
                     context: context,
@@ -69,6 +71,7 @@ class _MonthChangerState extends State<MonthChanger> {
                     ),
                   ),
                 ),
+                const SizedBox(width: Sizes.mediumSpace),
                 IconButton(
                     color: Theme.of(context).colorScheme.onPrimary,
                     onPressed: () {

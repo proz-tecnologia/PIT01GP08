@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../design_sys/sizes.dart';
 import '../../shared/models/category.dart';
 import '../../shared/models/transaction.dart';
+import '../../shared/utils/currency_format.dart';
 import '../page_view/widgets/top_bar_toggle_button.dart';
 import 'new_entry_controller.dart';
 import 'new_entry_states.dart';
@@ -46,8 +47,7 @@ class _NewEntryContentState extends State<NewEntryContent> {
       totalValueNotifier.value = transaction.payment == Payment.parcelada
           ? transaction.value * (transaction.parts ?? 0)
           : transaction.value;
-      value.text =
-          'R\$ ${totalValueNotifier.value.toStringAsFixed(2).replaceAll('.', ',')}';
+      value.text = totalValueNotifier.value.toBrReal;
       description.text = transaction.description;
       date.text = DateFormat('dd/MM/yyyy').format(transaction.date);
       if (transaction.endDate != null) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../design_sys/sizes.dart';
 import '../../../shared/models/category.dart';
 import '../new_entry_controller.dart';
 import '../new_entry_states.dart';
@@ -32,7 +33,17 @@ class CategoryFormField extends StatelessWidget {
           items: state.categories
               .map((category) => DropdownMenuItem(
                     value: category,
-                    child: Text(category.name),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Sizes.smallSpace,
+                          ),
+                          child: Icon(category.icon, color: category.color),
+                        ),
+                        Text(category.name),
+                      ],
+                    ),
                   ))
               .toList(),
           onChanged: (value) {
