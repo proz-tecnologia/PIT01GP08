@@ -16,17 +16,6 @@ class SuccessHomeState implements HomeState {
     required this.pendingIncome,
     required this.pendingExpense,
   });
-
-  String get balanceStr =>
-      'R\$ ${balance.toStringAsFixed(2).replaceAll('.', ',')}';
-  String get incomeStr =>
-      'R\$ ${income.toStringAsFixed(2).replaceAll('.', ',')}';
-  String get expenseStr =>
-      'R\$ ${expense.toStringAsFixed(2).replaceAll('.', ',')}';
-  String get pendingIncomeStr =>
-      'R\$ ${pendingIncome.toStringAsFixed(2).replaceAll('.', ',')}';
-  String get pendingExpenseStr =>
-      'R\$ ${pendingExpense.toStringAsFixed(2).replaceAll('.', ',')}';
 }
 
 class ErrorHomeState implements HomeState {}

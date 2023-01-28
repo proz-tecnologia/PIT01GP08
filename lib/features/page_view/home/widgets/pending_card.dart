@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../design_sys/colors.dart';
 import '../../../../design_sys/sizes.dart';
+import '../../../../shared/utils/currency_format.dart';
 import '../home_controller.dart';
 import '../home_states.dart';
 
@@ -55,8 +56,8 @@ class PendingCard extends StatelessWidget {
                         return Text(
                           isVisible
                               ? color == AppColors.expense
-                                  ? state.pendingExpenseStr
-                                  : state.pendingIncomeStr
+                                  ? state.pendingExpense.toBrReal
+                                  : state.pendingIncome.toBrReal
                               : 'R\$ -------',
                           textAlign: TextAlign.center,
                           style: TextStyle(

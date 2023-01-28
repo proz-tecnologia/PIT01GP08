@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../shared/utils/currency_format.dart';
 
 import '../../shared/models/category.dart';
 import '../../shared/models/transaction.dart';
@@ -44,12 +45,7 @@ class NewEntryController extends Cubit<NewEntryState> {
         id: id,
         date: date,
         description: description,
-        value: double.parse(
-          value
-              .replaceAll(RegExp('[R\$]'), '')
-              .replaceAll('.', '')
-              .replaceAll(',', '.'),
-        ),
+        value: value.fromBrReal,
         category: category,
         fulfilled: fulfilled,
         payment: payment,

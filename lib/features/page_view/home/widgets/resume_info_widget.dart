@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../design_sys/sizes.dart';
+import '../../../../shared/utils/currency_format.dart';
 import '../home_controller.dart';
 import '../home_states.dart';
 import 'total_tile.dart';
@@ -78,7 +79,7 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                                 builder: (_, isVisible, __) {
                                   return Text(
                                     isVisible
-                                        ? state.balanceStr
+                                        ? state.balance.toBrReal
                                         : 'R\$ -------',
                                     style: Theme.of(context)
                                         .textTheme
@@ -135,13 +136,12 @@ class _ResumeInfoWidgetState extends State<ResumeInfoWidget> {
                     TotalTile(
                       icon: Icons.arrow_downward,
                       label: 'Despesas',
-                      value:
-                          state is SuccessHomeState ? state.expenseStr : null,
+                      value: state is SuccessHomeState ? state.expense : null,
                     ),
                     TotalTile(
                       icon: Icons.arrow_upward,
                       label: 'Receitas',
-                      value: state is SuccessHomeState ? state.incomeStr : null,
+                      value: state is SuccessHomeState ? state.income : null,
                     ),
                   ],
                 ),

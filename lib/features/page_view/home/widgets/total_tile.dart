@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../design_sys/sizes.dart';
+import '../../../../shared/utils/currency_format.dart';
 import '../home_controller.dart';
 
 class TotalTile extends StatelessWidget {
@@ -14,7 +15,7 @@ class TotalTile extends StatelessWidget {
 
   final IconData? icon;
   final String label;
-  final String? value;
+  final double? value;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class TotalTile extends StatelessWidget {
                     valueListenable: context.read<HomeController>().isVisible,
                     builder: (_, isVisible, __) {
                       return Text(
-                        isVisible ? value! : 'R\$ -------',
+                        isVisible ? value!.toBrReal : 'R\$ -------',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.onPrimary,
