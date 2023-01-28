@@ -58,9 +58,6 @@ class Transaction {
     );
   }
 
-  String get valueString =>
-      'R\$ ${value.toStringAsFixed(2).replaceFirst('.', ',')}';
-
   bool get fulfilled => _fulfilled;
   void fulfill() => _fulfilled = true;
 
@@ -84,7 +81,11 @@ class Transaction {
     return result;
   }
 
-  factory Transaction.fromMap(String id, Map<String, dynamic> map,{bool isCopy = false}) {
+  factory Transaction.fromMap(
+    String id,
+    Map<String, dynamic> map, {
+    bool isCopy = false,
+  }) {
     final type = map['type'] == 'expense' ? Type.expense : Type.income;
     final payment = map['payment'] == 'normal'
         ? Payment.normal
