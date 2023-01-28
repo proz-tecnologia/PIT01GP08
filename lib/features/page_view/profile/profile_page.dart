@@ -57,9 +57,10 @@ class _ProfilePageState extends State<ProfilePage> {
               leading: const Icon(Icons.logout_rounded),
               title: const Text("Sair do app"),
             ),
-            const ListTile(
-              leading: Icon(Icons.info_outline_rounded),
-              title: Text("Sobre o app"),
+            ListTile(
+              onTap: () => Navigator.of(context).pushNamed('/about-page'),
+              leading: const Icon(Icons.info_outline_rounded),
+              title: const Text("Sobre o app"),
             ),
           ];
           return Column(
