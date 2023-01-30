@@ -24,7 +24,7 @@ This app was developed on Proz bootCamp, to help you easily manage your financia
 - `Sign Up` 
 - `Sign In` 
 - `Authentication with Google - Firebase`
-- `Autentication with Biometry - When it's available `
+- `Authentication with Biometry - When it's available `
 - `Dark or light mode according to system definition`
 - `Hide your info on home screen`
 - `Get extract of all transactions monthly`
