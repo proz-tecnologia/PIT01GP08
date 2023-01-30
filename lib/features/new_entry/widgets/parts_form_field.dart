@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../design_sys/sizes.dart';
+import '../../../shared/utils/currency_format.dart';
 import '../new_entry_controller.dart';
 import '../new_entry_states.dart';
 
@@ -55,8 +56,7 @@ class PartsFormField extends StatelessWidget {
                 builder: (_, value, ___) {
                   final partValue =
                       value / (int.tryParse(partsController.text) ?? 2);
-                  return Text(
-                      'x de R\$ ${partValue.toStringAsFixed(2).replaceAll('.', ',')}');
+                  return Text('x de ${partValue.toBrReal}');
                 },
               ),
               const Expanded(flex: 2, child: SizedBox.shrink()),

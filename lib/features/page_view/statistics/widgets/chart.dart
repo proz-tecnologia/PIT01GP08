@@ -4,6 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../design_sys/sizes.dart';
+import '../../../../shared/utils/currency_format.dart';
 import '../statistics_states.dart';
 
 class Chart extends StatelessWidget {
@@ -20,7 +21,7 @@ class Chart extends StatelessWidget {
       alignment: AlignmentDirectional.center,
       children: [
         Text(
-          'Total:\nR\$${state.total.toStringAsFixed(2).replaceFirst('.', ',')}',
+          'Total:\n${state.total.toBrReal}',
           style: Theme.of(context).textTheme.bodyLarge,
           textAlign: TextAlign.center,
         ),

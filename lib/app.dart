@@ -1,3 +1,4 @@
+import 'package:financial_app/features/about/about_page.dart';
 import 'package:flutter/material.dart';
 
 import 'design_sys/themes.dart';
@@ -21,7 +22,8 @@ class App extends StatelessWidget {
         '/settings': (context) => const SettingsPage(),
         '/my-categories': (context) => const MyCategoriesPage(),
         '/category-edit': (context) => const CategoryEditPage(),
-        '/my-pix-keys':(context) => const MyPixKeysPage(),
+        '/my-pix-keys': (context) => const MyPixKeysPage(),
+        '/about-page': (context) => AboutPage(),
       },
       debugShowCheckedModeBanner: false,
     );

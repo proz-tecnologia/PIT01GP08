@@ -22,20 +22,21 @@ class BottomBar extends StatelessWidget {
         builder: (_, value, __) => BottomNavigationBar(
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_rounded),
-              label: 'Início',
-            ),
+                icon: Icon(Icons.home_rounded),
+                label: 'Início',
+                tooltip: 'Início'),
             BottomNavigationBarItem(
-              icon: Icon(Icons.import_export_rounded),
-              label: 'Extrato',
-            ),
+                icon: Icon(Icons.import_export_rounded),
+                label: 'Extrato',
+                tooltip: 'Extrato'),
             BottomNavigationBarItem(
-              icon: Icon(Icons.equalizer_rounded),
-              label: 'Estatística',
-            ),
+                icon: Icon(Icons.equalizer_rounded),
+                label: 'Estatística',
+                tooltip: 'Estatística'),
             BottomNavigationBarItem(
               icon: Icon(Icons.more_horiz),
               label: 'Mais',
+              tooltip: 'Mais',
             ),
             BottomNavigationBarItem(
               icon: SizedBox.shrink(),
