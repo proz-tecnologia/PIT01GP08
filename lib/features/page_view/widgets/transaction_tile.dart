@@ -153,16 +153,6 @@ class _TransactionTileState extends State<TransactionTile> {
         ],
       ),
       children: [
-        // widget.category != null && isExpanded.value
-        //     ? Text(
-        //         widget.transaction.payment == Payment.normal
-        //             ? ''
-        //             : widget.transaction.payment == Payment.fixa
-        //                 ? 'até ${widget.transaction.endDate!.day}/${widget.transaction.endDate!.month}'
-        //                 : '${widget.transaction.parts} parcelas',
-        //         style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
-        //       )
-        //     : const SizedBox.shrink(),
         Row(children: widget.actions ?? []),
       ],
     );
