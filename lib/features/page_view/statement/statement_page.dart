@@ -44,6 +44,9 @@ class StatementPage extends StatelessWidget {
           child: BlocBuilder<StatementController, StatementState>(
             bloc: controller,
             builder: (context, state) {
+              final categoryList =
+                  (context.read<DataController>().state as SuccessDataState)
+                      .categoryList;
               return Column(
                 children: [
                   Row(
@@ -72,7 +75,10 @@ class StatementPage extends StatelessWidget {
                                 itemCount: state.list.length,
                                 itemBuilder: (context, index) {
                                   return ClickableTransactionTile(
-                                      state.list[index]);
+                                    state.list[index],
+                                    category: categoryList.firstWhere((e) =>
+                                        e.id == state.list[index].categoryId),
+                                  );
                                 },
                               ),
                             ),
